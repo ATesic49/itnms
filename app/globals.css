@@ -1,26 +1,123 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+	--background: #ffffff;
+	--foreground: #171717;
 }
 
+@import "leaflet/dist/leaflet.css";
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-geist-sans);
+	--font-mono: var(--font-geist-mono);
+	--font-naslov: var(--font-naslov);
+	--font-text: var(--font-text);
+	--font-prim: var(--font-ibm-sans);
+	--font-eb: var(--font-eb-garamond);
+
+	--color-secondary: #2563eb;
+	--color-primary: #006cb5;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	:root {
+		--background: #0a0a0a;
+		--foreground: #ededed;
+	}
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	background: var(--background);
+	color: var(--foreground);
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.custom-scrollbar {
+	scrollbar-width: thin;
+	scrollbar-color: #006cb5aa transparent;
+	scrollbar-arrow-color: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+	width: 8px;
+	scrollbar-arrow-color: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+	background: transparent;
+	scrollbar-arrow-color: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+	scrollbar-arrow-color: transparent;
+
+	background: #006cb5;
+	border-radius: 999px;
+	border: 2px solid transparent;
+	background-clip: content-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	scrollbar-arrow-color: transparent;
+
+	background: #006cb5;
+	border: 2px solid transparent;
+	background-clip: content-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-button {
+	display: none;
+	width: 0;
+	height: 0;
+}
+.text-fade-mask {
+	-webkit-mask-image: linear-gradient(
+		to bottom,
+		transparent 0px,
+		black 48px,
+		black calc(100% - 48px),
+		transparent 100%
+	);
+	mask-image: linear-gradient(
+		to bottom,
+		transparent 0px,
+		black 48px,
+		black calc(100% - 48px),
+		transparent 100%
+	);
+}
+.custom-scrollbar::-webkit-scrollbar-button {
+	display: none !important;
+	width: 0;
+	height: 0;
+}
+.custom-scrollbar::-webkit-scrollbar-button:single-button {
+	display: none !important;
+}
+
+@theme {
+	--color-institute-50: #f3f7fa;
+	--color-institute-100: #e6eef4;
+	--color-institute-200: #c9dce8;
+	--color-institute-300: #9fc1d4;
+	--color-institute-400: #6d9fb9;
+	--color-institute-500: #467f9e;
+	--color-institute-600: #356681;
+	--color-institute-700: #2d536a;
+	--color-institute-800: #294657;
+	--color-institute-900: #253b49;
+	--color-institute-950: #162832;
+
+	--color-mineral-50: #f1f8f7;
+	--color-mineral-100: #ddedea;
+	--color-mineral-200: #bcdcd6;
+	--color-mineral-300: #91c4bb;
+	--color-mineral-400: #62a79d;
+	--color-mineral-500: #438b82;
+	--color-mineral-600: #356f69;
+	--color-mineral-700: #2e5a56;
+	--color-mineral-800: #294946;
+	--color-mineral-900: #263e3c;
+	--color-mineral-950: #122322;
 }
