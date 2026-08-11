@@ -7,7 +7,7 @@ import {
 	Network,
 	Target,
 } from "lucide-react";
-import slika from "@/public/imgs/IMG_9995.jpg";
+import slika from "@/public/imgs/IMG_0001.jpg";
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";

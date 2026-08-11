@@ -1,21 +1,25 @@
+import Image from "next/image";
+import { Employee } from "../types/employee";
+
 type CompactEmployeeCardProps = {
 	image: string;
 	fullName: string;
 	scientificTitle: string;
 	profileUrl: string;
 };
-
+import user from "@/public/imgs/user.png";
+import Link from "next/link";
 export function CompactEmployeeCard({
-	image,
-	fullName,
-	scientificTitle,
-	profileUrl,
-}: CompactEmployeeCardProps) {
+	firstName,
+	lastName,
+	naucnoZvanje,
+	slug,
+}: Employee) {
 	return (
-		<a
-			href={profileUrl}
+		<Link
+			href={`istrazivaci/${slug}`}
 			className="
-        group flex min-h-[128px] overflow-hidden rounded-xl
+        group flex min-h-32 overflow-hidden rounded-xl
         border border-stone-200 bg-white shadow-sm
         transition duration-200
         hover:-translate-y-0.5
@@ -23,10 +27,10 @@ export function CompactEmployeeCard({
         hover:shadow-md
       "
 		>
-			<div className="w-28 shrink-0 overflow-hidden bg-stone-100 sm:w-32">
-				<img
-					src={image}
-					alt={fullName}
+			<div className="overflow-hidden w-28 shrink-0 bg-stone-100 sm:w-32">
+				<Image
+					src={user}
+					alt={firstName}
 					className="
             h-full w-full object-cover object-top
             transition-transform duration-300
@@ -35,29 +39,17 @@ export function CompactEmployeeCard({
 				/>
 			</div>
 
-			<div className="flex min-w-0 flex-1 flex-col justify-center px-5 py-4">
-				<h3
-					className="
-            text-lg font-semibold  tracking-tight text-stone-900
-            transition-colors group-hover:text-institute-800
-          "
-				>
-					{fullName}
+			<div className="flex flex-col justify-center flex-1 min-w-0 px-5 py-4">
+				<h3 className="text-lg font-semibold tracking-tight transition-colors text-stone-900 group-hover:text-institute-800">
+					{firstName} {lastName}
 				</h3>
 
-				<p className="mt-2 text-sm leading-5 text-stone-600">
-					{scientificTitle}
-				</p>
+				<p className="mt-2 text-sm leading-5 text-stone-600">{naucnoZvanje}</p>
 
-				<span
-					className="
-            mt-3 text-sm font-semibold text-institute-700
-            transition-colors group-hover:text-institute-900
-          "
-				>
+				<span className="mt-3 text-sm font-semibold transition-colors text-institute-700 group-hover:text-institute-900">
 					Saznaj Više →
 				</span>
 			</div>
-		</a>
+		</Link>
 	);
 }

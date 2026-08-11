@@ -35,14 +35,15 @@ export default function Home() {
 				></Image>
 			</div> */}
 			<HeroSection></HeroSection>
-			<ResearchAreasSection />
+			<NewsSection />
+			{/* //Akta instituta */}
 			{/* <InstituteStatsSection /> */}
 			<FeaturedProjectsSection />
-			<ServicesSection />
-			<LabsAndEquipmentSection />
-			<NewsSection />
-			<PartnersSection />
+			{/* <ServicesSection /> */}
+			{/* <LabsAndEquipmentSection /> */}
+			{/* <ResearchAreasSection /> */}
 			<ContactCtaSection />
+			<PartnersSection />
 			{/* <Vesti></Vesti> */}
 		</div>
 	);

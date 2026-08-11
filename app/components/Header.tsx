@@ -21,10 +21,10 @@ export function Header() {
 				<div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2 lg:px-8">
 					<div className="flex items-center gap-6">
 						<a
-							href="mailto:office@itnms.ac.rs"
+							href="mailto:itnms@itnms.ac.rs"
 							className="transition hover:text-institute-200"
 						>
-							office@itnms.ac.rs
+							itnms@itnms.ac.rs
 						</a>
 
 						<a
@@ -212,10 +212,10 @@ export function Header() {
 
 								<div className="mt-5 space-y-2 text-sm text-stone-600">
 									<a
-										href="mailto:office@itnms.ac.rs"
+										href="mailto:itnms@itnms.ac.rs"
 										className="block hover:text-institute-800"
 									>
-										office@itnms.ac.rs
+										itnms@itnms.ac.rs
 									</a>
 
 									<a

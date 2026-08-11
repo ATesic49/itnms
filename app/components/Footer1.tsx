@@ -132,14 +132,14 @@ export default function Footer() {
 							</a>
 
 							<a
-								href="mailto:office@itnms.ac.rs"
+								href="mailto:itnms@itnms.ac.rs"
 								className="flex items-center gap-3 text-sm transition text-stone-400 hover:text-white"
 							>
 								<Mail
 									className="w-5 h-5 shrink-0 text-institute-300"
 									aria-hidden="true"
 								/>
-								office@itnms.ac.rs
+								itnms@itnms.ac.rs
 							</a>
 
 							<a

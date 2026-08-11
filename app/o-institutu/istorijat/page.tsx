@@ -1,7 +1,7 @@
 import { ArrowRight, CalendarDays } from "lucide-react";
 import logo from "@/public/imgs/load3.jpg";
-import logo2 from "@/public/imgs/load2.jpg";
-import logo3 from "@/public/imgs/load4.jpg";
+import logo2 from "@/public/imgs/IMG_0127.jpg";
+import logo3 from "@/public/imgs/IMG_0132.jpg";
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
@@ -23,37 +23,55 @@ const timeline: TimelineItem[] = [
 		year: "1948.",
 		title: "Osnivanje Instituta",
 		description:
-			"Institut za tehnologiju nuklearnih i drugih mineralnih sirovina osnovan je 1948. god. Uredbom Vlade FNRJ. Pomenutom Uredbom od 27. marta 1948. god. osnovana je Uprava za koordinaciju rada naučnih instituta, pri Predsedništvu iste vlade. Iza ovog uopštenog naziva nije se moglo naslutiti da je osnovni cilj Uprave razvoj nuklearne tehnologije u našoj zemlji.",
-	},
-	{
-		year: "1952.",
-		title: "Uprava se seli u ulicu Franše d'Epere-a",
-		description:
-			"U oktobru 1952. god. Uprava se seli u ulicu Franše d'Epere-a 86 (gde se ITNMS i danas nalazi), istovremeno, na osnovu nove uredbe, Uprava menja naziv u Uprava za rudarska istrživanja i rudarske studije. Sa preseljenjem, Upravi su pripojena dva instituta koja su radila u zgradi u Ul. Franše d'Epere-a: Savezni institut za metalurgiju (prenet u nadležnost Vlade NR Srbije 1951. god.) i Naučnoistraživački institut Ministarstva industrije NR Srbije. U aprilu 1953. god. Uprava menja naziv u Zavod za geološko-rudarska i tehnološka istraživanja.",
+			"Уредбом Владе ФНРЈ основана је институција из које ће се касније развити данашњи ИТНМС..",
 	},
 	{
 		year: "1955.",
-		title: "Osnivanje Instituta za tehnologiju nuklearnih sirovina",
+		title: "Дефинисање делатности",
 		description:
-			"Juna 1955. god. Savezno izvršno veće ukida Zavod i donosi Rešenje o osnivanju Instituta za tehnologiju nuklearnih sirovina. Rešenjem se utvrđuje da je zadatak Instituta vršenje tehnoloških ispitivanja i istraživanja mineralnih, prvenstveno nuklearnih sirovina. Time se jasno definišu strogo namenska istraživanja na izdvajanju urana iz domaćih mineralnih i nekonvencionalnih sirovina, dobijanje nuklearno čistih soli i jedinjenja uranijuma pogodnih za dalju preradu, kao i razvoj reaktorskih materijala. Zahvaljujući zamahu geološko-rudarskih istraživanja, Institut je bio nosilac istraživanja koncentracije i prerade ruda obojenih, plemenitih i retkih metala.",
+			"Институт добија назив Институт за технологију нуклеарних минералних сировина и усмерава рад на технолошка испитивања и истраживање минералних сировина.",
 	},
 	{
 		year: "1966.",
-		title: "Podela zavoda u dva dela",
+		title: "Формирање ИТНМС-а",
 		description:
-			"Zavod za nuklearne sirovine deli se u dva dela i jasno se profiliše Institut za tehnologiju nuklearnih i drugih mineralnih sirovina. Rasformiranjem Savezne komisije za nuklearnu energiju (1968. god.) praktično se odustaje od zajedničkog nuklearnog programa u zemlji, što zbog prestanka finansiranja dovodi do ozbiljnih potresa u Institutu. Pravo osnivača preuzima Izvršno veće SR Srbije. Novonastale okolnosti dovode do nove programske koncepcije koja se bazira na uspostavljanju direktne saradnje sa privredom, proširenju delatnosti u oblast nemetaličnih sirovina, obojenih i retkih metala, zaštite životne sredine, inženjerizaciji tehničko-tehnoloških rešenja, konsaltinga i inženjeringa. Poseban napor je uložen u očuvanju primata u domenu analitičke hemije i karakterizacije uopšte",
+			"Поделом Завода за нуклеарне сировине формиран је Институт за технологију нуклеарних и других минералних сировина.",
+	},
+	{
+		year: "1968.",
+		title: "Проширење области рада zavoda u dva dela",
+		description:
+			"Институт се окреће директној сарадњи са привредом и проширује делатност на неметаличне сировине, обојене и ретке метале, заштиту животне средине, инжењеринг и консалтинг.",
 	},
 	{
 		year: "1991.",
-		title: "ITNMS kao jedinstvena organizacija",
+		title: "Статус научног института",
 		description:
-			"1991. god. ITNMS se registruje kao jedinstvena naučnoistraživačka organizacija u statusu naučnog instituta. Prema Zakonu o naučnoistraživačkom radu iz 1993. god. Institut je registrovan u statusu naučne državne ustanove (Rešenje Ministarstva za nauku i tehnologiju Republike Srbije br. 660-2-199/93 od 1.4.1994. god.).",
+			"ИТНМС се региструје као јединствена научноистраживачка организација у статусу научног института.",
 	},
 	{
-		year: "2003.",
-		title: "Moderno doba",
+		year: "1994.",
+		title: "Научна државна установа",
 		description:
-			"TNMS je reakreditovana naučno istraživačka organizacija - istraživačko razvojni institut, shodno Rešenju Ministra prosvete, nauke i tehnološkog razvoja br. 660-01-019/2016-14 od 03.02.2016. kojim je uvrđeno da ITNMS ispunjava uslove propisane zakonom da obavlja naučnoistraživačku delatnost radi ostvarivanja opšteg interesa, a na osnovu pozitivne Odluke Odbora za akreditaciju naučnoistraživačkih organizacija br.660-01-00013/18 od 12.01.2016. godine.",
+			"Институт је регистрован као научна државна установа, у складу са Законом о научноистраживачком раду.",
+	},
+	{
+		year: "1999.",
+		title: "Упис у судски регистар",
+		description:
+			"ИТНМС је уписан у судски регистар, уз касније проширење делатности 2003. године.",
+	},
+	{
+		year: "2007.",
+		title: "Прва акредитација",
+		description:
+			"Институт је акредитован за обављање научноистраживачке делатности од општег интереса.",
+	},
+	{
+		year: "2016.",
+		title: "Обнова акредитације",
+		description:
+			"ИТНМС успешно обнавља акредитацију и наставља развој научне, истраживачке и стручне делатности.",
 	},
 ];
 
@@ -61,17 +79,17 @@ const historicalImages = [
 	{
 		src: logo,
 		alt: "Arhivska fotografija Instituta",
-		caption: "Opis fotografije i približna godina nastanka.",
+		caption: "Prva fotografija instituta ",
 	},
 	{
 		src: logo2,
 		alt: "Laboratorija Instituta u ranijem periodu",
-		caption: "Opis laboratorije ili događaja prikazanog na fotografiji.",
+		caption: "Fontana u dvorištu instituta",
 	},
 	{
 		src: logo3,
 		alt: "Zaposleni Instituta na arhivskoj fotografiji",
-		caption: "Opis zaposlenih, događaja ili perioda.",
+		caption: "Fotografija instituta u moderno doba.",
 	},
 ];
 
@@ -148,7 +166,7 @@ export default function HistoryPage() {
 							/>
 
 							<figcaption className="px-5 py-4 text-sm leading-6 bg-white border-t border-stone-200 text-stone-500">
-								Arhivska fotografija Instituta slikana juna 1952. godine.
+								Arhivska fotografija Instituta slikana juna 1948. godine.
 							</figcaption>
 						</figure>
 					</div>
@@ -459,7 +477,7 @@ function TimelineEntry({ item, index }: TimelineEntryProps) {
 	return (
 		<li className="relative md:grid md:grid-cols-[40px_140px_1fr] md:gap-6">
 			<div
-				className="relative z-10 items-center justify-center hidden w-10 h-10 text-xs font-semibold text-white border-4 rounded-full border-stone-50 bg-institute-800 md:flex"
+				className="relative items-center justify-center hidden w-10 h-10 text-xs font-semibold text-white border-4 rounded-full z- border-stone-50 bg-institute-800 md:flex"
 				aria-hidden="true"
 			>
 				{index + 1}

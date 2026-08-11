@@ -3,72 +3,14 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/app/components/Container";
 import { Section } from "@/app/components/Section";
 import { ProjectCard } from "@/app/components/ProjectCard";
+import { getProjects } from "../lib/google-sheets/projectss";
+import { ScientificProjectCard } from "../projekti/naucni/CompactProjectPageContent";
 
-const featuredProjects = [
-	{
-		title: "Razvoj naprednih materijala za održivu preradu mineralnih sirovina",
-		acronym: "MINERAL+",
-		abstract:
-			"Projekat je usmeren na razvoj novih tehnoloških postupaka i materijala koji omogućavaju efikasniju, ekonomičniju i ekološki prihvatljiviju preradu mineralnih sirovina.",
-		projectUrl: "https://projekat.rs",
-		funder: "Fond za nauku Republike Srbije",
-		startDate: "2025.",
-		endDate: "2027.",
-		team: [
-			{
-				name: "Dr Ime Prezime",
-				profileUrl: "/istrazivaci-i-zaposleni/ime-prezime",
-			},
-			{
-				name: "Dr Drugo Prezime",
-				profileUrl: "/istrazivaci-i-zaposleni/drugo-prezime",
-			},
-			{
-				name: "MSc Treće Prezime",
-			},
-		],
-		institutions: [
-			{
-				name: "ITNMS",
-				url: "https://itnms.ac.rs",
-			},
-			{
-				name: "Univerzitet u Beogradu",
-				url: "https://www.bg.ac.rs",
-			},
-		],
-	},
-	{
-		title: "Unapređenje procesa tretmana industrijskog i rudarskog otpada",
-		acronym: "ECO-MINE",
-		abstract:
-			"Cilj projekta je razvoj održivih metoda tretmana industrijskog i rudarskog otpada, izdvajanje korisnih komponenti i smanjenje negativnog uticaja na životnu sredinu.",
-		projectUrl: "https://projekat.rs",
-		funder: "Fond za nauku Republike Srbije",
-		startDate: "2024.",
-		endDate: "2026.",
-		team: [
-			{
-				name: "Dr Primer Istraživač",
-				profileUrl: "/istrazivaci-i-zaposleni/primer-istrazivac",
-			},
-			{
-				name: "Dr Primer Saradnik",
-			},
-		],
-		institutions: [
-			{
-				name: "ITNMS",
-				url: "https://itnms.ac.rs",
-			},
-			{
-				name: "Partnerska naučnoistraživačka organizacija",
-			},
-		],
-	},
-];
-
-export function FeaturedProjectsSection() {
+export async function FeaturedProjectsSection() {
+	//TODO Projekti u toku
+	const projects = (await getProjects())
+		.filter((a) => a.status == "Aktivan")
+		.splice(0, 2);
 	return (
 		<Section background="stone">
 			<Container>
@@ -79,7 +21,7 @@ export function FeaturedProjectsSection() {
 						</p>
 
 						<h2 className="max-w-3xl mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-							Izdvojeni naučnoistraživački projekti
+							Naučnoistraživački projekti koji su u toku
 						</h2>
 
 						<p className="max-w-2xl mt-4 text-base leading-7 text-stone-600">
@@ -101,10 +43,10 @@ export function FeaturedProjectsSection() {
 				</div>
 
 				<div className="mt-12 space-y-8">
-					{featuredProjects.map((project) => (
-						<ProjectCard
-							key={project.acronym}
-							{...project}
+					{projects.map((project, a) => (
+						<ScientificProjectCard
+							key={a}
+							project={project}
 						/>
 					))}
 				</div>

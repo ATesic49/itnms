@@ -25,14 +25,14 @@ export function ContactCtaSection() {
 
 							<div className="flex flex-col gap-3 text-sm mt-7 text-institute-600 sm:flex-row sm:gap-6">
 								<a
-									href="mailto:office@itnms.ac.rs"
+									href="mailto:itnms@itnms.ac.rs"
 									className="inline-flex items-center gap-2 transition hover:text-institute-800"
 								>
 									<Mail
 										className="w-4 h-4"
 										aria-hidden="true"
 									/>
-									office@itnms.ac.rs
+									itnms@itnms.ac.rs
 								</a>
 
 								<a

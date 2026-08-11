@@ -3,12 +3,14 @@ import { ArrowRight, Mail, Phone } from "lucide-react";
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
-
+import Image, { StaticImageData } from "next/image";
+import user from "@/public/imgs/user.png";
+import user1 from "@/public/imgs/user1.png";
 type LeadershipMember = {
 	fullName: string;
 	position: string;
 	scientificTitle?: string;
-	image: string;
+	image: string | StaticImageData;
 	email?: string;
 	phone?: string;
 	profileUrl?: string;
@@ -20,7 +22,7 @@ const leadership: LeadershipMember[] = [
 		fullName: "Ime i prezime",
 		position: "Direktor Instituta",
 		scientificTitle: "Naučni savetnik",
-		image: "/images/zaposleni/direktor.webp",
+		image: user,
 		email: "ime.prezime@itnms.ac.rs",
 		phone: "+381 11 0000 000",
 		profileUrl: "/istrazivaci-i-zaposleni/ime-prezime",
@@ -30,21 +32,21 @@ const leadership: LeadershipMember[] = [
 		fullName: "Ime i prezime",
 		position: "Pomoćnik direktora za nauku",
 		scientificTitle: "Viši naučni saradnik",
-		image: "/images/zaposleni/pomocnik-nauka.webp",
+		image: user1,
 		email: "ime.prezime@itnms.ac.rs",
 		profileUrl: "/istrazivaci-i-zaposleni/ime-prezime-2",
 	},
 	{
 		fullName: "Ime i prezime",
 		position: "Pomoćnik direktora za finansije",
-		image: "/images/zaposleni/pomocnik-finansije.webp",
+		image: user1,
 		email: "ime.prezime@itnms.ac.rs",
 		profileUrl: "/istrazivaci-i-zaposleni/ime-prezime-3",
 	},
 	{
 		fullName: "Ime i prezime",
 		position: "Sekretar Instituta",
-		image: "/images/zaposleni/sekretar.webp",
+		image: user1,
 		email: "ime.prezime@itnms.ac.rs",
 		profileUrl: "/istrazivaci-i-zaposleni/ime-prezime-4",
 	},
@@ -86,10 +88,10 @@ export default function LeadershipPage() {
 						<div className="mt-10 overflow-hidden bg-white border shadow-sm rounded-2xl border-stone-200">
 							<div className="grid lg:grid-cols-[320px_1fr]">
 								<div className="bg-stone-100">
-									<img
+									<Image
 										src={director.image}
 										alt={director.fullName}
-										className="h-full min-h-[380px] w-full object-cover object-top"
+										className="object-cover object-top w-full h-full min-h-95"
 									/>
 								</div>
 
@@ -109,8 +111,7 @@ export default function LeadershipPage() {
 									)}
 
 									<p className="max-w-2xl mt-6 text-base leading-8 text-stone-600">
-										Ovde možete uneti kratak zvanični opis odgovornosti,
-										stručnog iskustva ili uloge direktora u radu Instituta.
+										Opis
 									</p>
 
 									<div className="flex flex-col gap-3 text-sm mt-7 sm:flex-row sm:flex-wrap sm:gap-5">
@@ -195,10 +196,10 @@ function LeadershipCard({ member }: LeadershipCardProps) {
 		<article className="overflow-hidden transition bg-white border shadow-sm group rounded-xl border-stone-200 hover:-translate-y-1 hover:border-institute-300 hover:shadow-md">
 			<div className="grid grid-cols-[120px_1fr]">
 				<div className="bg-stone-100">
-					<img
+					<Image
 						src={member.image}
 						alt={member.fullName}
-						className="h-full min-h-[180px] w-full object-cover object-top"
+						className="object-cover object-top w-full h-full min-h-45"
 					/>
 				</div>
 
