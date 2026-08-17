@@ -9,10 +9,34 @@ import simbol from "@/public/imgs/ITNMS_simbol.png";
 import text from "@/public/imgs/ITNMS_text.png";
 import NavKarta from "./NavKarta";
 import MobileNav from "./MobileNav";
-
+import { usePathname, useRouter } from "next/navigation";
 const Nav = () => {
 	const [open, setOpen] = useState(0);
 	const [searchOpen, setSearchOpen] = useState(false);
+	const pathname = usePathname();
+	const router = useRouter();
+
+	const isEnglish = pathname === "/en" || pathname.startsWith("/en/");
+	function changeLanguage(language: "sr" | "en") {
+		const search = window.location.search;
+		const hash = window.location.hash;
+
+		let newPath = pathname;
+
+		if (language === "en") {
+			if (!isEnglish) {
+				newPath = pathname === "/" ? "/en" : `/en${pathname}`;
+			}
+		}
+
+		if (language === "sr") {
+			if (isEnglish) {
+				newPath = pathname === "/en" ? "/" : pathname.replace(/^\/en/, "");
+			}
+		}
+
+		router.push(`${newPath}${search}${hash}`);
+	}
 	return (
 		<>
 			<div className="sticky top-0 z-50 font-text">
@@ -52,7 +76,7 @@ const Nav = () => {
 									Pretraga
 								</button>
 
-								<div className="flex items-center gap-2">
+								{/* <div className="flex items-center gap-2">
 									<Link
 										href="/"
 										className="font-semibold"
@@ -68,6 +92,33 @@ const Nav = () => {
 									>
 										EN
 									</Link>
+								</div> */}
+								<div className="flex items-center gap-2">
+									<button
+										type="button"
+										onClick={() => changeLanguage("sr")}
+										className={`transition ${
+											!isEnglish
+												? "font-semibold text-white"
+												: "text-institute-200 hover:text-white"
+										}`}
+									>
+										SR
+									</button>
+
+									<span className="text-institute-300">/</span>
+
+									<button
+										type="button"
+										onClick={() => changeLanguage("en")}
+										className={`transition ${
+											isEnglish
+												? "font-semibold text-white"
+												: "text-institute-200 hover:text-white"
+										}`}
+									>
+										EN
+									</button>
 								</div>
 							</div>
 						</div>
