@@ -49,13 +49,13 @@ const aboutSections = [
 		href: "/o-institutu/naucno-vece",
 		icon: Landmark,
 	},
-	{
-		title: "Delatnosti i oblasti rada",
-		description:
-			"Pregled naučnih, razvojnih i stručnih oblasti kojima se Institut bavi.",
-		href: "/o-institutu/delatnosti-i-oblasti-rada",
-		icon: Scale,
-	},
+	// {
+	// 	title: "Delatnosti i oblasti rada",
+	// 	description:
+	// 		"Pregled naučnih, razvojnih i stručnih oblasti kojima se Institut bavi.",
+	// 	href: "/o-institutu/delatnosti-i-oblasti-rada",
+	// 	icon: Scale,
+	// },
 ];
 
 export default function AboutInstitutePage() {

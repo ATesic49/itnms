@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import simbol from "@/public/imgs/ITNMS_simbol.png";
 import text from "@/public/imgs/ITNMS_text.png";
+import SearchOverlay from "./SearchOverlay";
 
 type MobileSection = {
 	title: string;
@@ -129,7 +130,7 @@ const sections: MobileSection[] = [
 export default function MobileNav() {
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [openSection, setOpenSection] = useState<number | null>(null);
-
+	const [searchOpen, setSearchOpen] = useState(false);
 	function closeMenu() {
 		setMenuOpen(false);
 		setOpenSection(null);
@@ -249,6 +250,10 @@ export default function MobileNav() {
 						<div className="pt-6 mt-6 border-t border-stone-200">
 							<button
 								type="button"
+								onClick={() => {
+									setMenuOpen(false);
+									setSearchOpen(true);
+								}}
 								className="flex items-center w-full gap-3 px-4 py-3 text-sm font-medium rounded-lg bg-stone-50 text-stone-700"
 							>
 								<Search className="w-4 h-4" />
@@ -284,6 +289,10 @@ export default function MobileNav() {
 					</nav>
 				</div>
 			)}
+			<SearchOverlay
+				open={searchOpen}
+				onClose={() => setSearchOpen(false)}
+			/>
 		</>
 	);
 }

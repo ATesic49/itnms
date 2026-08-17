@@ -30,10 +30,10 @@ const NavKarta = ({ open }: { open: number }) => {
 				{ ime: "Organizacija", link: "o-institutu/organizacija" },
 				{ ime: "Rukovodstvo", link: "o-institutu/rukovodstvo" },
 				{ ime: "Naučno Veće", link: "o-institutu/naucno-vece" },
-				{
-					ime: "Delatnosti i Oblasti Rada",
-					link: "o-institutu/delatnosti-i-oblasti-rada",
-				},
+				// {
+				// 	ime: "Delatnosti i Oblasti Rada",
+				// 	link: "o-institutu/delatnosti-i-oblasti-rada",
+				// },
 
 				// { ime: "Akta ITNMS-a", link: "akta" },
 			],
@@ -76,10 +76,10 @@ const NavKarta = ({ open }: { open: number }) => {
 		{
 			naslov: "Usluge",
 			linkovi: [
-				{ ime: "Oblasti usluga", link: "usluge/oblasti-usluga" },
-				{ ime: "Laboratorije", link: "usluge/laboratorije" },
-				{ ime: "Oprema", link: "usluge/oprema" },
-				{ ime: "Pošaljite upit", link: "usluge/posaljite-upit" },
+				// { ime: "Oblasti usluga", link: "usluge/oblasti-usluga" },
+				// { ime: "Laboratorije", link: "usluge/laboratorije" },
+				// { ime: "Oprema", link: "usluge/oprema" },
+				// { ime: "Pošaljite upit", link: "usluge/posaljite-upit" },
 			],
 			slika: usluge,
 			text: "Sve naše usluge na jednom mestu",

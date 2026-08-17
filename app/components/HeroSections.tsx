@@ -34,7 +34,7 @@ export function HeroSection() {
 						<div className="flex flex-col gap-3 mt-8 sm:flex-row">
 							<Button>
 								<Link
-									href="/o-institutu/organizacija/organizaciona-sema"
+									href="/o-institutu/organizacija"
 									className="inline-flex items-center justify-center gap-2 font-semibold "
 								>
 									Centri
