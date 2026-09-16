@@ -1,50 +1,43 @@
 import { ArrowRight, Factory, FlaskConical, Recycle } from "lucide-react";
+
 import Link from "next/link";
 
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
 
-const mainActivities = [
-	"Prerada metala hidrometalurškim postupcima",
-	"Prerada sekundarnih sirovina i međuprodukata metalurgije",
-];
+import { getLanguage } from "@/app/lib/language/getLanguage";
+import { getDictionary } from "@/app/lib/language/dictionary";
+import { routeTranslations } from "@/app/lib/language/routes";
 
-const products = [
-	"Proizvodi na bazi kobalta",
-	"Proizvodi na bazi nikla",
-	"Proizvodi na bazi cinka",
-	"Proizvodi na bazi olova",
-	"Proizvodi na bazi bakra",
-];
+export default async function ProductionCenterPage() {
+	const lang = await getLanguage();
+	const dict = await getDictionary(lang);
 
-const recyclingActivities = [
-	"Prerada šljaka i muljeva obojenih metala (Pb, Sn, Cu, Zn, Al i dr.)",
-	"Rafinacija obojenih metala i legura",
-	"Prerada otpadnih rastvora nikla, kobalta, bakra, molibdena i dr.",
-	"Prerada istrošenih Pb i Ni-Cd akumulatora",
-	"Prerada istrošenih Ni, Mo i V katalizatora",
-	"Prerada međuprodukata obojene metalurgije",
-	"Prerada međuprodukata crne metalurgije",
-];
+	const content = dict.productionCentre;
 
-export default function ProductionCenterPage() {
+	const localizeHref = (href: string) => {
+		if (lang === "sr") return href;
+
+		return routeTranslations[href] ?? `/en${href}`;
+	};
+
 	return (
 		<>
 			<PageHeader
-				title="Centar za proizvodnju"
-				description="Izrada soli i oksida metala iz primarnih i sekundarnih sirovina."
+				title={content.pageHeader.title}
+				description={content.pageHeader.description}
 				breadcrumbs={[
 					{
-						label: "O Institutu",
-						href: "/o-institutu",
+						label: content.pageHeader.breadcrumbAbout,
+						href: localizeHref("/o-institutu"),
 					},
 					{
-						label: "Organizacione jedinice",
-						href: "/o-institutu/organizacija",
+						label: content.pageHeader.breadcrumbOrganization,
+						href: localizeHref("/o-institutu/organizacija"),
 					},
 					{
-						label: "Centar za proizvodnju",
+						label: content.pageHeader.breadcrumbCurrent,
 					},
 				]}
 			/>
@@ -55,20 +48,19 @@ export default function ProductionCenterPage() {
 						<main>
 							<section>
 								<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-									Delatnost centra
+									{content.intro.eyebrow}
 								</p>
 
 								<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900">
-									Proizvodnja i prerada
+									{content.intro.title}
 								</h2>
 
 								<p className="max-w-4xl mt-5 text-base leading-8 text-stone-600">
-									Delatnost Centra za eksperimentalnu proizvodnju je izrada soli
-									i oksida metala iz primarnih i sekundarnih sirovina.
+									{content.intro.description}
 								</p>
 
 								<div className="grid gap-4 mt-8 md:grid-cols-2">
-									{mainActivities.map((activity, index) => (
+									{content.intro.mainActivities.map((activity, index) => (
 										<div
 											key={activity}
 											className="flex items-start gap-4 p-5 border rounded-xl border-stone-200 bg-stone-50"
@@ -89,20 +81,16 @@ export default function ProductionCenterPage() {
 								</div>
 							</section>
 
-							<ContentSection title="Prerada metala hidrometalurškim postupcima">
-								<p>
-									Proizvodnja soli i oksida metala tehničkog i p.a. kvaliteta iz
-									primarnih i sekundarnih sirovina obuhvata sledeće grupe
-									proizvoda:
-								</p>
+							<ContentSection title={content.hydrometallurgy.title}>
+								<p>{content.hydrometallurgy.description}</p>
 
 								<div className="grid gap-4 mt-6 sm:grid-cols-2 lg:grid-cols-3">
-									{products.map((product) => (
+									{content.hydrometallurgy.products.map((product) => (
 										<div
 											key={product}
 											className="flex items-center gap-3 p-4 bg-white border rounded-xl border-stone-200"
 										>
-											<div className="flex items-center justify-center rounded-lg w-9 h-9 shrink-0 bg-mineral-100 text-mineral-800">
+											<div className="flex items-center justify-center rounded-lg h-9 w-9 shrink-0 bg-mineral-100 text-mineral-800">
 												<Factory className="w-4 h-4" />
 											</div>
 
@@ -114,56 +102,51 @@ export default function ProductionCenterPage() {
 								</div>
 							</ContentSection>
 
-							<ContentSection title="Prerada sekundarnih sirovina i međuprodukata metalurgije">
-								<p>
-									Delatnost obuhvata preradu različitih sekundarnih sirovina,
-									otpadnih rastvora, istrošenih akumulatora i katalizatora, kao
-									i međuprodukata obojene i crne metalurgije.
-								</p>
+							<ContentSection title={content.recycling.title}>
+								<p>{content.recycling.description}</p>
 
-								<BulletList items={recyclingActivities} />
+								<BulletList items={content.recycling.items} />
 							</ContentSection>
 						</main>
 
 						<aside>
 							<div className="sticky p-6 border top-28 rounded-2xl border-stone-200 bg-stone-50">
 								<p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-500">
-									Centar
+									{content.sidebar.label}
 								</p>
 
 								<h2 className="mt-3 text-xl font-semibold text-stone-900">
-									Centar za proizvodnju
+									{content.sidebar.title}
 								</h2>
 
 								<div className="pt-5 mt-5 border-t border-stone-200">
 									<p className="text-xs font-semibold tracking-wide uppercase text-stone-500">
-										Glavne oblasti
+										{content.sidebar.mainAreas}
 									</p>
 
 									<ul className="mt-3 space-y-3 text-sm leading-6 text-stone-700">
-										<li>Prerada metala hidrometalurškim postupcima</li>
-
-										<li>
-											Prerada sekundarnih sirovina i međuprodukata metalurgije
-										</li>
+										{content.sidebar.areas.map((area) => (
+											<li key={area}>{area}</li>
+										))}
 									</ul>
 								</div>
 
 								<div className="pt-5 mt-5 border-t border-stone-200">
 									<p className="text-xs font-semibold tracking-wide uppercase text-stone-500">
-										Proizvodi
+										{content.sidebar.productsTitle}
 									</p>
 
 									<p className="mt-2 text-sm leading-6 text-stone-600">
-										Soli i oksidi metala tehničkog i p.a. kvaliteta.
+										{content.sidebar.productsDescription}
 									</p>
 								</div>
 
 								<Link
-									href="/o-institutu/organizacija"
+									href={localizeHref("/o-institutu/organizacija")}
 									className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-institute-700 hover:text-institute-900"
 								>
-									Organizaciona šema
+									{content.sidebar.organizationLink}
+
 									<ArrowRight className="w-4 h-4" />
 								</Link>
 							</div>
@@ -195,7 +178,7 @@ function ContentSection({
 	);
 }
 
-function BulletList({ items }: { items: string[] }) {
+function BulletList({ items }: { items: readonly string[] }) {
 	return (
 		<ul className="grid gap-3 mt-5">
 			{items.map((item) => (

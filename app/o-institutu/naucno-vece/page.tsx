@@ -1,22 +1,37 @@
 import { ArrowRight, FileText, Landmark, Users } from "lucide-react";
-//Podsetnik: Moram da nabavim od Sonje Naucno Vece
+
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
 
-export default function ScientificCouncilPage() {
+import { getLanguage } from "@/app/lib/language/getLanguage";
+import { getDictionary } from "@/app/lib/language/dictionary";
+import { routeTranslations } from "@/app/lib/language/routes";
+
+export default async function ScientificCouncilPage() {
+	const lang = await getLanguage();
+	const dict = await getDictionary(lang);
+
+	const content = dict.scientificCouncil;
+
+	const localizeHref = (href: string) => {
+		if (lang === "sr") return href;
+
+		return routeTranslations[href] ?? `/en${href}`;
+	};
+
 	return (
 		<>
 			<PageHeader
-				title="Naučno veće"
-				description="Informacije o sastavu, radu i dokumentima Naučnog veća Instituta."
+				title={content.pageHeader.title}
+				description={content.pageHeader.description}
 				breadcrumbs={[
 					{
-						label: "O institutu",
-						href: "/o-institutu",
+						label: content.pageHeader.breadcrumbAbout,
+						href: localizeHref("/o-institutu"),
 					},
 					{
-						label: "Naučno veće",
+						label: content.pageHeader.breadcrumbCurrent,
 					},
 				]}
 			/>
@@ -25,17 +40,19 @@ export default function ScientificCouncilPage() {
 				<Container>
 					<div className="grid gap-8 lg:grid-cols-2">
 						<ScientificCouncilCard
-							title="Sastav Naučnog veća"
-							description="Pregled predsednika, zamenika, sekretara i članova Naučnog veća Instituta."
-							href="/o-institutu/naucno-vece/sastav"
+							title={content.cards.members.title}
+							description={content.cards.members.description}
+							href={localizeHref("/o-institutu/naucno-vece/sastav")}
 							icon={Users}
+							openPageLabel={content.cards.openPage}
 						/>
 
 						<ScientificCouncilCard
-							title="Zapisnici"
-							description="Zapisnici sa sednica Naučnog veća, razvrstani prema godini i datumu održavanja."
-							href="/o-institutu/naucno-vece/zapisnici"
+							title={content.cards.minutes.title}
+							description={content.cards.minutes.description}
+							href={localizeHref("/o-institutu/naucno-vece/zapisnici")}
 							icon={FileText}
+							openPageLabel={content.cards.openPage}
 						/>
 					</div>
 				</Container>
@@ -57,25 +74,16 @@ export default function ScientificCouncilPage() {
 
 						<div>
 							<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-								Naučno telo Instituta
+								{content.role.eyebrow}
 							</p>
 
 							<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-								Uloga Naučnog veća
+								{content.role.title}
 							</h2>
 
 							<div className="mt-6 space-y-4 text-base leading-8 text-stone-600">
-								<p>
-									Naučno veće je stručno i naučno telo Instituta koje razmatra
-									pitanja od značaja za naučnoistraživački rad, razvoj
-									istraživačkih oblasti i stručno napredovanje zaposlenih.
-								</p>
-
-								<p>
-									Na ovoj stranici dostupni su podaci o članovima Naučnog veća,
-									kao i zapisnici i druga javno dostupna dokumenta vezana za
-									njegov rad.
-								</p>
+								<p>{content.role.paragraph1}</p>
+								<p>{content.role.paragraph2}</p>
 							</div>
 						</div>
 					</div>
@@ -87,20 +95,20 @@ export default function ScientificCouncilPage() {
 					<div className="grid gap-8 rounded-2xl border border-institute-100 bg-white p-8 shadow-sm md:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
 						<div>
 							<h2 className="text-2xl font-semibold tracking-tight text-stone-900 md:text-3xl">
-								Dokumenta Naučnog veća
+								{content.documents.title}
 							</h2>
 
 							<p className="max-w-2xl mt-3 text-base leading-7 text-stone-600">
-								Pored zapisnika sa sednica, druga relevantna akta i dokumenta
-								dostupna su u centralnoj sekciji Dokumenta.
+								{content.documents.description}
 							</p>
 						</div>
 
 						<a
-							href="/dokumenta/naucno-vece"
+							href={localizeHref("/dokumenta/naucno-vece")}
 							className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-white transition rounded-md bg-institute-800 hover:bg-institute-900"
 						>
-							Sva dokumenta
+							{content.documents.button}
+
 							<ArrowRight
 								className="w-4 h-4"
 								aria-hidden="true"
@@ -118,6 +126,7 @@ type ScientificCouncilCardProps = {
 	description: string;
 	href: string;
 	icon: React.ElementType;
+	openPageLabel: string;
 };
 
 function ScientificCouncilCard({
@@ -125,6 +134,7 @@ function ScientificCouncilCard({
 	description,
 	href,
 	icon: Icon,
+	openPageLabel,
 }: ScientificCouncilCardProps) {
 	return (
 		<a
@@ -147,7 +157,8 @@ function ScientificCouncilCard({
 			</p>
 
 			<span className="inline-flex items-center gap-2 pt-8 mt-auto text-sm font-semibold text-institute-700">
-				Otvorite stranicu
+				{openPageLabel}
+
 				<ArrowRight
 					className="w-4 h-4 transition-transform group-hover:translate-x-1"
 					aria-hidden="true"

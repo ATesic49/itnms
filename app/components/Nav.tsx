@@ -1,5 +1,5 @@
 "use client";
-
+import { localizeHref } from "@/app/lib/language/localizeHref";
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,12 @@ import simbol from "@/public/imgs/ITNMS_simbol.png";
 import text from "@/public/imgs/ITNMS_text.png";
 import NavKarta from "./NavKarta";
 import MobileNav from "./MobileNav";
+import { getDictionary, type Language } from "@/app/lib/language/dictionary";
 import { usePathname, useRouter } from "next/navigation";
+import {
+	reverseRouteTranslations,
+	routeTranslations,
+} from "@/app/lib/language/routes";
 const Nav = () => {
 	const [open, setOpen] = useState(0);
 	const [searchOpen, setSearchOpen] = useState(false);
@@ -17,6 +22,31 @@ const Nav = () => {
 	const router = useRouter();
 
 	const isEnglish = pathname === "/en" || pathname.startsWith("/en/");
+	const language: Language = isEnglish ? "en" : "sr";
+
+	const t = getDictionary(language);
+	// function changeLanguage(language: "sr" | "en") {
+	// 	const search = window.location.search;
+	// 	const hash = window.location.hash;
+
+	// 	let newPath = pathname;
+
+	// 	if (language === "en") {
+	// 		if (isEnglish) return;
+
+	// 		newPath = routeTranslations[pathname] ?? `/en${pathname}`;
+	// 	}
+
+	// 	if (language === "sr") {
+	// 		if (!isEnglish) return;
+
+	// 		newPath =
+	// 			reverseRouteTranslations[pathname] ??
+	// 			(pathname.replace(/^\/en/, "") || "/");
+	// 	}
+
+	// 	router.push(`${newPath}${search}${hash}`);
+	// }
 	function changeLanguage(language: "sr" | "en") {
 		const search = window.location.search;
 		const hash = window.location.hash;
@@ -24,18 +54,20 @@ const Nav = () => {
 		let newPath = pathname;
 
 		if (language === "en") {
-			if (!isEnglish) {
-				newPath = pathname === "/" ? "/en" : `/en${pathname}`;
-			}
+			if (isEnglish) return;
+
+			newPath = routeTranslations[pathname] ?? `/en${pathname}`;
 		}
 
 		if (language === "sr") {
-			if (isEnglish) {
-				newPath = pathname === "/en" ? "/" : pathname.replace(/^\/en/, "");
-			}
+			if (!isEnglish) return;
+
+			newPath =
+				reverseRouteTranslations[pathname] ??
+				(pathname.replace(/^\/en/, "") || "/");
 		}
 
-		router.push(`${newPath}${search}${hash}`);
+		window.location.href = `${newPath}${search}${hash}`;
 	}
 	return (
 		<>
@@ -73,7 +105,7 @@ const Nav = () => {
 									aria-label="Pretraži sajt"
 								>
 									<Search className="w-4 h-4" />
-									Pretraga
+									{t.nav.search}
 								</button>
 
 								{/* <div className="flex items-center gap-2">
@@ -97,25 +129,25 @@ const Nav = () => {
 									<button
 										type="button"
 										onClick={() => changeLanguage("sr")}
-										className={`transition ${
+										className={
 											!isEnglish
-												? "font-semibold text-white"
-												: "text-institute-200 hover:text-white"
-										}`}
+												? "font-semibold"
+												: "opacity-60 hover:opacity-100"
+										}
 									>
 										SR
 									</button>
 
-									<span className="text-institute-300">/</span>
+									<span>/</span>
 
 									<button
 										type="button"
 										onClick={() => changeLanguage("en")}
-										className={`transition ${
+										className={
 											isEnglish
-												? "font-semibold text-white"
-												: "text-institute-200 hover:text-white"
-										}`}
+												? "font-semibold"
+												: "opacity-60 hover:opacity-100"
+										}
 									>
 										EN
 									</button>
@@ -137,7 +169,7 @@ const Nav = () => {
 						<div className="flex items-center gap-2">
 							<Link
 								className="w-16"
-								href="/"
+								href={localizeHref("/", isEnglish)}
 							>
 								<Image
 									src={simbol}
@@ -147,7 +179,7 @@ const Nav = () => {
 
 							<Link
 								className="w-26"
-								href="/"
+								href={localizeHref("/", isEnglish)}
 							>
 								<Image
 									src={text}
@@ -161,33 +193,37 @@ const Nav = () => {
 								open ? "text-institute-500" : "text-gray-800"
 							}`}
 						>
-							<NavKarta open={open} />
+							<NavKarta
+								open={open}
+								language={language}
+							/>
 
 							<Link
-								href="/o-institutu"
+								href={localizeHref("/o-institutu", isEnglish)}
 								onMouseOver={() => setOpen(1)}
 								className={`${open == 1 && "text-gray-800"}`}
 							>
-								O Institutu
+								{t.nav.about}
 							</Link>
 
 							<Link
-								href="/istrazivaci-i-zaposleni"
-								className={`${open == 2 && "text-gray-800"}`}
-								onMouseOver={() => setOpen(2)}
+								href={localizeHref("/istrazivaci", isEnglish)}
+								className={"hover:text-gray-800"}
+								onMouseOver={() => setOpen(0)}
 							>
-								Istraživači/Zaposleni
+								{t.nav.employees}
 							</Link>
 
 							<Link
-								href="/projekti"
+								href={localizeHref("/projekti", isEnglish)}
 								className={`${open == 3 && "text-gray-800"}`}
 								onMouseOver={() => setOpen(3)}
 							>
-								Projekti
+								{t.nav.projects}
 							</Link>
 
 							<Link
+								onMouseOver={() => setOpen(0)}
 								target="_blank"
 								className="flex items-start gap-1 hover:text-gray-800"
 								href="https://ritnms.itnms.ac.rs/"
@@ -197,18 +233,19 @@ const Nav = () => {
 							</Link>
 
 							<Link
-								href="/usluge"
+								onMouseOver={() => setOpen(0)}
+								href={localizeHref("/usluge", isEnglish)}
 								// onMouseOver={() => setOpen(4)}
 								className={`${open == 4 && "text-gray-800"} hover:text-gray-800`}
 							>
-								Usluge
+								{t.nav.services}
 							</Link>
 
 							<Link
-								href="/kontakt"
+								href={localizeHref("/kontakt", isEnglish)}
 								className={`${open == 8 && "text-gray-800"} hover:text-gray-800`}
 							>
-								Kontakt
+								{t.nav.contact}
 							</Link>
 						</div>
 					</div>

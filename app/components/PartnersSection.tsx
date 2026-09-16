@@ -1,59 +1,79 @@
 import { ExternalLink } from "lucide-react";
+import Image from "next/image";
+
 import { Container } from "@/app/components/Container";
 import { Section } from "@/app/components/Section";
-import Image from "next/image";
+
 import logo from "@/public/imgs/ITNMS_simbol.png";
-// Podsetnik: Pitati Sonju koji su nam Partneri i za njihove logoe
+
+// Podsetnik: Pitati Sonju koji su nam partneri i za njihove logoe
+
+type PartnersSectionProps = {
+	content: {
+		eyebrow: string;
+		title: string;
+		description: string;
+		openNewWindow: string;
+
+		names: {
+			scienceFund: string;
+			universityBelgrade: string;
+			ministry: string;
+			partnerInstitution: string;
+			industryPartner: string;
+		};
+	};
+};
+
 type Partner = {
 	name: string;
 	logo: string;
 	href: string;
 };
 
-const partners: Partner[] = [
-	{
-		name: "Fond za nauku Republike Srbije",
-		logo: "/images/partneri/fond-za-nauku.webp",
-		href: "https://fondzanauku.gov.rs",
-	},
-	{
-		name: "Univerzitet u Beogradu",
-		logo: "/images/partneri/univerzitet-u-beogradu.webp",
-		href: "https://www.bg.ac.rs",
-	},
-	{
-		name: "Ministarstvo nauke, tehnološkog razvoja i inovacija",
-		logo: "/images/partneri/ministarstvo-nauke.webp",
-		href: "https://nitra.gov.rs",
-	},
-	{
-		name: "Partnerska institucija",
-		logo: "/images/partneri/partner-01.webp",
-		href: "https://example.com",
-	},
-	{
-		name: "Industrijski partner",
-		logo: "/images/partneri/partner-02.webp",
-		href: "https://example.com",
-	},
-];
+export function PartnersSection({ content }: PartnersSectionProps) {
+	const partners: Partner[] = [
+		{
+			name: content.names.scienceFund,
+			logo: "/images/partneri/fond-za-nauku.webp",
+			href: "https://fondzanauku.gov.rs",
+		},
+		{
+			name: content.names.universityBelgrade,
+			logo: "/images/partneri/univerzitet-u-beogradu.webp",
+			href: "https://www.bg.ac.rs",
+		},
+		{
+			name: content.names.ministry,
+			logo: "/images/partneri/ministarstvo-nauke.webp",
+			href: "https://nitra.gov.rs",
+		},
+		{
+			name: content.names.partnerInstitution,
+			logo: "/images/partneri/partner-01.webp",
+			href: "https://example.com",
+		},
+		{
+			name: content.names.industryPartner,
+			logo: "/images/partneri/partner-02.webp",
+			href: "https://example.com",
+		},
+	];
 
-export function PartnersSection() {
 	return (
 		<Section background="stone">
 			<Container>
 				<div className="max-w-3xl mx-auto text-center">
 					<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-						Saradnja
+						{content.eyebrow}
 					</p>
 
 					<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-						Partneri Instituta
+						{content.title}
 					</h2>
 
 					<p className="mt-4 text-base leading-7 text-stone-600">
-						ITNMS sarađuje sa naučnoistraživačkim organizacijama, državnim
-						institucijama, fondovima i partnerima iz industrije.
+						{content.description}
 					</p>
 				</div>
 
@@ -62,6 +82,7 @@ export function PartnersSection() {
 						<PartnerCard
 							key={partner.name}
 							partner={partner}
+							openNewWindow={content.openNewWindow}
 						/>
 					))}
 				</div>
@@ -72,22 +93,23 @@ export function PartnersSection() {
 
 type PartnerCardProps = {
 	partner: Partner;
+	openNewWindow: string;
 };
 
-function PartnerCard({ partner }: PartnerCardProps) {
+function PartnerCard({ partner, openNewWindow }: PartnerCardProps) {
 	return (
 		<a
 			href={partner.href}
 			target="_blank"
 			rel="noreferrer"
-			aria-label={`${partner.name} — otvara se u novom prozoru`}
-			className="group flex min-h-[150px] flex-col items-center justify-center rounded-xl border border-stone-200 bg-white p-5 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-institute-300 hover:shadow-md"
+			aria-label={`${partner.name} — ${openNewWindow}`}
+			className="group flex min-h-37.5 flex-col items-center justify-center rounded-xl border border-stone-200 bg-white p-5 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-institute-300 hover:shadow-md"
 		>
 			<div className="flex items-center justify-center w-full h-16">
 				<Image
 					src={logo}
 					alt=""
-					className="object-contain max-w-full transition duration-200 opacity-75 max-h-14 grayscale group-hover:grayscale-0 group-hover:opacity-100"
+					className="object-contain max-w-full transition duration-200 opacity-75 max-h-14 grayscale group-hover:opacity-100 group-hover:grayscale-0"
 				/>
 			</div>
 

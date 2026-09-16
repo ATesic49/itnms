@@ -19,12 +19,6 @@ const featuredItems = [
 		href: "/usluge/oprema",
 		icon: Microscope,
 	},
-	{
-		title: "Metode i ispitivanja",
-		description: "Pregled metoda, standarda i mogućnosti laboratorijskog rada.",
-		href: "/kvalitet-i-akreditacije/akreditovane-metode",
-		icon: Settings2,
-	},
 ];
 
 export function LabsAndEquipmentSection() {
@@ -36,10 +30,10 @@ export function LabsAndEquipmentSection() {
 						<Image
 							src={slika}
 							alt="Laboratorija Instituta i istraživačka oprema"
-							className="aspect-[4/3] w-full object-cover"
+							className="object-cover w-full aspect-4/3"
 						/>
 
-						<div className="absolute inset-x-0 bottom-0 p-6 pt-24 bg-gradient-to-t from-institute-950/85 via-institute-950/30 to-transparent">
+						<div className="absolute inset-x-0 bottom-0 p-6 pt-24 bg-linear-to-t from-institute-950/85 via-institute-950/30 to-transparent">
 							<p className="max-w-lg text-sm leading-6 text-white">
 								Laboratorijski i tehnološki kapaciteti namenjeni naučnim
 								istraživanjima, razvoju procesa i stručnoj podršci industriji.

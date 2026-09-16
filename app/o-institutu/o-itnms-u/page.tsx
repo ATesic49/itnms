@@ -7,61 +7,67 @@ import {
 	Network,
 	Target,
 } from "lucide-react";
+
+import Image from "next/image";
+
 import slika from "@/public/imgs/IMG_0001.jpg";
+
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
-import Image from "next/image";
 
-const principles = [
-	{
-		title: "Naučnoistraživački rad",
-		description:
-			"Razvoj znanja, metoda i tehnoloških postupaka u oblastima kojima se Institut bavi.",
-		icon: Microscope,
-	},
-	{
-		title: "Primenjena istraživanja",
-		description:
-			"Usmeravanje naučnih rezultata ka praktičnim rešenjima i potrebama privrede.",
-		icon: Lightbulb,
-	},
-	{
-		title: "Saradnja sa industrijom",
-		description:
-			"Stručna podrška kompanijama kroz ispitivanja, razvoj procesa i konsultantske usluge.",
-		icon: Factory,
-	},
-	{
-		title: "Međuinstitucionalna saradnja",
-		description:
-			"Povezivanje sa domaćim i međunarodnim naučnoistraživačkim organizacijama.",
-		icon: Network,
-	},
-];
+import { getLanguage } from "@/app/lib/language/getLanguage";
+import { getDictionary } from "@/app/lib/language/dictionary";
 
-const workAreas = [
-	"Priprema i prerada mineralnih sirovina",
-	"Metalurgija i procesno inženjerstvo",
-	"Materijali i hemijsko inženjerstvo",
-	"Zaštita životne sredine",
-	"Laboratorijska i instrumentalna ispitivanja",
-	"Razvoj i optimizacija tehnoloških procesa",
-];
+export default async function AboutItnmsPage() {
+	const lang = await getLanguage();
+	const dict = await getDictionary(lang);
 
-export default function AboutItnmsPage() {
+	const content = dict.aboutItnms;
+
+	const principles = [
+		{
+			...content.approach.principles.research,
+			icon: Microscope,
+		},
+		{
+			...content.approach.principles.appliedResearch,
+			icon: Lightbulb,
+		},
+		{
+			...content.approach.principles.industry,
+			icon: Factory,
+		},
+		{
+			...content.approach.principles.institutions,
+			icon: Network,
+		},
+	];
+
+	const aboutHref = lang === "en" ? "/en/about-the-institute" : "/o-institutu";
+
+	const workAreasHref =
+		lang === "en"
+			? "/en/about-the-institute/activities-and-fields-of-work"
+			: "/o-institutu/delatnosti-i-oblasti-rada";
+
+	const historyHref =
+		lang === "en"
+			? "/en/about-the-institute/history"
+			: "/o-institutu/istorijat";
+
 	return (
 		<>
 			<PageHeader
-				title="O ITNMS-u"
-				description="Osnovne informacije o Institutu, njegovoj ulozi, delatnostima i načinu povezivanja naučnih istraživanja sa potrebama privrede."
+				title={content.pageHeader.title}
+				description={content.pageHeader.description}
 				breadcrumbs={[
 					{
-						label: "O institutu",
-						href: "/o-institutu",
+						label: content.pageHeader.breadcrumbAbout,
+						href: aboutHref,
 					},
 					{
-						label: "O ITNMS-u",
+						label: content.pageHeader.breadcrumbCurrent,
 					},
 				]}
 			/>
@@ -71,42 +77,25 @@ export default function AboutItnmsPage() {
 					<div className="grid items-start gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
 						<div className="max-w-3xl">
 							<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-								Institut
+								{content.intro.eyebrow}
 							</p>
 
 							<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-								Nauka i tehnologija u službi razvoja
+								{content.intro.title}
 							</h2>
 
 							<div className="mt-6 space-y-5 text-base leading-8 text-stone-600">
-								<p>
-									Institut za tehnologiju nuklearnih i drugih mineralnih
-									sirovina je naučnoistraživačka organizacija koja se bavi
-									razvojem i primenom znanja u oblastima mineralnih sirovina,
-									materijala, metalurgije, hemijskog inženjerstva i zaštite
-									životne sredine.
-								</p>
-
-								<p>
-									Delatnost Instituta obuhvata fundamentalna i primenjena
-									istraživanja, razvoj tehnoloških postupaka, laboratorijska
-									ispitivanja, stručne studije i saradnju sa privredom i drugim
-									naučnoistraživačkim organizacijama.
-								</p>
-
-								<p>
-									Stručni timovi Instituta povezuju naučne rezultate sa
-									konkretnim industrijskim i društvenim potrebama, sa ciljem
-									razvoja efikasnijih, pouzdanijih i održivijih tehnologija.
-								</p>
+								<p>{content.intro.paragraph1}</p>
+								<p>{content.intro.paragraph2}</p>
+								<p>{content.intro.paragraph3}</p>
 							</div>
 						</div>
 
 						<div className="overflow-hidden border shadow-sm rounded-2xl border-stone-200 bg-stone-100">
 							<Image
 								src={slika}
-								alt="Prostor Instituta ITNMS"
-								className="aspect-[4/3] w-full object-cover"
+								alt={content.intro.imageAlt}
+								className="object-cover w-full aspect-4/3"
 							/>
 						</div>
 					</div>
@@ -125,13 +114,11 @@ export default function AboutItnmsPage() {
 							</div>
 
 							<h2 className="mt-6 text-2xl font-semibold tracking-tight text-stone-900">
-								Misija
+								{content.mission.title}
 							</h2>
 
 							<p className="mt-4 text-base leading-8 text-stone-600">
-								Misija Instituta je razvoj naučnih i tehnoloških rešenja,
-								unapređenje stručnih znanja i njihova primena u oblastima od
-								značaja za privredu, industriju i zaštitu životne sredine.
+								{content.mission.description}
 							</p>
 						</div>
 
@@ -144,13 +131,11 @@ export default function AboutItnmsPage() {
 							</div>
 
 							<h2 className="mt-6 text-2xl font-semibold tracking-tight text-stone-900">
-								Vizija
+								{content.vision.title}
 							</h2>
 
 							<p className="mt-4 text-base leading-8 text-stone-600">
-								Vizija Instituta je da bude prepoznat kao pouzdan
-								naučnoistraživački i razvojni partner, sposoban da odgovori na
-								savremene tehnološke, industrijske i ekološke izazove.
+								{content.vision.description}
 							</p>
 						</div>
 					</div>
@@ -161,16 +146,15 @@ export default function AboutItnmsPage() {
 				<Container>
 					<div className="max-w-3xl">
 						<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-							Način rada
+							{content.approach.eyebrow}
 						</p>
 
 						<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-							Nauka povezana sa praktičnom primenom
+							{content.approach.title}
 						</h2>
 
 						<p className="mt-4 text-base leading-7 text-stone-600">
-							Institut kombinuje istraživački rad, laboratorijske kapacitete i
-							saradnju sa privredom kroz nekoliko osnovnih pravaca.
+							{content.approach.description}
 						</p>
 					</div>
 
@@ -209,23 +193,23 @@ export default function AboutItnmsPage() {
 					<div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
 						<div>
 							<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-								Oblasti delovanja
+								{content.workAreas.eyebrow}
 							</p>
 
 							<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-								Glavne naučne i stručne oblasti
+								{content.workAreas.title}
 							</h2>
 
 							<p className="max-w-xl mt-4 text-base leading-7 text-stone-600">
-								Rad Instituta obuhvata povezane oblasti istraživanja,
-								tehnološkog razvoja i stručnih usluga.
+								{content.workAreas.description}
 							</p>
 
 							<a
-								href="/o-institutu/delatnosti-i-oblasti-rada"
+								href={workAreasHref}
 								className="inline-flex items-center gap-2 text-sm font-semibold transition mt-7 text-institute-700 hover:text-institute-900"
 							>
-								Detaljan pregled oblasti rada
+								{content.workAreas.link}
+
 								<ArrowRight
 									className="w-4 h-4"
 									aria-hidden="true"
@@ -235,7 +219,7 @@ export default function AboutItnmsPage() {
 
 						<div className="bg-white border shadow-sm rounded-2xl border-institute-100 p-7 md:p-9">
 							<ul className="grid gap-4 sm:grid-cols-2">
-								{workAreas.map((area) => (
+								{content.workAreas.items.map((area) => (
 									<li
 										key={area}
 										className="flex items-start gap-3 p-4 border rounded-lg border-stone-100 bg-stone-50"
@@ -258,20 +242,20 @@ export default function AboutItnmsPage() {
 					<div className="grid gap-8 rounded-2xl bg-institute-950 p-8 text-white md:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
 						<div>
 							<h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
-								Saznajte više o razvoju Instituta
+								{content.historyCta.title}
 							</h2>
 
 							<p className="max-w-2xl mt-3 text-base leading-7 text-institute-100">
-								Pogledajte istorijat, organizaciju i najvažnije etape razvoja
-								ITNMS-a.
+								{content.historyCta.description}
 							</p>
 						</div>
 
 						<a
-							href="/o-institutu/istorijat"
+							href={historyHref}
 							className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold transition bg-white rounded-md text-institute-950 hover:bg-institute-50"
 						>
-							Istorijat Instituta
+							{content.historyCta.button}
+
 							<ArrowRight
 								className="w-4 h-4"
 								aria-hidden="true"

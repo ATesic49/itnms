@@ -1,5 +1,5 @@
 "use client";
-//Promeni projekte u ono sto oni trebaju biti
+
 import {
 	Building2,
 	CalendarDays,
@@ -10,12 +10,71 @@ import {
 	Users,
 	X,
 } from "lucide-react";
+
 import { useMemo, useState } from "react";
+import Link from "next/link";
 
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
+
 import { Project } from "@/app/types/projects";
+
+import { routeTranslations } from "@/app/lib/language/routes";
+
+type Language = "sr" | "en";
+
+type ScientificProjectsContent = {
+	pageHeader: {
+		title: string;
+		description: string;
+		breadcrumbProjects: string;
+		breadcrumbCurrent: string;
+	};
+
+	filters: {
+		title: string;
+
+		searchLabel: string;
+		searchPlaceholder: string;
+
+		statusLabel: string;
+		allStatuses: string;
+
+		funderLabel: string;
+		allFunders: string;
+
+		clear: string;
+	};
+
+	statuses: {
+		active: string;
+		completed: string;
+	};
+
+	results: {
+		shown: string;
+		projects: string;
+		total: string;
+	};
+
+	card: {
+		abstract: string;
+		team: string;
+		projectLink: string;
+
+		duration: string;
+		funder: string;
+		institutions: string;
+	};
+
+	empty: {
+		title: string;
+		description: string;
+		clear: string;
+	};
+};
+
 type Zaposleni = {
 	ime: string;
 	rukovodilac: boolean;
@@ -45,162 +104,88 @@ export function handleZaposleni(value: string): Zaposleni[] {
 		});
 }
 
-type Institution = {
-	name: string;
-	url?: string;
-};
-
-// type ScientificProject = {
-// 	id: string;
-// 	title: string;
-// 	acronym: string;
-// 	abstract: string;
-// 	projectUrl?: string;
-// 	funder: string;
-// 	program: string;
-// 	startDate: string;
-// 	endDate: string;
-// 	status: "Aktivan" | "Završen";
-// 	team: TeamMember[];
-// 	institutions: Institution[];
-// };
-
-// const projects: ScientificProject[] = [
-// 	{
-// 		id: "mineral-plus",
-// 		title: "Razvoj naprednih materijala za održivu preradu mineralnih sirovina",
-// 		acronym: "MINERAL+",
-// 		abstract:
-// 			"Projekat je usmeren na razvoj novih tehnoloških postupaka i materijala koji omogućavaju efikasniju, ekonomičniju i ekološki prihvatljiviju preradu mineralnih sirovina. Istraživanja obuhvataju karakterizaciju sirovina, laboratorijska ispitivanja i razvoj mogućnosti za buduću industrijsku primenu.",
-// 		projectUrl: "https://example.com/mineral-plus",
-// 		funder: "Fond za nauku Republike Srbije",
-// 		program: "IDEJE",
-// 		startDate: "2025.",
-// 		endDate: "2027.",
-// 		status: "Aktivan",
-// 		team: [
-// 			{
-// 				name: "Dr Ime Prezime",
-// 				profileUrl: "/istrazivaci-i-zaposleni/istrazivaci/ime-prezime",
-// 			},
-// 			{
-// 				name: "Dr Drugo Prezime",
-// 				profileUrl: "/istrazivaci-i-zaposleni/istrazivaci/drugo-prezime",
-// 			},
-// 			{
-// 				name: "MSc Treće Prezime",
-// 			},
-// 		],
-// 		institutions: [
-// 			{
-// 				name: "ITNMS",
-// 				url: "https://itnms.ac.rs",
-// 			},
-// 			{
-// 				name: "Univerzitet u Beogradu",
-// 				url: "https://www.bg.ac.rs",
-// 			},
-// 		],
-// 	},
-// 	{
-// 		id: "eco-mine",
-// 		title: "Unapređenje procesa tretmana industrijskog i rudarskog otpada",
-// 		acronym: "ECO-MINE",
-// 		abstract:
-// 			"Cilj projekta je razvoj održivih postupaka za karakterizaciju i tretman industrijskog i rudarskog otpada. Posebna pažnja posvećena je izdvajaju korisnih komponenti, smanjenju uticaja na životnu sredinu i mogućnostima ponovne upotrebe tretiranih materijala.",
-// 		funder: "Fond za nauku Republike Srbije",
-// 		program: "Dokaz koncepta",
-// 		startDate: "2023.",
-// 		endDate: "2025.",
-// 		status: "Završen",
-// 		team: [
-// 			{
-// 				name: "Dr Primer Istraživač",
-// 			},
-// 			{
-// 				name: "Dr Primer Saradnik",
-// 			},
-// 		],
-// 		institutions: [
-// 			{
-// 				name: "ITNMS",
-// 			},
-// 			{
-// 				name: "Partnerska naučnoistraživačka organizacija",
-// 			},
-// 		],
-// 	},
-// ];
-
-const statuses = ["Aktivan", "Završen"];
-
-// const programs = [...new Set(projects.map((project) => project.program))];
-
-//
+const statuses = ["Aktivan", "Završen"] as const;
 
 export default function ScientificProjectsPage({
 	projectss,
 	title,
+	lang,
+	content,
 }: {
 	projectss: Project[];
 	title?: string;
+	lang: Language;
+	content: ScientificProjectsContent;
 }) {
 	const [query, setQuery] = useState(title || "");
-	const [selectedStatus, setSelectedStatus] = useState("Svi");
-	const [selectedProgram, setSelectedProgram] = useState("Svi");
-	const [selectedFunder, setSelectedFunder] = useState("Svi");
-	const fundera = [...new Set(projectss.map((project) => project.finansijer))];
-	const funders = fundera.filter((value) => value !== undefined);
-	console.log(title, "aa");
 
-	const programs = [...new Set(projectss.map((project) => project.nio))];
+	const [selectedStatus, setSelectedStatus] = useState("");
+
+	const [selectedFunder, setSelectedFunder] = useState("");
+
+	const funders = [
+		...new Set(projectss.map((project) => project.finansijer).filter(Boolean)),
+	];
+
+	const localizeHref = (href: string) => {
+		if (lang === "sr") return href;
+
+		return routeTranslations[href] ?? `/en${href}`;
+	};
+
 	const filteredProjects = useMemo(() => {
-		const normalizedQuery = query.toLocaleLowerCase("sr");
+		const normalizedQuery = normalizeSearch(query);
 
 		return projectss.filter((project) => {
 			const matchesQuery =
-				project.projectName.toLocaleLowerCase("sr").includes(normalizedQuery) ||
-				project.akronim.toLocaleLowerCase("sr").includes(normalizedQuery) ||
-				project.apstrakt.toLocaleLowerCase("sr").includes(normalizedQuery);
+				normalizedQuery === "" ||
+				normalizeSearch(project.projectName).includes(normalizedQuery) ||
+				normalizeSearch(project.akronim).includes(normalizedQuery) ||
+				normalizeSearch(project.apstrakt).includes(normalizedQuery);
 
 			const matchesStatus =
-				selectedStatus === "Svi" || project.status === selectedStatus;
-
-			const matchesProgram =
-				selectedProgram === "Svi" || project.nio === selectedProgram;
+				selectedStatus === "" || project.status === selectedStatus;
 
 			const matchesFunder =
-				selectedFunder === "Svi" || project.finansijer === selectedFunder;
+				selectedFunder === "" || project.finansijer === selectedFunder;
 
-			return matchesQuery && matchesStatus && matchesProgram && matchesFunder;
+			return matchesQuery && matchesStatus && matchesFunder;
 		});
-	}, [query, selectedStatus, selectedProgram, selectedFunder]);
+	}, [projectss, query, selectedStatus, selectedFunder]);
 
 	const filtersActive =
-		query !== "" ||
-		selectedStatus !== "Svi" ||
-		selectedProgram !== "Svi" ||
-		selectedFunder !== "Svi";
+		query !== "" || selectedStatus !== "" || selectedFunder !== "";
 
 	function clearFilters() {
 		setQuery("");
-		setSelectedStatus("Svi");
-		setSelectedProgram("Svi");
-		setSelectedFunder("Svi");
+		setSelectedStatus("");
+		setSelectedFunder("");
+	}
+
+	function getStatusLabel(status: string) {
+		if (status === "Aktivan") {
+			return content.statuses.active;
+		}
+
+		if (status === "Završen") {
+			return content.statuses.completed;
+		}
+
+		return status;
 	}
 
 	return (
 		<>
 			<PageHeader
-				title="Naučni projekti"
-				description="Pregled naučnoistraživačkih projekata, projektnih timova, programa, finansijera i partnerskih institucija."
+				title={content.pageHeader.title}
+				description={content.pageHeader.description}
 				breadcrumbs={[
 					{
-						label: "Projekti",
-						href: "/projekti",
+						label: content.pageHeader.breadcrumbProjects,
+						href: localizeHref("/projekti"),
 					},
 					{
-						label: "Naučni projekti",
+						label: content.pageHeader.breadcrumbCurrent,
 					},
 				]}
 			/>
@@ -213,12 +198,13 @@ export default function ScientificProjectsPage({
 								className="w-4 h-4 text-institute-700"
 								aria-hidden="true"
 							/>
-							Pretraga i filteri
+
+							{content.filters.title}
 						</div>
 
-						<div className="mt-5 grid gap-4 xl:grid-cols-[1fr_180px_220px_280px_auto]">
+						<div className="mt-5 grid gap-4 xl:grid-cols-[1fr_180px_280px_auto]">
 							<label className="relative block">
-								<span className="sr-only">Pretražite projekte</span>
+								<span className="sr-only">{content.filters.searchLabel}</span>
 
 								<Search
 									className="absolute w-4 h-4 -translate-y-1/2 pointer-events-none left-3 top-1/2 text-stone-400"
@@ -229,7 +215,7 @@ export default function ScientificProjectsPage({
 									type="search"
 									value={query}
 									onChange={(event) => setQuery(event.target.value)}
-									placeholder="Naziv, akronim ili pojam"
+									placeholder={content.filters.searchPlaceholder}
 									className="w-full py-3 pl-10 pr-4 text-sm transition bg-white border rounded-md outline-none border-stone-300 text-stone-900 placeholder:text-stone-400 focus:border-institute-500 focus:ring-2 focus:ring-institute-100"
 								/>
 							</label>
@@ -238,49 +224,31 @@ export default function ScientificProjectsPage({
 								value={selectedStatus}
 								onChange={(event) => setSelectedStatus(event.target.value)}
 								className="w-full px-4 py-3 text-sm transition bg-white border rounded-md outline-none border-stone-300 text-stone-800 focus:border-institute-500 focus:ring-2 focus:ring-institute-100"
-								aria-label="Status projekta"
+								aria-label={content.filters.statusLabel}
 							>
-								<option value="Svi">Svi statusi</option>
+								<option value="">{content.filters.allStatuses}</option>
 
-								{statuses.map((status, a) => (
+								{statuses.map((status, i) => (
 									<option
-										key={a}
+										key={i}
 										value={status}
 									>
-										{status}
+										{getStatusLabel(status)}
 									</option>
 								))}
 							</select>
-
-							{/* <select
-								value={selectedProgram}
-								onChange={(event) => setSelectedProgram(event.target.value)}
-								className="w-full px-4 py-3 text-sm transition bg-white border rounded-md outline-none border-stone-300 text-stone-800 focus:border-institute-500 focus:ring-2 focus:ring-institute-100"
-								aria-label="Program"
-							>
-								<option value="Svi">Svi programi</option>
-
-								{programs.map((program, a) => (
-									<option
-										key={a}
-										value={program}
-									>
-										{program}
-									</option>
-								))}
-							</select> */}
 
 							<select
 								value={selectedFunder}
 								onChange={(event) => setSelectedFunder(event.target.value)}
 								className="w-full px-4 py-3 text-sm transition bg-white border rounded-md outline-none border-stone-300 text-stone-800 focus:border-institute-500 focus:ring-2 focus:ring-institute-100"
-								aria-label="Finansijer"
+								aria-label={content.filters.funderLabel}
 							>
-								<option value="Svi">Svi finansijeri</option>
+								<option value="">{content.filters.allFunders}</option>
 
-								{funders.map((funder, a) => (
+								{funders.map((funder, i) => (
 									<option
-										key={a}
+										key={i}
 										value={funder}
 									>
 										{funder}
@@ -298,34 +266,44 @@ export default function ScientificProjectsPage({
 									className="w-4 h-4"
 									aria-hidden="true"
 								/>
-								Poništi
+
+								{content.filters.clear}
 							</button>
 						</div>
 					</div>
 
 					<div className="flex items-center justify-between gap-4 mt-8">
 						<p className="text-sm text-stone-600">
-							Prikazano{" "}
+							{content.results.shown}{" "}
 							<span className="font-semibold text-stone-900">
 								{filteredProjects.length}
 							</span>{" "}
-							projekata
+							{content.results.projects}
 						</p>
 
-						<p className="text-sm text-stone-500">Ukupno: {projectss.length}</p>
+						<p className="text-sm text-stone-500">
+							{content.results.total}: {projectss.length}
+						</p>
 					</div>
 
 					{filteredProjects.length > 0 ? (
 						<div className="mt-6 space-y-8">
-							{filteredProjects.map((project, k) => (
+							{filteredProjects.map((project, index) => (
 								<ScientificProjectCard
-									key={k}
+									key={index}
 									project={project}
+									lang={lang}
+									content={content}
+									localizeHref={localizeHref}
+									statusLabel={getStatusLabel(project.status)}
 								/>
 							))}
 						</div>
 					) : (
-						<EmptyProjectsState onClear={clearFilters} />
+						<EmptyProjectsState
+							onClear={clearFilters}
+							content={content.empty}
+						/>
 					)}
 				</Container>
 			</Section>
@@ -335,20 +313,29 @@ export default function ScientificProjectsPage({
 
 type ScientificProjectCardProps = {
 	project: Project;
+	lang: Language;
+	content: ScientificProjectsContent;
+	localizeHref: (href: string) => string;
+	statusLabel: string;
 };
 
-export function ScientificProjectCard({ project }: ScientificProjectCardProps) {
+function ScientificProjectCard({
+	project,
+	content,
+	localizeHref,
+	statusLabel,
+}: ScientificProjectCardProps) {
 	return (
 		<article className="overflow-hidden transition bg-white border shadow-sm rounded-2xl border-stone-200 hover:border-institute-300 hover:shadow-md">
 			<div className="grid lg:grid-cols-[1fr_300px]">
 				<div className="p-6 md:p-8">
 					<header>
 						<div className="flex flex-wrap items-center gap-3">
-							<span
-								className={` ${project.akronim == "/" ? "hidden" : "inline-flex"} px-3 py-1 text-xs font-semibold tracking-wide uppercase rounded-full bg-institute-50 text-institute-800`}
-							>
-								{project.akronim}
-							</span>
+							{project.akronim !== "/" && (
+								<span className="inline-flex px-3 py-1 text-xs font-semibold tracking-wide uppercase rounded-full bg-institute-50 text-institute-800">
+									{project.akronim}
+								</span>
+							)}
 
 							<span
 								className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
@@ -357,7 +344,7 @@ export function ScientificProjectCard({ project }: ScientificProjectCardProps) {
 										: "bg-stone-100 text-stone-700"
 								}`}
 							>
-								{project.status}
+								{statusLabel}
 							</span>
 
 							<span className="text-sm font-medium text-stone-500">
@@ -372,7 +359,7 @@ export function ScientificProjectCard({ project }: ScientificProjectCardProps) {
 
 					<section className="mt-6">
 						<h3 className="text-sm font-semibold tracking-wide uppercase text-stone-800">
-							Apstrakt projekta
+							{content.card.abstract}
 						</h3>
 
 						<p className="mt-3 text-sm leading-7 text-stone-600 md:text-base">
@@ -388,57 +375,46 @@ export function ScientificProjectCard({ project }: ScientificProjectCardProps) {
 							/>
 
 							<h3 className="text-sm font-semibold tracking-wide uppercase text-stone-800">
-								Tim saradnika
+								{content.card.team}
 							</h3>
 						</div>
 
-						<div className="flex flex-wrap mt-3 gap-x-4 gap-y-4 ">
-							{/* {project.team.map((member) =>
-								member.profileUrl ? (
-									<a
-										key={member.name}
-										href={member.profileUrl}
-										className="text-sm font-medium transition text-institute-700 hover:text-institute-900 hover:underline"
+						<div className="flex flex-wrap mt-3 gap-x-4 gap-y-4">
+							{handleZaposleni(project.timSaradnika).map((member, index) => {
+								const profilePath = `/istrazivaci/${member.ime
+									.replaceAll(" ", "-")
+									.toLowerCase()}`;
+
+								return (
+									<Link
+										key={`${member.ime}-${index}`}
+										href={`${localizeHref(profilePath)}?zaposleni=true`}
+										className="text-sm font-medium hover:underline"
 									>
-										{member.name}
-									</a>
-								) : (
-									<span
-										key={member.name}
-										className="text-sm text-stone-600"
-									>
-										{member.name}
-									</span>
-								),
-							)} */}
-							{handleZaposleni(project.timSaradnika).map((member, i) => (
-								<a
-									key={i}
-									href={
-										"/istrazivaci-i-zaposleni/istrazivaci/" +
-										member.ime.replaceAll(" ", "-").toLowerCase() +
-										"?zaposleni=true"
-									}
-									className="text-sm font-medium transition text-institute- hover:text-institute-00 hover:underline"
-								>
-									<span
-										className={` ${member.rukovodilac ? "text-institute-50  bg-mineral-700" : "text-institute-700 bg-mineral-200"} p-1.5 px-3 rounded-lg  bg-mineral-200`}
-									>
-										{member.ime}
-									</span>
-								</a>
-							))}
+										<span
+											className={`rounded-lg px-3 py-1.5 ${
+												member.rukovodilac
+													? "bg-mineral-700 text-institute-50"
+													: "bg-mineral-200 text-institute-700"
+											}`}
+										>
+											{member.ime}
+										</span>
+									</Link>
+								);
+							})}
 						</div>
 					</section>
 
-					{project.link && project.link != "/" && (
+					{project.link && project.link !== "/" && (
 						<a
 							href={project.link}
 							target="_blank"
 							rel="noreferrer"
 							className="inline-flex items-center gap-2 px-5 py-3 mt-8 text-sm font-semibold text-white transition rounded-md bg-institute-800 hover:bg-institute-900"
 						>
-							Link ka projektu
+							{content.card.projectLink}
+
 							<ExternalLink
 								className="w-4 h-4"
 								aria-hidden="true"
@@ -447,44 +423,26 @@ export function ScientificProjectCard({ project }: ScientificProjectCardProps) {
 					)}
 				</div>
 
-				<aside className="p-6 border-t border-stone-200 bg-stone-50 md:p-8 lg:border-l lg:border-t-0">
+				<aside className="p-6 border-t border-stone-200 bg-stone-50 md:p-8 lg:border-t-0 lg:border-l">
 					<ProjectInfo
 						icon={CalendarDays}
-						label="Period trajanja"
+						label={content.card.duration}
 					>
 						{project.period}
 					</ProjectInfo>
 
 					<ProjectInfo
 						icon={Landmark}
-						label="Finansijer"
+						label={content.card.funder}
 					>
 						{project.finansijer}
 					</ProjectInfo>
 
 					<ProjectInfo
 						icon={Building2}
-						label="NIO učesnici"
+						label={content.card.institutions}
 					>
-						<ul className="space-y-2">
-							{/* {project.institutions.map((institution) => (
-								<li key={institution.name}>
-									{institution.url ? (
-										<a
-											href={institution.url}
-											target="_blank"
-											rel="noreferrer"
-											className="font-medium transition text-institute-700 hover:text-institute-900 hover:underline"
-										>
-											{institution.name}
-										</a>
-									) : (
-										institution.name
-									)}
-								</li>
-							))} */}
-							{project.nio}
-						</ul>
+						{project.nio}
 					</ProjectInfo>
 				</aside>
 			</div>
@@ -517,11 +475,17 @@ function ProjectInfo({ icon: Icon, label, children }: ProjectInfoProps) {
 	);
 }
 
-type EmptyProjectsStateProps = {
+function EmptyProjectsState({
+	onClear,
+	content,
+}: {
 	onClear: () => void;
-};
-
-function EmptyProjectsState({ onClear }: EmptyProjectsStateProps) {
+	content: {
+		title: string;
+		description: string;
+		clear: string;
+	};
+}) {
 	return (
 		<div className="px-6 mt-8 text-center border rounded-2xl border-stone-200 bg-stone-50 py-14">
 			<Search
@@ -530,11 +494,11 @@ function EmptyProjectsState({ onClear }: EmptyProjectsStateProps) {
 			/>
 
 			<h2 className="mt-5 text-2xl font-semibold text-stone-900">
-				Nema pronađenih projekata
+				{content.title}
 			</h2>
 
 			<p className="max-w-lg mx-auto mt-3 text-sm leading-6 text-stone-600">
-				Promenite pojam pretrage ili izaberite druge filtere.
+				{content.description}
 			</p>
 
 			<button
@@ -542,8 +506,17 @@ function EmptyProjectsState({ onClear }: EmptyProjectsStateProps) {
 				onClick={onClear}
 				className="mt-6 rounded-md border border-institute-700 px-5 py-2.5 text-sm font-semibold text-institute-800 transition hover:bg-institute-50"
 			>
-				Poništi sve filtere
+				{content.clear}
 			</button>
 		</div>
 	);
+}
+
+function normalizeSearch(value: string) {
+	return value
+		.toLocaleLowerCase("sr")
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "")
+		.replace(/đ/g, "dj")
+		.trim();
 }

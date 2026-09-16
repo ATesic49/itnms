@@ -55,6 +55,8 @@ import { useEffect, useRef, useState } from "react";
 
 import type { SearchResult, SearchResultType } from "@/app/types/search";
 import { normalizeSearch } from "../lib/search/normalizeSearch";
+import { localizeHref } from "../lib/language/localizeHref";
+import { usePathname } from "next/navigation";
 
 type SearchOverlayProps = {
 	open: boolean;
@@ -407,10 +409,16 @@ function SearchResultItem({
 	onClose: () => void;
 }) {
 	const external = result.href.startsWith("http");
+	const pathname = usePathname();
 
+	const isEnglish = pathname === "/en" || pathname.startsWith("/en/");
 	return (
 		<Link
-			href={result.href}
+			href={
+				result.href.startsWith("http")
+					? result.href
+					: localizeHref(result.href, isEnglish)
+			}
 			target={external ? "_blank" : undefined}
 			rel={external ? "noopener noreferrer" : undefined}
 			onClick={onClose}

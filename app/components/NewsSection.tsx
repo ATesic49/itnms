@@ -216,8 +216,18 @@ import { Container } from "@/app/components/Container";
 import { NewsCard } from "@/app/components/NewsCard";
 import { Section } from "@/app/components/Section";
 import { getNews } from "@/app/lib/getNews";
+type NewsSectionProps = {
+	content: {
+		eyebrow: string;
+		title: string;
+		description: string;
+		allNews: string;
+		readMore: string;
+	};
+	lang: "sr" | "en";
+};
 
-export async function NewsSection() {
+export async function NewsSection({ content }: NewsSectionProps) {
 	const news = await getNews();
 
 	const latestNews = news.slice(0, 3);
@@ -228,16 +238,15 @@ export async function NewsSection() {
 				<div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
 					<div>
 						<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-							Aktuelnosti
+							{content.eyebrow}
 						</p>
 
 						<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-							Vesti i obaveštenja
+							{content.title}
 						</h2>
 
 						<p className="max-w-2xl mt-4 text-base leading-7 text-stone-600">
-							Najnovije informacije o projektima, događajima, konkursima i
-							aktivnostima Instituta.
+							{content.description}
 						</p>
 					</div>
 
@@ -245,7 +254,7 @@ export async function NewsSection() {
 						href="/vesti"
 						className="inline-flex items-center self-start gap-2 text-sm font-semibold transition shrink-0 text-institute-700 hover:text-institute-900 md:self-auto"
 					>
-						Sve vesti i obaveštenja
+						{content.allNews}
 						<ArrowRight
 							className="w-4 h-4"
 							aria-hidden="true"

@@ -2,23 +2,9 @@ import "server-only";
 
 import Papa from "papaparse";
 
-import { researchPositions, type Employee } from "@/app/types/employee";
-import { parse } from "path";
-import { Project } from "@/app/types/projects";
-export function createEmployeeSlug(firstName: string, lastName: string) {
-	return `${firstName}-${lastName}`
-		.toLocaleLowerCase("sr")
-		.normalize("NFD")
-		.replace(/[\u0300-\u036f]/g, "")
-		.replace(/đ/g, "dj")
-		.replace(/[^a-z0-9]+/g, "-")
-		.replace(/^-|-$/g, "");
-}
-export function isResearchPosition(position: string): boolean {
-	return researchPositions.includes(
-		position as (typeof researchPositions)[number],
-	);
-}
+import { type Project } from "@/app/types/projects";
+
+export type ProjectLanguage = "sr" | "en";
 
 type ParsedSheetRow = {
 	"naziv projekta"?: string;
@@ -29,42 +15,115 @@ type ParsedSheetRow = {
 	"nio koje učestvuju"?: string;
 	finansijer?: string;
 	"period trajanja"?: string;
+
 	"naziv projekta[eng]"?: string;
 	"akronim[eng]"?: string;
 	"apstrakt[eng]"?: string;
 	"nio koje ucestvuju[eng]"?: string;
 	"finansijer[eng]"?: string;
-	status: string;
+
+	status?: string;
 };
 
-function normalizeBoolean(value?: string): boolean {
-	const normalizedValue = value?.trim().toLocaleLowerCase("sr");
+function createProjectSlug(projectName: string, acronym: string): string {
+	return `${projectName}-${acronym}`
+		.toLocaleLowerCase("sr")
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "")
+		.replace(/đ/g, "dj")
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-|-$/g, "");
+}
 
-	return ["da", "true", "1", "yes"].includes(normalizedValue ?? "");
+function getLocalizedValue(
+	serbianValue: string | undefined,
+	englishValue: string | undefined,
+	lang: ProjectLanguage,
+): string | undefined {
+	const sr = serbianValue?.trim();
+	const en = englishValue?.trim();
+
+	if (lang === "en") {
+		return en || sr || undefined;
+	}
+
+	return sr || undefined;
 }
-export function isZavrsen(value: string): boolean {
-	return value.includes("-");
-}
-function mapRowToEmployee(row: ParsedSheetRow, index: number): Project | null {
-	const zavrsenLiJe = isZavrsen(row["period trajanja"]?.trim() || "a");
+
+function mapRowToProject(
+	row: ParsedSheetRow,
+	lang: ProjectLanguage,
+): Project | null {
+	const srProjectName = row["naziv projekta"]?.trim() ?? "";
+
+	if (!srProjectName) {
+		return null;
+	}
+
+	const srAcronym = row.akronim?.trim() ?? "";
+
+	const projectName =
+		getLocalizedValue(
+			row["naziv projekta"],
+			row["naziv projekta[eng]"],
+			lang,
+		) ?? srProjectName;
+
+	const akronim =
+		getLocalizedValue(row.akronim, row["akronim[eng]"], lang) ?? "";
+
 	return {
-		projectName: row["naziv projekta"]?.trim() || "Zaposleni",
-		akronim: row.akronim?.trim() || "",
+		projectName,
+
+		akronim,
+
 		timSaradnika: row["tim saradnika iz itnms"]?.trim() || "",
-		apstrakt: row.apstrakt?.trim() || "",
-		status: row.status.trim(),
+
+		apstrakt: getLocalizedValue(row.apstrakt, row["apstrakt[eng]"], lang) ?? "",
+
+		/*
+		 * Status ne prevodimo ovde.
+		 * U Sheet-u ostaje npr. "Aktivan" / "Završen",
+		 * a ProjectPageContent prevodi samo prikaz.
+		 */
+		status: row.status?.trim() || "",
+
 		link: row["link ka projektu"]?.trim() || undefined,
-		nio: row["nio koje učestvuju"]?.trim() || undefined,
-		finansijer: row["finansijer"]?.trim() || undefined,
-		period: row["period trajanja"]?.trim() || undefined,
-		slug: createEmployeeSlug(
-			row["naziv projekta"]?.trim() || "",
-			row.akronim?.trim() || "",
+
+		nio: getLocalizedValue(
+			row["nio koje učestvuju"],
+			row["nio koje ucestvuju[eng]"],
+			lang,
 		),
+
+		finansijer: getLocalizedValue(row.finansijer, row["finansijer[eng]"], lang),
+
+		/*
+		 * Period je isti u oba jezika.
+		 */
+		period: row["period trajanja"]?.trim() || undefined,
+
+		/*
+		 * Slug namerno pravimo od SR vrednosti,
+		 * kako se ne bi menjao kada promenimo jezik.
+		 */
+		slug: createProjectSlug(srProjectName, srAcronym),
 	};
 }
 
-export async function getProjects(): Promise<Project[]> {
+function getStartYear(period?: string): number {
+	if (!period) {
+		return 0;
+	}
+
+	const match = period.match(/\d{4}/);
+
+	return match ? Number(match[0]) : 0;
+}
+
+export async function getProjects(
+	lang: ProjectLanguage = "sr",
+): Promise<Project[]> {
 	const csvUrl = process.env.GOOGLE_SHEETS_PROJECTS_CSV_URL;
 
 	if (!csvUrl) {
@@ -85,25 +144,25 @@ export async function getProjects(): Promise<Project[]> {
 	}
 
 	const csvText = await response.text();
-	// const parsed = Papa.parse(csvText);
-	// console.log("pocetak", parsed.data[0], "text");
-	// console.log(parsed.data[0], "parsed");
-	// return "a";
+
 	const parsed = Papa.parse<ParsedSheetRow>(csvText, {
 		header: true,
 		skipEmptyLines: true,
+
 		transformHeader: (header) => header.trim().toLocaleLowerCase("sr"),
 	});
+
 	if (parsed.errors.length > 0) {
 		console.error("Greške pri obradi Google Sheeta:", parsed.errors);
 
-		throw new Error("Podaci zaposlenih nisu pravilno formatirani.");
+		throw new Error("Podaci projekata nisu pravilno formatirani.");
 	}
-	// console.log(parsed.data);
+
 	return parsed.data
-		.map(mapRowToEmployee)
-		.filter((employee): employee is Project => employee !== null)
-		.sort((first, second) => {
-			return first?.projectName.localeCompare(second?.projectName, "sr");
-		});
+		.map((row) => mapRowToProject(row, lang))
+		.filter((project): project is Project => project !== null)
+		.sort(
+			(first, second) =>
+				getStartYear(second.period) - getStartYear(first.period),
+		);
 }

@@ -27,13 +27,7 @@ const qualitySections = [
 		href: "/kvalitet-i-akreditacije/akreditacije",
 		icon: BadgeCheck,
 	},
-	{
-		title: "Akreditovane metode",
-		description:
-			"Pretraživ pregled akreditovanih metoda ispitivanja prema oblasti, standardu i laboratoriji.",
-		href: "/kvalitet-i-akreditacije/akreditovane-metode",
-		icon: ListChecks,
-	},
+
 	{
 		title: "Sertifikati",
 		description:

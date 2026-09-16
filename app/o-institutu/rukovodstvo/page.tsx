@@ -1,11 +1,18 @@
 import { ArrowRight, Mail, Phone } from "lucide-react";
-// import rukovodstvoSlika1 from '@/app/'
+
+import Image, { StaticImageData } from "next/image";
+
+import user from "@/public/imgs/user.png";
+import user1 from "@/public/imgs/user1.png";
+
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
-import Image, { StaticImageData } from "next/image";
-import user from "@/public/imgs/user.png";
-import user1 from "@/public/imgs/user1.png";
+
+import { getLanguage } from "@/app/lib/language/getLanguage";
+import { getDictionary } from "@/app/lib/language/dictionary";
+import { routeTranslations } from "@/app/lib/language/routes";
+
 type LeadershipMember = {
 	fullName: string;
 	position: string;
@@ -17,57 +24,70 @@ type LeadershipMember = {
 	featured?: boolean;
 };
 
-const leadership: LeadershipMember[] = [
-	{
-		fullName: "Ime i prezime",
-		position: "Direktor Instituta",
-		scientificTitle: "Naučni savetnik",
-		image: user,
-		email: "ime.prezime@itnms.ac.rs",
-		phone: "+381 11 0000 000",
-		profileUrl: "/istrazivaci-i-zaposleni/ime-prezime",
-		featured: true,
-	},
-	{
-		fullName: "Ime i prezime",
-		position: "Pomoćnik direktora za nauku",
-		scientificTitle: "Viši naučni saradnik",
-		image: user1,
-		email: "ime.prezime@itnms.ac.rs",
-		profileUrl: "/istrazivaci-i-zaposleni/ime-prezime-2",
-	},
-	{
-		fullName: "Ime i prezime",
-		position: "Pomoćnik direktora za finansije",
-		image: user1,
-		email: "ime.prezime@itnms.ac.rs",
-		profileUrl: "/istrazivaci-i-zaposleni/ime-prezime-3",
-	},
-	{
-		fullName: "Ime i prezime",
-		position: "Sekretar Instituta",
-		image: user1,
-		email: "ime.prezime@itnms.ac.rs",
-		profileUrl: "/istrazivaci-i-zaposleni/ime-prezime-4",
-	},
-];
+export default async function LeadershipPage() {
+	const lang = await getLanguage();
+	const dict = await getDictionary(lang);
 
-export default function LeadershipPage() {
+	const content = dict.leadership;
+
+	const localizeHref = (href: string) => {
+		if (lang === "sr") return href;
+
+		return routeTranslations[href] ?? `/en${href}`;
+	};
+
+	const leadership: LeadershipMember[] = [
+		{
+			fullName: "Dragan Radulović",
+			position: content.positions.director,
+			scientificTitle: content.scientificTitles.scientificAdviser,
+			image: user,
+			email: "d.radulovic@itnms.ac.rs",
+			profileUrl: localizeHref("/istrazivaci/dragan-radulovic"),
+			featured: true,
+		},
+		{
+			fullName: "Sonja Milićević",
+			position: content.positions.assistantDirector,
+			scientificTitle: content.scientificTitles.scientificAdviser,
+			image: user1,
+			email: "s.milicevic@itnms.ac.rs",
+			profileUrl: localizeHref("/istrazivaci/sonja-milicevic"),
+		},
+		{
+			fullName: "Branislav Marković",
+			position: content.positions.assistantDirector,
+			scientificTitle: content.scientificTitles.scientificAdviser,
+			image: user1,
+			email: "b.markovic@itnms.ac.rs",
+			profileUrl: localizeHref("/istrazivaci/branislav-markovic"),
+		},
+		{
+			fullName: "Jovica Stojanović",
+			position: content.positions.assistantDirector,
+			scientificTitle: content.scientificTitles.scientificAdviser,
+			image: user1,
+			email: "j.stojanovic@itnms.ac.rs",
+			profileUrl: localizeHref("/istrazivaci/jovica-stojanovic"),
+		},
+	];
+
 	const director = leadership.find((member) => member.featured);
+
 	const otherMembers = leadership.filter((member) => !member.featured);
 
 	return (
 		<>
 			<PageHeader
-				title="Rukovodstvo"
-				description="Pregled rukovodstva Instituta i odgovornih lica zaduženih za upravljanje naučnim, stručnim i administrativnim poslovima."
+				title={content.pageHeader.title}
+				description={content.pageHeader.description}
 				breadcrumbs={[
 					{
-						label: "O institutu",
-						href: "/o-institutu",
+						label: content.pageHeader.breadcrumbAbout,
+						href: localizeHref("/o-institutu"),
 					},
 					{
-						label: "Rukovodstvo",
+						label: content.pageHeader.breadcrumbCurrent,
 					},
 				]}
 			/>
@@ -77,11 +97,11 @@ export default function LeadershipPage() {
 					<Container>
 						<div className="max-w-3xl">
 							<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-								Direktor Instituta
+								{content.directorSection.eyebrow}
 							</p>
 
 							<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-								Upravljanje i razvoj Instituta
+								{content.directorSection.title}
 							</h2>
 						</div>
 
@@ -111,7 +131,7 @@ export default function LeadershipPage() {
 									)}
 
 									<p className="max-w-2xl mt-6 text-base leading-8 text-stone-600">
-										Opis
+										{content.directorSection.description}
 									</p>
 
 									<div className="flex flex-col gap-3 text-sm mt-7 sm:flex-row sm:flex-wrap sm:gap-5">
@@ -124,6 +144,7 @@ export default function LeadershipPage() {
 													className="w-4 h-4"
 													aria-hidden="true"
 												/>
+
 												{director.email}
 											</a>
 										)}
@@ -137,6 +158,7 @@ export default function LeadershipPage() {
 													className="w-4 h-4"
 													aria-hidden="true"
 												/>
+
 												{director.phone}
 											</a>
 										)}
@@ -147,7 +169,8 @@ export default function LeadershipPage() {
 											href={director.profileUrl}
 											className="inline-flex items-center self-start gap-2 mt-8 text-sm font-semibold transition text-institute-700 hover:text-institute-900"
 										>
-											Pogledajte profil
+											{content.directorSection.viewProfile}
+
 											<ArrowRight
 												className="w-4 h-4"
 												aria-hidden="true"
@@ -165,19 +188,20 @@ export default function LeadershipPage() {
 				<Container>
 					<div className="max-w-3xl">
 						<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-							Ostali članovi rukovodstva
+							{content.otherMembersSection.eyebrow}
 						</p>
 
 						<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-							Stručna i operativna podrška upravljanju
+							{content.otherMembersSection.title}
 						</h2>
 					</div>
 
 					<div className="grid gap-6 mt-10 md:grid-cols-2 xl:grid-cols-3">
 						{otherMembers.map((member) => (
 							<LeadershipCard
-								key={member.profileUrl ?? member.fullName}
+								key={member.fullName}
 								member={member}
+								profileLabel={content.profile}
 							/>
 						))}
 					</div>
@@ -189,9 +213,10 @@ export default function LeadershipPage() {
 
 type LeadershipCardProps = {
 	member: LeadershipMember;
+	profileLabel: string;
 };
 
-function LeadershipCard({ member }: LeadershipCardProps) {
+function LeadershipCard({ member, profileLabel }: LeadershipCardProps) {
 	return (
 		<article className="overflow-hidden transition bg-white border shadow-sm group rounded-xl border-stone-200 hover:-translate-y-1 hover:border-institute-300 hover:shadow-md">
 			<div className="grid grid-cols-[120px_1fr]">
@@ -227,6 +252,7 @@ function LeadershipCard({ member }: LeadershipCardProps) {
 								className="w-4 h-4"
 								aria-hidden="true"
 							/>
+
 							{member.email}
 						</a>
 					)}
@@ -236,7 +262,8 @@ function LeadershipCard({ member }: LeadershipCardProps) {
 							href={member.profileUrl}
 							className="inline-flex items-center gap-2 pt-5 mt-auto text-sm font-semibold text-institute-700"
 						>
-							Profil
+							{profileLabel}
+
 							<ArrowRight
 								className="w-4 h-4 transition-transform group-hover:translate-x-1"
 								aria-hidden="true"

@@ -4,69 +4,92 @@ import {
 	History,
 	Landmark,
 	Network,
-	Scale,
 	Users,
 } from "lucide-react";
+
+import Image from "next/image";
+
 import slika from "@/public/imgs/IMG_9906.jpg";
+
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
-import Image from "next/image";
 
-const aboutSections = [
-	{
-		title: "O ITNMS-u",
-		description:
-			"Osnovne informacije o Institutu, njegovoj ulozi, misiji i naučnoistraživačkim delatnostima.",
-		href: "/o-institutu/o-itnms-u",
-		icon: Building2,
-	},
-	{
-		title: "Istorijat",
-		description:
-			"Razvoj Instituta od osnivanja do danas i najvažnije etape njegovog rada.",
-		href: "/o-institutu/istorijat",
-		icon: History,
-	},
-	{
-		title: "Organizacija",
-		description:
-			"Organizaciona šema, sektori, laboratorije i druge organizacione jedinice.",
-		href: "/o-institutu/organizacija",
-		icon: Network,
-	},
-	{
-		title: "Rukovodstvo",
-		description:
-			"Pregled rukovodstva Instituta i odgovornih lica organizacionih jedinica.",
-		href: "/o-institutu/rukovodstvo",
-		icon: Users,
-	},
-	{
-		title: "Naučno veće",
-		description:
-			"Sastav Naučnog veća, zapisnici sa sednica i prateća dokumentacija.",
-		href: "/o-institutu/naucno-vece",
-		icon: Landmark,
-	},
-	// {
-	// 	title: "Delatnosti i oblasti rada",
-	// 	description:
-	// 		"Pregled naučnih, razvojnih i stručnih oblasti kojima se Institut bavi.",
-	// 	href: "/o-institutu/delatnosti-i-oblasti-rada",
-	// 	icon: Scale,
-	// },
-];
+import { getLanguage } from "@/app/lib/language/getLanguage";
+import { getDictionary } from "../lib/language/dictionary";
 
-export default function AboutInstitutePage() {
+export default async function AboutInstitutePage() {
+	const lang = await getLanguage();
+	const dict = await getDictionary(lang);
+
+	const content = dict.about;
+
+	const aboutSections = [
+		{
+			title: content.structure.sections.about.title,
+			description: content.structure.sections.about.description,
+			href:
+				lang === "en"
+					? "/en/about-the-institute/about-itnms"
+					: "/o-institutu/o-itnms-u",
+			icon: Building2,
+		},
+		{
+			title: content.structure.sections.history.title,
+			description: content.structure.sections.history.description,
+			href:
+				lang === "en"
+					? "/en/about-the-institute/history"
+					: "/o-institutu/istorijat",
+			icon: History,
+		},
+		{
+			title: content.structure.sections.organization.title,
+			description: content.structure.sections.organization.description,
+			href:
+				lang === "en"
+					? "/en/about-the-institute/organization"
+					: "/o-institutu/organizacija",
+			icon: Network,
+		},
+		{
+			title: content.structure.sections.management.title,
+			description: content.structure.sections.management.description,
+			href:
+				lang === "en"
+					? "/en/about-the-institute/management"
+					: "/o-institutu/rukovodstvo",
+			icon: Users,
+		},
+		{
+			title: content.structure.sections.scientificCouncil.title,
+			description: content.structure.sections.scientificCouncil.description,
+			href:
+				lang === "en"
+					? "/en/about-the-institute/scientific-council"
+					: "/o-institutu/naucno-vece",
+			icon: Landmark,
+		},
+	];
+
+	const aboutHref =
+		lang === "en"
+			? "/en/about-the-institute/about-itnms"
+			: "/o-institutu/o-itnms-u";
+
+	const researchersHref =
+		lang === "en"
+			? "/en/researchers-and-employees/researchers"
+			: "/istrazivaci-i-zaposleni/istrazivaci";
+
 	return (
 		<>
 			<PageHeader
-				title="O institutu"
-				description="Institut za tehnologiju nuklearnih i drugih mineralnih sirovina bavi se naučnoistraživačkim radom, razvojem tehnologija i stručnim uslugama za potrebe nauke i industrije."
+				title={content.pageHeader.title}
+				description={content.pageHeader.description}
 				breadcrumbs={[
 					{
-						label: "O institutu",
+						label: content.pageHeader.breadcrumb,
 					},
 				]}
 			/>
@@ -76,30 +99,27 @@ export default function AboutInstitutePage() {
 					<div className="grid items-center gap-12 lg:grid-cols-[1fr_0.95fr] lg:gap-16">
 						<div>
 							<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-								O ITNMS-u
+								{content.intro.eyebrow}
 							</p>
 
 							<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-								Naučnoistraživačka institucija sa dugom tradicijom
+								{content.intro.title}
 							</h2>
 
 							<p className="mt-5 text-base leading-8 text-stone-600">
-								ITNMS razvija znanja, metode i tehnološka rešenja u oblastima
-								mineralnih sirovina, materijala, metalurgije, hemijskog
-								inženjerstva i zaštite životne sredine.
+								{content.intro.paragraph1}
 							</p>
 
 							<p className="mt-4 text-base leading-8 text-stone-600">
-								Institut povezuje fundamentalna i primenjena istraživanja sa
-								potrebama privrede, državnih institucija i domaćih i
-								međunarodnih partnera.
+								{content.intro.paragraph2}
 							</p>
 
 							<a
-								href="/o-institutu/o-itnms-u"
+								href={aboutHref}
 								className="inline-flex items-center gap-2 text-sm font-semibold transition mt-7 text-institute-700 hover:text-institute-900"
 							>
-								Pročitajte više o Institutu
+								{content.intro.readMore}
+
 								<ArrowRight
 									className="w-4 h-4"
 									aria-hidden="true"
@@ -111,8 +131,8 @@ export default function AboutInstitutePage() {
 							<Image
 								loading="eager"
 								src={slika}
-								alt="Zgrada Instituta ITNMS"
-								className="aspect-[4/3] w-full object-cover"
+								alt={content.intro.imageAlt}
+								className="object-cover w-full aspect-4/3"
 							/>
 						</div>
 					</div>
@@ -123,16 +143,15 @@ export default function AboutInstitutePage() {
 				<Container>
 					<div className="max-w-3xl">
 						<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-							Struktura Instituta
+							{content.structure.eyebrow}
 						</p>
 
 						<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-							Informacije o radu i organizaciji
+							{content.structure.title}
 						</h2>
 
 						<p className="mt-4 text-base leading-7 text-stone-600">
-							Izaberite oblast da biste saznali više o istorijatu, organizaciji,
-							rukovodstvu i naučnim telima Instituta.
+							{content.structure.description}
 						</p>
 					</div>
 
@@ -144,7 +163,7 @@ export default function AboutInstitutePage() {
 								<a
 									key={item.href}
 									href={item.href}
-									className="group flex min-h-[245px] flex-col rounded-xl border border-stone-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-institute-300 hover:shadow-md"
+									className="group flex min-h-61.25 flex-col rounded-xl border border-stone-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-institute-300 hover:shadow-md"
 								>
 									<div className="flex items-center justify-center w-12 h-12 transition rounded-lg bg-institute-50 text-institute-800 group-hover:bg-institute-800 group-hover:text-white">
 										<Icon
@@ -162,7 +181,7 @@ export default function AboutInstitutePage() {
 									</p>
 
 									<span className="pt-6 mt-auto text-sm font-semibold text-institute-700">
-										Otvorite stranicu →
+										{content.structure.openPage}
 									</span>
 								</a>
 							);
@@ -176,20 +195,20 @@ export default function AboutInstitutePage() {
 					<div className="grid gap-8 rounded-2xl border border-institute-100 bg-white p-8 md:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
 						<div>
 							<h2 className="text-2xl font-semibold tracking-tight text-stone-900 md:text-3xl">
-								Upoznajte istraživačke timove Instituta
+								{content.researchersCta.title}
 							</h2>
 
 							<p className="max-w-2xl mt-3 text-base leading-7 text-stone-600">
-								Pogledajte profile zaposlenih, naučna zvanja, oblasti
-								interesovanja i projekte na kojima učestvuju.
+								{content.researchersCta.description}
 							</p>
 						</div>
 
 						<a
-							href="/istrazivaci-i-zaposleni"
+							href={researchersHref}
 							className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-white transition rounded-md bg-institute-800 hover:bg-institute-900"
 						>
-							Istraživači i zaposleni
+							{content.researchersCta.button}
+
 							<ArrowRight
 								className="w-4 h-4"
 								aria-hidden="true"

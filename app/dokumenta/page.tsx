@@ -21,13 +21,7 @@ const documentCategories = [
 		href: "/dokumenta/akta",
 		icon: Gavel,
 	},
-	{
-		title: "Pravilnici",
-		description:
-			"Interni pravilnici kojima se uređuju procedure, odgovornosti i pojedine oblasti rada Instituta.",
-		href: "/dokumenta/pravilnici",
-		icon: FileCog,
-	},
+
 	{
 		title: "Izveštaji",
 		description:

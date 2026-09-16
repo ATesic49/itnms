@@ -4,6 +4,10 @@ import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
 
+import { getLanguage } from "@/app/lib/language/getLanguage";
+import { getDictionary } from "@/app/lib/language/dictionary";
+import { routeTranslations } from "@/app/lib/language/routes";
+
 type CouncilMember = {
 	fullName: string;
 	role?: string;
@@ -12,70 +16,94 @@ type CouncilMember = {
 	profileUrl?: string;
 };
 
-const leadership: CouncilMember[] = [
-	{
-		fullName: "Ime i prezime",
-		role: "Predsednik Naučnog veća",
-		scientificTitle: "Naučni savetnik",
-		email: "ime.prezime@itnms.ac.rs",
-		profileUrl: "/istrazivaci-i-zaposleni/ime-prezime",
-	},
-	{
-		fullName: "Ime i prezime",
-		role: "Zamenik predsednika",
-		scientificTitle: "Viši naučni saradnik",
-		email: "ime.prezime@itnms.ac.rs",
-		profileUrl: "/istrazivaci-i-zaposleni/ime-prezime-2",
-	},
-	{
-		fullName: "Ime i prezime",
-		role: "Sekretar Naučnog veća",
-		scientificTitle: "Naučni saradnik",
-		email: "ime.prezime@itnms.ac.rs",
-		profileUrl: "/istrazivaci-i-zaposleni/ime-prezime-3",
-	},
-];
+export default async function ScientificCouncilMembersPage() {
+	const lang = await getLanguage();
+	const dict = await getDictionary(lang);
 
-const members: CouncilMember[] = [
-	{
-		fullName: "Ime i prezime",
-		scientificTitle: "Naučni savetnik",
-		profileUrl: "/istrazivaci-i-zaposleni/clan-1",
-	},
-	{
-		fullName: "Ime i prezime",
-		scientificTitle: "Viši naučni saradnik",
-		profileUrl: "/istrazivaci-i-zaposleni/clan-2",
-	},
-	{
-		fullName: "Ime i prezime",
-		scientificTitle: "Naučni saradnik",
-		profileUrl: "/istrazivaci-i-zaposleni/clan-3",
-	},
-	{
-		fullName: "Ime i prezime",
-		scientificTitle: "Istraživač saradnik",
-		profileUrl: "/istrazivaci-i-zaposleni/clan-4",
-	},
-];
+	const content = dict.scientificCouncilMembers;
 
-export default function ScientificCouncilMembersPage() {
+	const localizeHref = (href: string) => {
+		if (lang === "sr") return href;
+
+		return routeTranslations[href] ?? `/en${href}`;
+	};
+
+	const leadership: CouncilMember[] = [
+		{
+			fullName: "Jovica Stojanović",
+			role: content.roles.president,
+			scientificTitle: content.scientificTitles.scientificAdviser,
+			email: "j.stojanovic@itnms.ac.rs",
+			profileUrl: localizeHref("/istrazivaci/jovica-stojanovic"),
+		},
+		{
+			fullName: "Branislav Marković",
+			role: content.roles.deputyPresident,
+			scientificTitle: content.scientificTitles.scientificAdviser,
+			email: "b.markovic@itnms.ac.rs",
+			profileUrl: localizeHref("/istrazivaci/branislav-markovic"),
+		},
+	];
+
+	const members: CouncilMember[] = [
+		{
+			fullName: "Dragan Radulović",
+			profileUrl: localizeHref("/istrazivaci/dragan-radulovic"),
+			scientificTitle: content.scientificTitles.scientificAdviser,
+		},
+		{
+			fullName: "Miroslav Sokić",
+			profileUrl: localizeHref("/istrazivaci/miroslav-sokic"),
+			scientificTitle: content.scientificTitles.scientificAdviser,
+		},
+		{
+			fullName: "Srđan Matijašević",
+			profileUrl: localizeHref("/istrazivaci/srdjan-matijasevic"),
+			scientificTitle: content.scientificTitles.scientificAdviser,
+		},
+		{
+			fullName: "Slavica Mihajlović",
+			profileUrl: localizeHref("/istrazivaci/slavica-mihajlovic"),
+			scientificTitle: content.scientificTitles.scientificAdviser,
+		},
+		{
+			fullName: "Jelena Petrović",
+			profileUrl: localizeHref("/istrazivaci/jelena-petrovic"),
+			scientificTitle: content.scientificTitles.seniorResearchAssociate,
+		},
+		{
+			fullName: "Tatjana Šoštarić",
+			profileUrl: localizeHref("/istrazivaci/tatjana-sostaric"),
+			scientificTitle: content.scientificTitles.seniorResearchAssociate,
+		},
+		{
+			fullName: "Aleksandar Jovanović",
+			profileUrl: localizeHref("/istrazivaci/aleksandar-jovanovic"),
+			scientificTitle: content.scientificTitles.researchAssociate,
+		},
+		{
+			fullName: "Ana Radosavljević Mihajlović",
+			profileUrl: localizeHref("/istrazivaci/ana-radosavljevic-mihajlovic"),
+			scientificTitle: content.scientificTitles.scientificAdviser,
+		},
+	];
+
 	return (
 		<>
 			<PageHeader
-				title="Sastav Naučnog veća"
-				description="Pregled predsednika, zamenika, sekretara i članova Naučnog veća Instituta."
+				title={content.pageHeader.title}
+				description={content.pageHeader.description}
 				breadcrumbs={[
 					{
-						label: "O institutu",
-						href: "/o-institutu",
+						label: content.pageHeader.breadcrumbAbout,
+						href: localizeHref("/o-institutu"),
 					},
 					{
-						label: "Naučno veće",
-						href: "/o-institutu/naucno-vece",
+						label: content.pageHeader.breadcrumbCouncil,
+						href: localizeHref("/o-institutu/naucno-vece"),
 					},
 					{
-						label: "Sastav",
+						label: content.pageHeader.breadcrumbCurrent,
 					},
 				]}
 			/>
@@ -84,19 +112,20 @@ export default function ScientificCouncilMembersPage() {
 				<Container>
 					<div className="max-w-3xl">
 						<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-							Rukovodstvo Naučnog veća
+							{content.leadershipSection.eyebrow}
 						</p>
 
 						<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-							Predsednik, zamenik i sekretar
+							{content.leadershipSection.title}
 						</h2>
 					</div>
 
-					<div className="grid gap-6 mt-10 md:grid-cols-2 xl:grid-cols-3">
+					<div className="grid gap-6 mt-10 md:grid-cols-2 xl:grid-cols-2">
 						{leadership.map((member) => (
 							<CouncilLeadershipCard
 								key={member.role}
 								member={member}
+								viewProfileLabel={content.viewProfile}
 							/>
 						))}
 					</div>
@@ -108,24 +137,27 @@ export default function ScientificCouncilMembersPage() {
 					<div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
 						<div>
 							<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
-								Članovi
+								{content.membersSection.eyebrow}
 							</p>
 
 							<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-								Članovi Naučnog veća
+								{content.membersSection.title}
 							</h2>
 						</div>
 
 						<p className="text-sm text-stone-500">
-							Ukupno članova: {members.length + leadership.length}
+							{content.membersSection.totalMembers}:{" "}
+							{members.length + leadership.length}
 						</p>
 					</div>
 
 					<div className="mt-10 overflow-hidden bg-white border shadow-sm rounded-xl border-stone-200">
 						<div className="hidden grid-cols-[1fr_280px_160px] border-b border-stone-200 bg-stone-50 px-6 py-4 text-xs font-semibold uppercase tracking-wide text-stone-500 md:grid">
-							<span>Ime i prezime</span>
-							<span>Naučno zvanje</span>
-							<span>Profil</span>
+							<span>{content.table.fullName}</span>
+
+							<span>{content.table.scientificTitle}</span>
+
+							<span>{content.table.profile}</span>
 						</div>
 
 						<div className="divide-y divide-stone-200">
@@ -133,6 +165,8 @@ export default function ScientificCouncilMembersPage() {
 								<CouncilMemberRow
 									key={member.profileUrl ?? member.fullName}
 									member={member}
+									openProfileLabel={content.openProfile}
+									notAvailableLabel={content.notAvailable}
 								/>
 							))}
 						</div>
@@ -145,9 +179,13 @@ export default function ScientificCouncilMembersPage() {
 
 type CouncilLeadershipCardProps = {
 	member: CouncilMember;
+	viewProfileLabel: string;
 };
 
-function CouncilLeadershipCard({ member }: CouncilLeadershipCardProps) {
+function CouncilLeadershipCard({
+	member,
+	viewProfileLabel,
+}: CouncilLeadershipCardProps) {
 	return (
 		<article className="bg-white border shadow-sm rounded-xl border-stone-200 p-7">
 			<div className="flex items-center justify-center w-12 h-12 rounded-lg bg-institute-50 text-institute-800">
@@ -178,6 +216,7 @@ function CouncilLeadershipCard({ member }: CouncilLeadershipCardProps) {
 						className="w-4 h-4"
 						aria-hidden="true"
 					/>
+
 					{member.email}
 				</a>
 			)}
@@ -187,7 +226,7 @@ function CouncilLeadershipCard({ member }: CouncilLeadershipCardProps) {
 					href={member.profileUrl}
 					className="block mt-6 text-sm font-semibold transition text-institute-700 hover:text-institute-900"
 				>
-					Pogledajte profil →
+					{viewProfileLabel}
 				</a>
 			)}
 		</article>
@@ -196,9 +235,15 @@ function CouncilLeadershipCard({ member }: CouncilLeadershipCardProps) {
 
 type CouncilMemberRowProps = {
 	member: CouncilMember;
+	openProfileLabel: string;
+	notAvailableLabel: string;
 };
 
-function CouncilMemberRow({ member }: CouncilMemberRowProps) {
+function CouncilMemberRow({
+	member,
+	openProfileLabel,
+	notAvailableLabel,
+}: CouncilMemberRowProps) {
 	return (
 		<div className="grid gap-3 px-6 py-5 md:grid-cols-[1fr_280px_160px] md:items-center">
 			<div>
@@ -213,10 +258,10 @@ function CouncilMemberRow({ member }: CouncilMemberRowProps) {
 						href={member.profileUrl}
 						className="text-sm font-semibold transition text-institute-700 hover:text-institute-900"
 					>
-						Otvori profil
+						{openProfileLabel}
 					</a>
 				) : (
-					<span className="text-sm text-stone-400">Nije dostupan</span>
+					<span className="text-sm text-stone-400">{notAvailableLabel}</span>
 				)}
 			</div>
 		</div>

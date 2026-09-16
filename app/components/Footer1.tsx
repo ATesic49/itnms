@@ -1,75 +1,155 @@
 import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
+
+import Image from "next/image";
+
 import logo from "@/public/imgs/ITNMS_simbol.png";
 import text from "@/public/imgs/ITNMS_text.png";
-import Image from "next/image";
-const quickLinks = [
-	{ label: "O institutu", href: "/o-institutu" },
-	{
-		label: "Istraživači i zaposleni",
-		href: "/istrazivaci-i-zaposleni",
-	},
-	{ label: "Naučni projekti", href: "/projekti/naucni" },
-	{ label: "Usluge", href: "/usluge" },
-	{ label: "Laboratorije", href: "/usluge/laboratorije" },
-	{ label: "Oprema", href: "/usluge/oprema" },
-];
 
-const documentLinks = [
-	{ label: "Akta Instituta", href: "/dokumenta/akta" },
-	{ label: "Pravilnici", href: "/dokumenta/pravilnici" },
-	{ label: "Izveštaji", href: "/dokumenta/izvestaji" },
-	{
-		label: "Akreditacije",
-		href: "/kvalitet-i-akreditacije/akreditacije",
-	},
-	{
-		label: "Akreditovane metode",
-		href: "/kvalitet-i-akreditacije/akreditovane-metode",
-	},
-	{
-		label: "Dokumenta Naučnog veća",
-		href: "/dokumenta/naucno-vece",
-	},
-];
+type FooterProps = {
+	content: {
+		instituteName: string;
+		description: string;
+		repository: string;
 
-export default function Footer() {
+		quickLinksTitle: string;
+
+		quickLinks: {
+			about: string;
+			researchers: string;
+			projects: string;
+			services: string;
+			laboratories: string;
+		};
+
+		documentsTitle: string;
+
+		documents: {
+			acts: string;
+			reports: string;
+			accreditations: string;
+			scientificCouncil: string;
+		};
+
+		contactTitle: string;
+		allContactDetails: string;
+
+		address: {
+			street: string;
+			city: string;
+		};
+
+		copyright: string;
+
+		privacyPolicy: string;
+		cookiePolicy: string;
+		accessibility: string;
+
+		homeAriaLabel: string;
+	};
+
+	lang: "sr" | "en";
+};
+
+export default function Footer({ content, lang }: FooterProps) {
 	const currentYear = new Date().getFullYear();
+
+	const quickLinks = [
+		{
+			label: content.quickLinks.about,
+			href: lang === "en" ? "/en/about-the-institute" : "/o-institutu",
+		},
+		{
+			label: content.quickLinks.researchers,
+			href:
+				lang === "en"
+					? "/en/researchers-and-employees/researchers"
+					: "/istrazivaci-i-zaposleni/istrazivaci",
+		},
+		{
+			label: content.quickLinks.projects,
+			href: lang === "en" ? "/en/projects/scientific" : "/projekti/naucni",
+		},
+		{
+			label: content.quickLinks.services,
+			href: lang === "en" ? "/en/services" : "/usluge",
+		},
+		{
+			label: content.quickLinks.laboratories,
+			href:
+				lang === "en"
+					? "/en/about-the-institute/centres/central-laboratory"
+					: "/o-institutu/centri/centralna-laboratorija",
+		},
+	];
+
+	const documentLinks = [
+		{
+			label: content.documents.acts,
+			href: lang === "en" ? "/en/documents/acts" : "/dokumenta/akta",
+		},
+		{
+			label: content.documents.reports,
+			href: lang === "en" ? "/en/documents/reports" : "/dokumenta/izvestaji",
+		},
+		{
+			label: content.documents.accreditations,
+			href:
+				lang === "en"
+					? "/en/quality-and-accreditation/accreditations"
+					: "/kvalitet-i-akreditacije/akreditacije",
+		},
+		{
+			label: content.documents.scientificCouncil,
+			href:
+				lang === "en"
+					? "/en/documents/scientific-council"
+					: "/dokumenta/naucno-vece",
+		},
+	];
+
+	const homeHref = lang === "en" ? "/en" : "/";
+
+	const contactHref = lang === "en" ? "/en/contact" : "/kontakt";
+
+	const privacyHref =
+		lang === "en" ? "/en/privacy-policy" : "/politika-privatnosti";
+
+	const cookieHref = lang === "en" ? "/en/cookie-policy" : "/politika-kolacica";
+
+	const accessibilityHref =
+		lang === "en" ? "/en/accessibility" : "/pristupacnost";
 
 	return (
 		<footer className="bg-institute-950 text-stone-300">
 			<div className="px-6 py-16 mx-auto max-w-7xl lg:px-8 lg:py-20">
 				<div className="grid gap-12 md:grid-cols-2 xl:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
-					{/* Institut */}
 					<div>
 						<a
-							href="/"
+							href={homeHref}
 							className="inline-flex items-center gap-3"
-							aria-label="ITNMS početna stranica"
+							aria-label={content.homeAriaLabel}
 						>
 							<Image
 								alt="ITNMS"
 								src={logo}
 								className="w-16"
-							></Image>
+							/>
 
 							<div>
 								<Image
 									alt="ITNMS"
 									src={text}
-									className="object-cover w-16 text-xl font-semibold text-white"
+									className="object-cover w-16"
 								/>
 
-								<p className="mt-1 text-xs leading-5 max-2-70 text-stone-400">
-									Institut za tehnologiju nuklearnih i drugih mineralnih
-									sirovina
+								<p className="mt-1 text-xs leading-5 max-w-70 text-stone-400">
+									{content.instituteName}
 								</p>
 							</div>
 						</a>
 
 						<p className="max-w-md mt-6 text-sm leading-7 text-stone-400">
-							Naučnoistraživački rad, razvoj tehnologija i stručne usluge u
-							oblasti mineralnih sirovina, materijala, metalurgije i zaštite
-							životne sredine.
+							{content.description}
 						</p>
 
 						<a
@@ -78,7 +158,8 @@ export default function Footer() {
 							rel="noreferrer"
 							className="inline-flex items-center gap-2 mt-6 text-sm font-semibold transition text-institute-200 hover:text-white"
 						>
-							Digitalni repozitorijum
+							{content.repository}
+
 							<ExternalLink
 								className="w-4 h-4"
 								aria-hidden="true"
@@ -86,8 +167,7 @@ export default function Footer() {
 						</a>
 					</div>
 
-					{/* Brzi linkovi */}
-					<FooterColumn title="Brzi linkovi">
+					<FooterColumn title={content.quickLinksTitle}>
 						{quickLinks.map((link) => (
 							<FooterLink
 								key={link.href}
@@ -96,8 +176,7 @@ export default function Footer() {
 						))}
 					</FooterColumn>
 
-					{/* Dokumenta */}
-					<FooterColumn title="Dokumenta i kvalitet">
+					<FooterColumn title={content.documentsTitle}>
 						{documentLinks.map((link) => (
 							<FooterLink
 								key={link.href}
@@ -106,10 +185,9 @@ export default function Footer() {
 						))}
 					</FooterColumn>
 
-					{/* Kontakt */}
 					<div>
 						<h2 className="text-sm font-semibold tracking-wider text-white uppercase">
-							Kontakt
+							{content.contactTitle}
 						</h2>
 
 						<address className="mt-6 space-y-5 not-italic">
@@ -125,9 +203,9 @@ export default function Footer() {
 								/>
 
 								<span>
-									Bulevar Franše d’Eperea 86
+									{content.address.street}
 									<br />
-									11000 Beograd, Srbija
+									{content.address.city}
 								</span>
 							</a>
 
@@ -155,40 +233,41 @@ export default function Footer() {
 						</address>
 
 						<a
-							href="/kontakt"
+							href={contactHref}
 							className="mt-7 inline-flex rounded-md border border-institute-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-institute-400 hover:bg-institute-900"
 						>
-							Svi kontakt podaci
+							{content.allContactDetails}
 						</a>
 					</div>
 				</div>
 			</div>
 
-			{/* Donja traka */}
 			<div className="border-t border-white/10">
 				<div className="flex flex-col gap-4 px-6 py-6 mx-auto text-xs max-w-7xl text-stone-400 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-					<p>© {currentYear} ITNMS. Sva prava zadržana.</p>
+					<p>
+						© {currentYear} ITNMS. {content.copyright}
+					</p>
 
 					<div className="flex flex-wrap gap-x-6 gap-y-2">
 						<a
-							href="/politika-privatnosti"
+							href={privacyHref}
 							className="transition hover:text-white"
 						>
-							Politika privatnosti
+							{content.privacyPolicy}
 						</a>
 
 						<a
-							href="/politika-kolacica"
+							href={cookieHref}
 							className="transition hover:text-white"
 						>
-							Politika kolačića
+							{content.cookiePolicy}
 						</a>
 
 						<a
-							href="/pristupacnost"
+							href={accessibilityHref}
 							className="transition hover:text-white"
 						>
-							Pristupačnost
+							{content.accessibility}
 						</a>
 					</div>
 				</div>

@@ -8,28 +8,36 @@ import zaposleni from "@/public/imgs/IMG_9917.jpg";
 import projekti from "@/public/imgs/IMG_9987.jpg";
 import usluge from "@/public/imgs/IMG_0083.jpg";
 import kvalitet from "@/public/imgs/IMG_0090.jpg";
-const NavKarta = ({ open }: { open: number }) => {
+import { localizeHref } from "../lib/language/localizeHref";
+import { usePathname } from "next/navigation";
+import { getDictionary, Language } from "../lib/language/dictionary";
+const NavKarta = ({ open, language }: { open: number; language: Language }) => {
+	const pathname = usePathname();
+	const isEnglish = pathname === "/en" || pathname.startsWith("/en/");
+	const t = getDictionary(language);
 	const kontent = [
 		{
-			naslov: "Institut sa bogatom istorijom",
+			naslov: t.nav.aboutMenu.naslov,
 			linkovi: [
-				{ ime: "Istorijat", link: "istorijat" },
-				{ ime: "O ITNMS-u", link: "o-itnmsu" },
-				{ ime: "Organizacija", link: "organizaciona-sema" },
-				{ ime: "Organizacija", link: "organizaciona-sema" },
+				{ ime: t.nav.aboutMenu.history, link: "istorijat" },
+				{ ime: t.nav.aboutMenu.aboutItNms, link: "o-itnmsu" },
+				{ ime: t.nav.aboutMenu.organization, link: "organizaciona-sema" },
 				{ ime: "Akta ITNMS-a", link: "akta" },
 			],
 			slika: logo,
 			text: "Lorem Ipsum dolor sit amet",
 		},
 		{
-			naslov: "Institut sa bogatom istorijom",
+			naslov: t.nav.aboutMenu.naslov,
 			linkovi: [
-				{ ime: "Istorijat", link: "o-institutu/istorijat" },
-				{ ime: "O ITNMS-u", link: "o-institutu/o-itnms-u" },
-				{ ime: "Organizacija", link: "o-institutu/organizacija" },
-				{ ime: "Rukovodstvo", link: "o-institutu/rukovodstvo" },
-				{ ime: "Naučno Veće", link: "o-institutu/naucno-vece" },
+				{ ime: t.nav.aboutMenu.history, link: "o-institutu/istorijat" },
+				{ ime: t.nav.aboutMenu.aboutItNms, link: "o-institutu/o-itnms-u" },
+				{ ime: t.nav.aboutMenu.organization, link: "o-institutu/organizacija" },
+				{ ime: t.nav.aboutMenu.management, link: "o-institutu/rukovodstvo" },
+				{
+					ime: t.nav.aboutMenu.scientificCouncil,
+					link: "o-institutu/naucno-vece",
+				},
 				// {
 				// 	ime: "Delatnosti i Oblasti Rada",
 				// 	link: "o-institutu/delatnosti-i-oblasti-rada",
@@ -41,28 +49,25 @@ const NavKarta = ({ open }: { open: number }) => {
 			text: "Institut star preko 100 godina...",
 		},
 		{
-			naslov: "Ljudi koji znanje pretvaraju u rezultate.",
+			naslov: t.nav.employeesMenu.naslov,
 			linkovi: [
 				// { ime: "Svi zaposleni", link: "istrazivaci-i-zaposleni/svi-zaposleni" },
 				{
-					ime: "Spisak Istraživača",
-					link: "istrazivaci-i-zaposleni/istrazivaci",
+					ime: t.nav.employeesMenu.researchers,
+					link: "istrazivaci",
 				},
-				{
-					ime: "Rukovodstvo",
-					link: "istrazivaci-i-zaposleni/rukovodstvo",
-				},
+
 				// { ime: "Pretraži zaposlenog", link: "pretrazi-zaposlenog" },
 			],
 			slika: zaposleni,
 			text: "Istražite naš tim",
 		},
 		{
-			naslov: "Svi naši projekti na jednom mestu",
+			naslov: t.nav.projectsMenu.naslov,
 			linkovi: [
-				{ ime: "Naučni projekti", link: "projekti/naucni" },
+				{ ime: t.nav.projectsMenu.scientific, link: "projekti/naucni" },
 				{
-					ime: "Industrijski projekti",
+					ime: t.nav.projectsMenu.industrial,
 					link: "projekti/industrijski-projekti",
 				},
 				// { ime: "Fond za nauku", link: "projekti/fond-za-nauku" },
@@ -92,10 +97,7 @@ const NavKarta = ({ open }: { open: number }) => {
 					link: "kvalitet-i-akreditacije/sistem-kvaliteta",
 				},
 				{ ime: "Akreditacije", link: "kvalitet-i-akreditacije/akreditacije" },
-				{
-					ime: "Akreditovane metode",
-					link: "kvalitet-i-akreditacije/akreditovane-metode",
-				},
+
 				{
 					ime: "Sertifikati",
 					link: "kvalitet-i-akreditacije/sertifikati",
@@ -134,7 +136,7 @@ const NavKarta = ({ open }: { open: number }) => {
 							return (
 								<Link
 									key={index}
-									href={`/${li.link}`}
+									href={localizeHref("/" + li.link, isEnglish)}
 									className="cursor-pointer hover:underline"
 								>
 									{li.ime}

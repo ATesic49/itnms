@@ -53,13 +53,8 @@ export const searchPages: SearchPage[] = [
 	},
 
 	{
-		title: "Istraživači i zaposleni",
-		href: "/istrazivaci-i-zaposleni",
-	},
-
-	{
 		title: "Istraživači",
-		href: "/istrazivaci-i-zaposleni/istrazivaci",
+		href: "/istrazivaci",
 	},
 
 	{
@@ -115,11 +110,6 @@ export const searchPages: SearchPage[] = [
 	{
 		title: "Akreditacije",
 		href: "/kvalitet-i-akreditacije/akreditacije",
-	},
-
-	{
-		title: "Akreditovane metode",
-		href: "/kvalitet-i-akreditacije/akreditovane-metode",
 	},
 
 	{

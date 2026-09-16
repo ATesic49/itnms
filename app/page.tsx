@@ -13,7 +13,12 @@ import { LabsAndEquipmentSection } from "./components/LabsAndEquipmentSection";
 import { NewsSection } from "./components/NewsSection";
 import { PartnersSection } from "./components/PartnersSection";
 import { ContactCtaSection } from "./components/ContactCtaSection";
-export default function Home() {
+import { headers } from "next/headers";
+import { getDictionary } from "./lib/language/dictionary";
+export default async function Home() {
+	const headersList = await headers();
+	const lang = headersList.get("x-site-language") === "en" ? "en" : "sr";
+	const dict = await getDictionary(lang);
 	return (
 		<div className="flex flex-col items-center justify-center w-full gap-16 ">
 			{/* <div className="relative w-full">
@@ -34,16 +39,25 @@ export default function Home() {
 					className="object-cover object-bottom w-full max-h-screen"
 				></Image>
 			</div> */}
-			<HeroSection></HeroSection>
-			<NewsSection />
+			<HeroSection lang={lang} />
+			<NewsSection
+				content={dict.home.news}
+				lang={lang}
+			/>
+			<FeaturedProjectsSection
+				content={dict.home.featuredProjects}
+				lang={lang}
+			/>
+			<ContactCtaSection
+				content={dict.home.contact}
+				lang={lang}
+			/>
+			<PartnersSection content={dict.home.partners} />
 			{/* //Akta instituta */}
 			{/* <InstituteStatsSection /> */}
-			<FeaturedProjectsSection />
 			{/* <ServicesSection /> */}
 			{/* <LabsAndEquipmentSection /> */}
 			{/* <ResearchAreasSection /> */}
-			<ContactCtaSection />
-			<PartnersSection />
 			{/* <Vesti></Vesti> */}
 		</div>
 	);

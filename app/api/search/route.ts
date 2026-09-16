@@ -35,7 +35,7 @@ export async function GET() {
 
 			description: employee.naucnoZvanje || employee.position || "Istraživač",
 
-			href: `/istrazivaci-i-zaposleni/istrazivaci/${employee.slug}`,
+			href: `/istrazivaci/${employee.slug}`,
 
 			searchText: [
 				employee.firstName,

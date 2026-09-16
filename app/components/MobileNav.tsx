@@ -4,7 +4,8 @@ import { ChevronDown, ExternalLink, Menu, Search, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
+import { usePathname } from "next/navigation";
+import { localizeHref } from "@/app/lib/language/localizeHref";
 import simbol from "@/public/imgs/ITNMS_simbol.png";
 import text from "@/public/imgs/ITNMS_text.png";
 import SearchOverlay from "./SearchOverlay";
@@ -51,17 +52,7 @@ const sections: MobileSection[] = [
 	},
 	{
 		title: "Istraživači / Zaposleni",
-		href: "/istrazivaci-i-zaposleni",
-		links: [
-			{
-				name: "Spisak istraživača",
-				href: "/istrazivaci-i-zaposleni/istrazivaci",
-			},
-			{
-				name: "Rukovodstvo",
-				href: "/istrazivaci-i-zaposleni/rukovodstvo",
-			},
-		],
+		href: "/istrazivaci",
 	},
 	{
 		title: "Projekti",
@@ -111,10 +102,7 @@ const sections: MobileSection[] = [
 				name: "Akreditacije",
 				href: "/kvalitet-i-akreditacije/akreditacije",
 			},
-			{
-				name: "Akreditovane metode",
-				href: "/kvalitet-i-akreditacije/akreditovane-metode",
-			},
+
 			{
 				name: "Sertifikati",
 				href: "/kvalitet-i-akreditacije/sertifikati",
@@ -139,7 +127,9 @@ export default function MobileNav() {
 	function toggleSection(index: number) {
 		setOpenSection((current) => (current === index ? null : index));
 	}
+	const pathname = usePathname();
 
+	const isEnglish = pathname === "/en" || pathname.startsWith("/en/");
 	return (
 		<>
 			<header className="flex items-center justify-between px-4 py-3 bg-white border-b border-stone-200">
@@ -271,13 +261,13 @@ export default function MobileNav() {
 
 								<span className="text-stone-300">|</span>
 
-								<Link
+								<a
 									href="/en"
 									onClick={closeMenu}
 									className="text-stone-500"
 								>
 									EN
-								</Link>
+								</a>
 							</div>
 
 							<div className="flex flex-col gap-2 pt-5 mt-5 text-sm border-t border-stone-200 text-stone-600">

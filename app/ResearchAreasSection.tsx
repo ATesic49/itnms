@@ -84,7 +84,7 @@ export function ResearchAreasSection() {
 							<a
 								key={area.href}
 								href={area.href}
-								className="group flex min-h-[250px] flex-col rounded-xl border border-stone-200 bg-white p-7 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-institute-300 hover:shadow-md"
+								className="group flex min-h-62.5 flex-col rounded-xl border border-stone-200 bg-white p-7 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-institute-300 hover:shadow-md"
 							>
 								<div className="flex items-center justify-center w-12 h-12 transition rounded-lg bg-institute-50 text-institute-800 group-hover:bg-institute-800 group-hover:text-white">
 									<Icon
