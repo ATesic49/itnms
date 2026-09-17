@@ -2,6 +2,7 @@ import { ArrowRight, Mail, Phone } from "lucide-react";
 
 import { Container } from "@/app/components/Container";
 import { Section } from "./Section";
+import Link from "next/link";
 
 type ContactCtaSectionProps = {
 	content: {
@@ -39,7 +40,7 @@ export function ContactCtaSection({ content, lang }: ContactCtaSectionProps) {
 							</p>
 
 							<div className="flex flex-col gap-3 text-sm mt-7 text-institute-600 sm:flex-row sm:gap-6">
-								<a
+								<Link
 									href="mailto:itnms@itnms.ac.rs"
 									className="inline-flex items-center gap-2 transition hover:text-institute-800"
 								>
@@ -48,9 +49,9 @@ export function ContactCtaSection({ content, lang }: ContactCtaSectionProps) {
 										aria-hidden="true"
 									/>
 									itnms@itnms.ac.rs
-								</a>
+								</Link>
 
-								<a
+								<Link
 									href="tel:+381113691722"
 									className="inline-flex items-center gap-2 transition hover:text-institute-800"
 								>
@@ -59,12 +60,12 @@ export function ContactCtaSection({ content, lang }: ContactCtaSectionProps) {
 										aria-hidden="true"
 									/>
 									+381 11 3691 722
-								</a>
+								</Link>
 							</div>
 						</div>
 
 						<div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-							<a
+							<Link
 								href={inquiryHref}
 								className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-white transition border rounded-md bg-institute-800 hover:bg-institute-900"
 							>
@@ -74,14 +75,14 @@ export function ContactCtaSection({ content, lang }: ContactCtaSectionProps) {
 									className="w-4 h-4"
 									aria-hidden="true"
 								/>
-							</a>
+							</Link>
 
-							<a
+							<Link
 								href={contactHref}
 								className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold transition border rounded-md border-institute-400/40 text-institute-600 hover:border-institute-900 hover:bg-white/10"
 							>
 								{content.contactDetails}
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>

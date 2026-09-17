@@ -22,7 +22,6 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 								className="w-4 h-4 text-mineral-700"
 								aria-hidden="true"
 							/>
-
 							{isEnglish
 								? "Science, development and industry collaboration"
 								: "Nauka, razvoj i saradnja sa privredom"}
@@ -51,7 +50,6 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 									className="inline-flex items-center justify-center gap-2 font-semibold"
 								>
 									{isEnglish ? "Research centres" : "Centri"}
-
 									<ArrowRight
 										className="w-4 h-4"
 										aria-hidden="true"
@@ -61,15 +59,10 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 
 							<Button tip={2}>
 								<Link
-									href={
-										isEnglish
-											? "/en/researchers-and-employees/researchers"
-											: "/istrazivaci-i-zaposleni/istrazivaci"
-									}
+									href={isEnglish ? "/en/researchers" : "/istrazivaci"}
 									className="inline-flex items-center justify-center gap-2 font-semibold"
 								>
 									{isEnglish ? "Researchers" : "Istraživači"}
-
 									<ArrowRight
 										className="w-4 h-4"
 										aria-hidden="true"
@@ -78,17 +71,15 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 							</Button>
 						</div>
 
-						<dl className="grid max-w-xl grid-cols-7 gap-6 pt-8 mt-10 border-t border-stone-200 sm:grid-cols-5">
+						<dl className="grid max-w-xl grid-cols-3 gap-6 pt-8 mt-10 border-t border-stone-200 sm:grid-cols-5">
 							<HeroStat
 								value="75+"
 								label={isEnglish ? "Years of experience" : "Godina iskustva"}
 							/>
-
 							<HeroStat
 								value="40+"
 								label={isEnglish ? "Researchers" : "Istraživača"}
 							/>
-
 							<HeroStat
 								value="2400+"
 								label={
@@ -97,7 +88,6 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 										: "Broj naučnih publikacija"
 								}
 							/>
-
 							<HeroStat
 								value="800+"
 								label={
@@ -106,7 +96,6 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 										: "Broj naučnih publikacija na SCI listi"
 								}
 							/>
-
 							<HeroStat
 								value="15%"
 								label={
@@ -120,7 +109,7 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 						<div className="absolute w-32 h-32 rounded-full -left-6 -top-6 bg-mineral-100 blur-3xl" />
 						<div className="absolute w-40 h-40 rounded-full -bottom-10 -right-8 bg-institute-100 blur-3xl" />
 
-						<div className="relative overflow-hidden border shadow-lg mb-36 rounded-2xl border-stone-200 bg-stone-100">
+						<div className="relative overflow-hidden border shadow-lg mb-36 rounded-2xl border-stone-200 bg-stone-100 aspect-[4/3]">
 							<Image
 								src={hero2}
 								alt={
@@ -129,6 +118,10 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 										: "Istraživači ITNMS-a tokom rada u laboratoriji"
 								}
 								className="object-cover w-full h-full"
+								sizes="(min-width: 1024px) 44vw, 100vw"
+								width={1024}
+								height={720}
+								placeholder="blur"
 							/>
 
 							<div className="absolute inset-x-0 bottom-0 p-6 pt-20 bg-linear-to-t from-institute-950/80 via-institute-950/30 to-transparent">
@@ -155,7 +148,6 @@ function HeroStat({ value, label }: HeroStatProps) {
 	return (
 		<div>
 			<dt className="text-sm leading-5 text-institute-400">{label}</dt>
-
 			<dd className="mt-1 text-2xl font-semibold text-mineral-800">{value}</dd>
 		</div>
 	);

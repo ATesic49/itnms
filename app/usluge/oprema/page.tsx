@@ -272,6 +272,7 @@ function EquipmentCard({ item }: EquipmentCardProps) {
 			<div className="grid sm:grid-cols-[220px_1fr]">
 				<div className="flex items-center justify-center p-4 overflow-hidden min-h-60 bg-stone-100">
 					<Image
+						sizes="(min-width: 1024px) 50vw, 100vw"
 						src={item.image}
 						alt={item.name}
 						className="h-full max-h-62.5  w-full object-cover"

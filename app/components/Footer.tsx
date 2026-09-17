@@ -93,6 +93,7 @@ const Footer = ({ content, lang }: FooterProps) => {
 						className="w-fit"
 					>
 						<Image
+							sizes="(min-width: 1024px) 50vw, 100vw"
 							className="w-48 brightness-200"
 							src={logo}
 							alt="ITNMS"

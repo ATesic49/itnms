@@ -8,7 +8,7 @@ const Button = ({
 	href,
 }: {
 	children: React.ReactNode;
-	tip?: Number;
+	tip?: number;
 	href?: Url;
 }) => {
 	if (tip == 1) {

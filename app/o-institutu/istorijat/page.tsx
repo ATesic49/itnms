@@ -126,6 +126,7 @@ export default async function HistoryPage() {
 
 						<figure className="overflow-hidden border shadow-sm rounded-2xl border-stone-200 bg-stone-100">
 							<Image
+								sizes="(min-width: 1024px) 50vw, 100vw"
 								src={archiveImage}
 								alt={content.intro.imageAlt}
 								className="object-cover w-full aspect-video"
@@ -200,6 +201,7 @@ export default async function HistoryPage() {
 											className="overflow-hidden bg-white border shadow-sm rounded-xl border-institute-100"
 										>
 											<Image
+												sizes="(min-width: 1024px) 50vw, 100vw"
 												src={image.src}
 												alt={`${content.officialHistory.accreditationPage} ${image.page}`}
 												className="object-contain w-full"
@@ -285,6 +287,7 @@ export default async function HistoryPage() {
 								className="overflow-hidden bg-white border shadow-sm rounded-xl border-institute-100"
 							>
 								<Image
+									sizes="(min-width: 1024px) 50vw, 100vw"
 									src={image.src}
 									alt={image.alt}
 									className="object-cover w-full aspect-4/3"
@@ -351,6 +354,7 @@ function TimelineEntry({ item, index }: TimelineEntryProps) {
 						<div className="absolute inset-x-0 top-0 z-10 h-10 pointer-events-none bg-linear-to-b from-white to-transparent" />
 
 						<Image
+							sizes="(min-width: 1024px) 50vw, 100vw"
 							src={item.slika}
 							alt={item.title}
 							className="object-cover w-full h-auto"

@@ -98,6 +98,7 @@ export default async function EmployeeProfilePage({
 						<aside>
 							<div className="overflow-hidden border shadow-sm rounded-2xl border-stone-200 bg-stone-100">
 								<Image
+									sizes="(min-width: 1024px) 50vw, 100vw"
 									src={user}
 									alt={fullName}
 									className="object-cover object-top w-full aspect-4/5"

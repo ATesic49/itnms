@@ -17,6 +17,7 @@ type EmployeeCardProps = {
 	};
 };
 import user from "@/public/imgs/user.png";
+import Link from "next/link";
 export function EmployeeCard({
 	// image,
 	firstName,
@@ -35,6 +36,7 @@ export function EmployeeCard({
 			<div className="grid md:grid-cols-[220px_1fr]">
 				<div className="overflow-hidden bg-stone-100">
 					<Image
+						sizes="(min-width: 1024px) 50vw, 100vw"
 						src={user}
 						alt={firstName}
 						className="h-full min-h-80 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
@@ -87,7 +89,7 @@ export function EmployeeCard({
 					</div>
 
 					<footer className="pt-6 mt-auto">
-						<a
+						<Link
 							href={`mailto:${email}`}
 							className="inline-flex items-center gap-2 text-sm font-medium transition text-institute-700 hover:text-institute-900"
 						>
@@ -96,7 +98,7 @@ export function EmployeeCard({
 								aria-hidden="true"
 							/>
 							{email}
-						</a>
+						</Link>
 
 						<div className="flex flex-wrap gap-3 mt-5">
 							{orcidLink && (
@@ -134,7 +136,7 @@ type ProfileLinkProps = {
 
 function ProfileLink({ href, label }: ProfileLinkProps) {
 	return (
-		<a
+		<Link
 			href={href}
 			target="_blank"
 			rel="noreferrer"
@@ -145,6 +147,6 @@ function ProfileLink({ href, label }: ProfileLinkProps) {
 				className="h-3.5 w-3.5"
 				aria-hidden="true"
 			/>
-		</a>
+		</Link>
 	);
 }

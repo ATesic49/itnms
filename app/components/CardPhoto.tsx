@@ -12,17 +12,9 @@ const CardPhoto = ({
 	src: string | StaticImport;
 }) => {
 	return (
-		<div
-			className="
-    
-    overflow-hidden
-rounded-xl
-border border-stone-200
-bg-white
-shadow-sm
-    "
-		>
+		<div className="overflow-hidden bg-white border shadow-sm  rounded-xl border-stone-200">
 			<Image
+				sizes="(min-width: 1024px) 50vw, 100vw"
 				className="aspect-[4/3]
 w-full
 object-cover"

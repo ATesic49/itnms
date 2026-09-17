@@ -1,11 +1,35 @@
 "use client";
 
-const SEARCH_CACHE_KEY = "itnms-search-cache";
+import {
+	ArrowRight,
+	FileText,
+	FlaskConical,
+	Loader2,
+	Search,
+	UserRound,
+	X,
+} from "lucide-react";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+import type { SearchResult, SearchResultType } from "@/app/types/search";
+
+import { normalizeSearch } from "../lib/search/normalizeSearch";
+import { localizeHref } from "../lib/language/localizeHref";
+
+const SEARCH_CACHE_KEY = "itnms-search-cache";
 const SEARCH_CACHE_TIME = 2 * 60 * 1000;
+
 type SearchCache = {
 	results: SearchResult[];
 	timestamp: number;
+};
+
+type SearchOverlayProps = {
+	open: boolean;
+	onClose: () => void;
 };
 
 function getCachedSearch(): SearchResult[] | null {
@@ -33,65 +57,62 @@ function getCachedSearch(): SearchResult[] | null {
 }
 
 function saveSearchCache(results: SearchResult[]) {
-	const cache: SearchCache = {
-		results,
-		timestamp: Date.now(),
-	};
+	try {
+		const cache: SearchCache = {
+			results,
+			timestamp: Date.now(),
+		};
 
-	sessionStorage.setItem(SEARCH_CACHE_KEY, JSON.stringify(cache));
+		sessionStorage.setItem(SEARCH_CACHE_KEY, JSON.stringify(cache));
+	} catch {
+		// sessionStorage može biti nedostupan
+		// u određenim browser/privacy režimima.
+	}
 }
-import {
-	ArrowRight,
-	BriefcaseBusiness,
-	FileText,
-	FlaskConical,
-	Loader2,
-	Search,
-	UserRound,
-	X,
-} from "lucide-react";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-
-import type { SearchResult, SearchResultType } from "@/app/types/search";
-import { normalizeSearch } from "../lib/search/normalizeSearch";
-import { localizeHref } from "../lib/language/localizeHref";
-import { usePathname } from "next/navigation";
-
-type SearchOverlayProps = {
-	open: boolean;
-	onClose: () => void;
-};
 
 export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
+	const [query, setQuery] = useState("");
+
+	const [allResults, setAllResults] = useState<SearchResult[]>([]);
+
+	const [loading, setLoading] = useState(false);
+
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	/*
+	 * Učitavanje search podataka.
+	 *
+	 * Prvo proveravamo session cache.
+	 * Ako ne postoji ili je istekao,
+	 * uzimamo podatke sa API-ja.
+	 */
 	useEffect(() => {
 		if (!open) {
 			return;
 		}
 
+		let cancelled = false;
+
 		async function loadSearchData() {
 			/*
-			 * Prvo proveravamo cache.
+			 * Async boundary sprečava sinhroni
+			 * setState direktno iz effect-a.
 			 */
-			const cached = getCachedSearch();
+			await Promise.resolve();
 
-			if (cached) {
-				console.log("Search: koristim cache");
-
-				setAllResults(cached);
-
+			if (cancelled) {
 				return;
 			}
 
-			/*
-			 * Ako cache ne postoji
-			 * ili je stariji od 2 min,
-			 * zovemo API.
-			 */
+			const cached = getCachedSearch();
+
+			if (cached) {
+				setAllResults(cached);
+				return;
+			}
+
 			try {
 				setLoading(true);
-
-				console.log("Search: fetchujem nove podatke");
 
 				const response = await fetch("/api/search");
 
@@ -103,33 +124,39 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 					results: SearchResult[];
 				};
 
+				if (cancelled) {
+					return;
+				}
+
 				const newResults = data.results ?? [];
 
 				setAllResults(newResults);
 
 				saveSearchCache(newResults);
 			} catch (error) {
+				if (cancelled) {
+					return;
+				}
+
 				console.error("Search loading error:", error);
 
 				setAllResults([]);
 			} finally {
-				setLoading(false);
+				if (!cancelled) {
+					setLoading(false);
+				}
 			}
 		}
 
-		loadSearchData();
+		void loadSearchData();
+
+		return () => {
+			cancelled = true;
+		};
 	}, [open]);
-	const [query, setQuery] = useState("");
-	const [allResults, setAllResults] = useState<SearchResult[]>([]);
-
-	const [results, setResults] = useState<SearchResult[]>([]);
-
-	const [loading, setLoading] = useState(false);
-
-	const inputRef = useRef<HTMLInputElement>(null);
 
 	/*
-	 * Fokus na input kada se otvori.
+	 * Fokus na input kada se search otvori.
 	 */
 	useEffect(() => {
 		if (!open) {
@@ -147,15 +174,17 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 	 * ESC zatvara search.
 	 */
 	useEffect(() => {
+		if (!open) {
+			return;
+		}
+
 		function handleKeyDown(event: KeyboardEvent) {
 			if (event.key === "Escape") {
 				onClose();
 			}
 		}
 
-		if (open) {
-			window.addEventListener("keydown", handleKeyDown);
-		}
+		window.addEventListener("keydown", handleKeyDown);
 
 		return () => {
 			window.removeEventListener("keydown", handleKeyDown);
@@ -163,8 +192,8 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 	}, [open, onClose]);
 
 	/*
-	 * Sprečava scroll stranice
-	 * dok je search otvoren.
+	 * Sprečava scroll stranice dok
+	 * je search overlay otvoren.
 	 */
 	useEffect(() => {
 		if (!open) {
@@ -179,15 +208,21 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 			document.body.style.overflow = previousOverflow;
 		};
 	}, [open]);
-	useEffect(() => {
+
+	/*
+	 * Search rezultati su izvedena vrednost.
+	 *
+	 * Ne treba nam poseban results state,
+	 * niti effect koji poziva setResults().
+	 */
+	const results = useMemo(() => {
 		const normalizedQuery = normalizeSearch(query);
 
 		if (normalizedQuery.length < 2) {
-			setResults([]);
-			return;
+			return [];
 		}
 
-		const ranked = allResults
+		return allResults
 			.map((result) => {
 				const title = normalizeSearch(result.title ?? "");
 
@@ -198,14 +233,16 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 				let score = 0;
 
 				/*
-				 * 1. ZAPOSLENI - ime ima najveći prioritet
+				 * 1. ZAPOSLENI
+				 * Ime ima najveći prioritet.
 				 */
 				if (result.type === "employee" && title.includes(normalizedQuery)) {
 					score = 400;
 				}
 
 				/*
-				 * Još veći score ako ime počinje upitom
+				 * Još veći prioritet ako
+				 * ime počinje upitom.
 				 */
 				if (result.type === "employee" && title.startsWith(normalizedQuery)) {
 					score = 450;
@@ -224,14 +261,16 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 				}
 
 				/*
-				 * Bonus ako se pojam nalazi u naslovu projekta
+				 * Bonus ako se pojam
+				 * nalazi u naslovu projekta.
 				 */
 				if (result.type === "project" && title.includes(normalizedQuery)) {
 					score = 350;
 				}
 
 				/*
-				 * 3. ZAPOSLENI - opis / oblast istraživanja
+				 * 3. ZAPOSLENI
+				 * Opis / oblast istraživanja.
 				 */
 				if (
 					result.type === "employee" &&
@@ -261,19 +300,13 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 			})
 			.filter(({ score }) => score > 0)
 			.sort((a, b) => b.score - a.score)
+			.slice(0, 30)
 			.map(({ result }) => result);
-
-		setResults(ranked.slice(0, 30));
 	}, [query, allResults]);
+
 	if (!open) {
 		return null;
 	}
-
-	const employees = results.filter((result) => result.type === "employee");
-
-	const pages = results.filter((result) => result.type === "page");
-
-	const projects = results.filter((result) => result.type === "project");
 
 	return (
 		<div
@@ -287,7 +320,10 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 
 				<div className="border-b border-stone-200">
 					<div className="flex items-center max-w-5xl gap-4 px-5 py-5 mx-auto md:px-8">
-						<Search className="w-6 h-6 shrink-0 text-institute-700" />
+						<Search
+							className="w-6 h-6 shrink-0 text-institute-700"
+							aria-hidden="true"
+						/>
 
 						<input
 							ref={inputRef}
@@ -299,7 +335,10 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 						/>
 
 						{loading && (
-							<Loader2 className="w-5 h-5 animate-spin text-stone-400" />
+							<Loader2
+								className="w-5 h-5 animate-spin text-stone-400"
+								aria-label="Učitavanje"
+							/>
 						)}
 
 						<button
@@ -308,7 +347,10 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 							className="flex items-center justify-center transition rounded-full h-11 w-11 shrink-0 text-stone-600 hover:bg-stone-100 hover:text-stone-900"
 							aria-label="Zatvori pretragu"
 						>
-							<X className="w-6 h-6" />
+							<X
+								className="w-6 h-6"
+								aria-hidden="true"
+							/>
 						</button>
 					</div>
 				</div>
@@ -322,31 +364,6 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 						) : !loading && results.length === 0 ? (
 							<NoResults query={query} />
 						) : (
-							// <div className="space-y-10">
-							// 	{employees.length > 0 && (
-							// 		<ResultGroup
-							// 			title="Istraživači i zaposleni"
-							// 			results={employees}
-							// 			onClose={onClose}
-							// 		/>
-							// 	)}
-
-							// 	{pages.length > 0 && (
-							// 		<ResultGroup
-							// 			title="Stranice"
-							// 			results={pages}
-							// 			onClose={onClose}
-							// 		/>
-							// 	)}
-
-							// 	{projects.length > 0 && (
-							// 		<ResultGroup
-							// 			title="Projekti"
-							// 			results={projects}
-							// 			onClose={onClose}
-							// 		/>
-							// 	)}
-							// </div>
 							<div className="divide-y divide-stone-200 border-y border-stone-200">
 								{results.map((result) => (
 									<SearchResultItem
@@ -373,33 +390,6 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 		</div>
 	);
 }
-function ResultGroup({
-	title,
-	results,
-	onClose,
-}: {
-	title: string;
-	results: SearchResult[];
-	onClose: () => void;
-}) {
-	return (
-		<section>
-			<p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-mineral-700">
-				{title}
-			</p>
-
-			<div className="divide-y divide-stone-200 border-y border-stone-200">
-				{results.map((result) => (
-					<SearchResultItem
-						key={result.id}
-						result={result}
-						onClose={onClose}
-					/>
-				))}
-			</div>
-		</section>
-	);
-}
 
 function SearchResultItem({
 	result,
@@ -408,17 +398,17 @@ function SearchResultItem({
 	result: SearchResult;
 	onClose: () => void;
 }) {
-	const external = result.href.startsWith("http");
 	const pathname = usePathname();
 
 	const isEnglish = pathname === "/en" || pathname.startsWith("/en/");
+
+	const external = result.href.startsWith("http");
+
+	const href = external ? result.href : localizeHref(result.href, isEnglish);
+
 	return (
 		<Link
-			href={
-				result.href.startsWith("http")
-					? result.href
-					: localizeHref(result.href, isEnglish)
-			}
+			href={href}
 			target={external ? "_blank" : undefined}
 			rel={external ? "noopener noreferrer" : undefined}
 			onClick={onClose}
@@ -431,7 +421,9 @@ function SearchResultItem({
 			<div className="flex-1 min-w-0">
 				<p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-mineral-700">
 					{result.type === "employee" && "Istraživač"}
+
 					{result.type === "project" && "Projekat"}
+
 					{result.type === "page" && "Stranica"}
 				</p>
 
@@ -446,7 +438,10 @@ function SearchResultItem({
 				)}
 			</div>
 
-			<ArrowRight className="w-5 h-5 transition shrink-0 text-stone-300 group-hover:translate-x-1 group-hover:text-institute-700" />
+			<ArrowRight
+				className="w-5 h-5 transition shrink-0 text-stone-300 group-hover:translate-x-1 group-hover:text-institute-700"
+				aria-hidden="true"
+			/>
 		</Link>
 	);
 }
@@ -454,13 +449,31 @@ function SearchResultItem({
 function SearchResultIcon({ type }: { type: SearchResultType }) {
 	switch (type) {
 		case "employee":
-			return <UserRound className="w-5 h-5" />;
+			return (
+				<UserRound
+					className="w-5 h-5"
+					aria-hidden="true"
+				/>
+			);
 
 		case "project":
-			return <FlaskConical className="w-5 h-5" />;
+			return (
+				<FlaskConical
+					className="w-5 h-5"
+					aria-hidden="true"
+				/>
+			);
 
 		case "page":
-			return <FileText className="w-5 h-5" />;
+			return (
+				<FileText
+					className="w-5 h-5"
+					aria-hidden="true"
+				/>
+			);
+
+		default:
+			return null;
 	}
 }
 
@@ -468,7 +481,10 @@ function SearchStart() {
 	return (
 		<div className="py-20 text-center">
 			<div className="flex items-center justify-center w-16 h-16 mx-auto rounded-2xl bg-institute-50 text-institute-800">
-				<Search className="w-8 h-8" />
+				<Search
+					className="w-8 h-8"
+					aria-hidden="true"
+				/>
 			</div>
 
 			<h2 className="mt-6 text-2xl font-semibold text-stone-900">

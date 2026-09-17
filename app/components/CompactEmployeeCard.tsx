@@ -41,6 +41,7 @@ export function CompactEmployeeCard({
 		>
 			<div className="overflow-hidden w-28 shrink-0 bg-stone-100 sm:w-32">
 				<Image
+					sizes="(min-width: 1024px) 50vw, 100vw"
 					src={user}
 					alt={`${firstName} ${lastName}`}
 					className="

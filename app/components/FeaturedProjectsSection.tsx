@@ -5,6 +5,7 @@ import { Section } from "@/app/components/Section";
 import { ProjectCard } from "@/app/components/ProjectCard";
 import { getProjects } from "../lib/google-sheets/projectss";
 import { ScientificProjectCard } from "../projekti/naucni/CompactProjectPageContent";
+import Link from "next/link";
 type FeaturedProjectsSectionProps = {
 	content: {
 		eyebrow: string;
@@ -41,7 +42,7 @@ export async function FeaturedProjectsSection({
 						</p>
 					</div>
 
-					<a
+					<Link
 						href="/projekti/naucni"
 						className="inline-flex items-center self-start gap-2 text-sm font-semibold transition shrink-0 text-institute-700 hover:text-institute-900 lg:self-auto"
 					>
@@ -50,7 +51,7 @@ export async function FeaturedProjectsSection({
 							className="w-4 h-4"
 							aria-hidden="true"
 						/>
-					</a>
+					</Link>
 				</div>
 
 				<div className="mt-12 space-y-8">

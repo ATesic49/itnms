@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import logo from "@/public/imgs/ITNMS_simbol.png";
 import text from "@/public/imgs/ITNMS_text.png";
+import Link from "next/link";
 
 type FooterProps = {
 	content: {
@@ -60,10 +61,7 @@ export default function Footer({ content, lang }: FooterProps) {
 		},
 		{
 			label: content.quickLinks.researchers,
-			href:
-				lang === "en"
-					? "/en/researchers-and-employees/researchers"
-					: "/istrazivaci-i-zaposleni/istrazivaci",
+			href: lang === "en" ? "/en/researchers" : "/istrazivaci",
 		},
 		{
 			label: content.quickLinks.projects,
@@ -124,12 +122,13 @@ export default function Footer({ content, lang }: FooterProps) {
 			<div className="px-6 py-16 mx-auto max-w-7xl lg:px-8 lg:py-20">
 				<div className="grid gap-12 md:grid-cols-2 xl:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
 					<div>
-						<a
+						<Link
 							href={homeHref}
 							className="inline-flex items-center gap-3"
 							aria-label={content.homeAriaLabel}
 						>
 							<Image
+								sizes="(min-width: 1024px) 50vw, 100vw"
 								alt="ITNMS"
 								src={logo}
 								className="w-16"
@@ -137,6 +136,7 @@ export default function Footer({ content, lang }: FooterProps) {
 
 							<div>
 								<Image
+									sizes="(min-width: 1024px) 50vw, 100vw"
 									alt="ITNMS"
 									src={text}
 									className="object-cover w-16"
@@ -146,13 +146,13 @@ export default function Footer({ content, lang }: FooterProps) {
 									{content.instituteName}
 								</p>
 							</div>
-						</a>
+						</Link>
 
 						<p className="max-w-md mt-6 text-sm leading-7 text-stone-400">
 							{content.description}
 						</p>
 
-						<a
+						<Link
 							href="https://ritnms.itnms.ac.rs"
 							target="_blank"
 							rel="noreferrer"
@@ -164,7 +164,7 @@ export default function Footer({ content, lang }: FooterProps) {
 								className="w-4 h-4"
 								aria-hidden="true"
 							/>
-						</a>
+						</Link>
 					</div>
 
 					<FooterColumn title={content.quickLinksTitle}>
@@ -191,7 +191,7 @@ export default function Footer({ content, lang }: FooterProps) {
 						</h2>
 
 						<address className="mt-6 space-y-5 not-italic">
-							<a
+							<Link
 								href="https://maps.google.com"
 								target="_blank"
 								rel="noreferrer"
@@ -207,9 +207,9 @@ export default function Footer({ content, lang }: FooterProps) {
 									<br />
 									{content.address.city}
 								</span>
-							</a>
+							</Link>
 
-							<a
+							<Link
 								href="mailto:itnms@itnms.ac.rs"
 								className="flex items-center gap-3 text-sm transition text-stone-400 hover:text-white"
 							>
@@ -218,9 +218,9 @@ export default function Footer({ content, lang }: FooterProps) {
 									aria-hidden="true"
 								/>
 								itnms@itnms.ac.rs
-							</a>
+							</Link>
 
-							<a
+							<Link
 								href="tel:+381113691722"
 								className="flex items-center gap-3 text-sm transition text-stone-400 hover:text-white"
 							>
@@ -229,15 +229,15 @@ export default function Footer({ content, lang }: FooterProps) {
 									aria-hidden="true"
 								/>
 								+381 11 3691 722
-							</a>
+							</Link>
 						</address>
 
-						<a
+						<Link
 							href={contactHref}
 							className="mt-7 inline-flex rounded-md border border-institute-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-institute-400 hover:bg-institute-900"
 						>
 							{content.allContactDetails}
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>
@@ -249,26 +249,26 @@ export default function Footer({ content, lang }: FooterProps) {
 					</p>
 
 					<div className="flex flex-wrap gap-x-6 gap-y-2">
-						<a
+						<Link
 							href={privacyHref}
 							className="transition hover:text-white"
 						>
 							{content.privacyPolicy}
-						</a>
+						</Link>
 
-						<a
+						<Link
 							href={cookieHref}
 							className="transition hover:text-white"
 						>
 							{content.cookiePolicy}
-						</a>
+						</Link>
 
-						<a
+						<Link
 							href={accessibilityHref}
 							className="transition hover:text-white"
 						>
 							{content.accessibility}
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>
@@ -300,11 +300,11 @@ type FooterLinkProps = {
 
 function FooterLink({ label, href }: FooterLinkProps) {
 	return (
-		<a
+		<Link
 			href={href}
 			className="text-sm leading-6 text-stone-400 transition hover:translate-x-0.5 hover:text-white"
 		>
 			{label}
-		</a>
+		</Link>
 	);
 }

@@ -5,6 +5,7 @@ import {
 	Landmark,
 	Users,
 } from "lucide-react";
+import Link from "next/link";
 
 type CompactProjectCardProps = {
 	title: string;
@@ -70,7 +71,7 @@ export function CompactProjectCard({
 					/>
 				</div>
 
-				<a
+				<Link
 					href={projectUrl}
 					className="inline-flex items-center self-start gap-2 text-sm font-semibold transition text-institute-700 hover:text-institute-900"
 				>
@@ -79,7 +80,7 @@ export function CompactProjectCard({
 						className="w-4 h-4 transition-transform group-hover:translate-x-1"
 						aria-hidden="true"
 					/>
-				</a>
+				</Link>
 			</div>
 		</article>
 	);

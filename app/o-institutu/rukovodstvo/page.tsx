@@ -109,6 +109,7 @@ export default async function LeadershipPage() {
 							<div className="grid lg:grid-cols-[320px_1fr]">
 								<div className="bg-stone-100">
 									<Image
+										sizes="(min-width: 1024px) 50vw, 100vw"
 										src={director.image}
 										alt={director.fullName}
 										className="object-cover object-top w-full h-full min-h-95"
@@ -222,6 +223,7 @@ function LeadershipCard({ member, profileLabel }: LeadershipCardProps) {
 			<div className="grid grid-cols-[120px_1fr]">
 				<div className="bg-stone-100">
 					<Image
+						sizes="(min-width: 1024px) 50vw, 100vw"
 						src={member.image}
 						alt={member.fullName}
 						className="object-cover object-top w-full h-full min-h-45"

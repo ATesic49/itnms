@@ -129,6 +129,7 @@ export default async function AboutInstitutePage() {
 
 						<div className="overflow-hidden border shadow-sm rounded-2xl border-stone-200 bg-stone-100">
 							<Image
+								sizes="(min-width: 1024px) 50vw, 100vw"
 								loading="eager"
 								src={slika}
 								alt={content.intro.imageAlt}

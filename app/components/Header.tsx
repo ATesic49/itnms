@@ -1,4 +1,5 @@
 import { Menu, Search, X } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 const navigation = [
@@ -17,22 +18,22 @@ export function Header() {
 	return (
 		<header className="sticky top-0 z-50 w-full">
 			{/* Gornja kontakt traka */}
-			<div className="hidden bg-institute-950 text-sm text-white lg:block">
-				<div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2 lg:px-8">
+			<div className="hidden text-sm text-white bg-institute-950 lg:block">
+				<div className="flex items-center justify-between px-6 py-2 mx-auto max-w-7xl lg:px-8">
 					<div className="flex items-center gap-6">
-						<a
+						<Link
 							href="mailto:itnms@itnms.ac.rs"
 							className="transition hover:text-institute-200"
 						>
 							itnms@itnms.ac.rs
-						</a>
+						</Link>
 
-						<a
+						<Link
 							href="tel:+381113691722"
 							className="transition hover:text-institute-200"
 						>
 							+381 11 3691 722
-						</a>
+						</Link>
 					</div>
 
 					<div className="flex items-center gap-5">
@@ -41,26 +42,26 @@ export function Header() {
 							className="flex items-center gap-2 transition hover:text-institute-200"
 							aria-label="Pretraži sajt"
 						>
-							<Search className="h-4 w-4" />
+							<Search className="w-4 h-4" />
 							Pretraga
 						</button>
 
 						<div className="flex items-center gap-2">
-							<a
+							<Link
 								href="/"
 								className="font-semibold"
 							>
 								SR
-							</a>
+							</Link>
 
 							<span className="text-stone-400">|</span>
 
-							<a
+							<Link
 								href="/en"
-								className="text-stone-300 transition hover:text-white"
+								className="transition text-stone-300 hover:text-white"
 							>
 								EN
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -68,13 +69,13 @@ export function Header() {
 
 			{/* Glavni navbar */}
 			<div className="border-b border-stone-200 bg-white/95 backdrop-blur">
-				<div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
+				<div className="flex items-center justify-between h-20 px-6 mx-auto max-w-7xl lg:px-8">
 					{/* Logo */}
-					<a
+					<Link
 						href="/"
-						className="flex shrink-0 items-center gap-3"
+						className="flex items-center gap-3 shrink-0"
 					>
-						<div className="flex h-11 w-11 items-center justify-center rounded-md bg-institute-800 text-sm font-bold text-white">
+						<div className="flex items-center justify-center text-sm font-bold text-white rounded-md h-11 w-11 bg-institute-800">
 							IT
 						</div>
 
@@ -87,32 +88,26 @@ export function Header() {
 								Institut za tehnologiju nuklearnih i drugih mineralnih sirovina
 							</p>
 						</div>
-					</a>
+					</Link>
 
 					{/* Desktop navigacija */}
 					<nav
-						className="hidden items-center gap-1 lg:flex"
+						className="items-center hidden gap-1 lg:flex"
 						aria-label="Glavna navigacija"
 					>
 						{navigation.map((item) => (
-							<a
+							<Link
 								key={item.href}
 								href={item.href}
-								className="
-                  rounded-md px-3 py-2
-                  text-sm font-medium text-stone-700
-                  transition
-                  hover:bg-institute-50
-                  hover:text-institute-800
-                "
+								className="px-3 py-2 text-sm font-medium transition rounded-md  text-stone-700 hover:bg-institute-50 hover:text-institute-800"
 							>
 								{item.label}
-							</a>
+							</Link>
 						))}
 					</nav>
 
 					{/* Desktop dugme */}
-					<a
+					<Link
 						href="/kontakt"
 						className="
               hidden shrink-0 items-center justify-center
@@ -125,29 +120,29 @@ export function Header() {
             "
 					>
 						Pošaljite upit
-					</a>
+					</Link>
 
 					{/* Mobilne kontrole */}
 					<div className="flex items-center gap-2 lg:hidden">
 						<button
 							type="button"
-							className="rounded-md p-2 text-stone-700 hover:bg-stone-100"
+							className="p-2 rounded-md text-stone-700 hover:bg-stone-100"
 							aria-label="Pretraži sajt"
 						>
-							<Search className="h-5 w-5" />
+							<Search className="w-5 h-5" />
 						</button>
 
 						<button
 							type="button"
 							onClick={() => setMobileMenuOpen((open) => !open)}
-							className="rounded-md p-2 text-stone-700 hover:bg-stone-100"
+							className="p-2 rounded-md text-stone-700 hover:bg-stone-100"
 							aria-label={mobileMenuOpen ? "Zatvori meni" : "Otvori meni"}
 							aria-expanded={mobileMenuOpen}
 						>
 							{mobileMenuOpen ? (
-								<X className="h-6 w-6" />
+								<X className="w-6 h-6" />
 							) : (
-								<Menu className="h-6 w-6" />
+								<Menu className="w-6 h-6" />
 							)}
 						</button>
 					</div>
@@ -155,75 +150,66 @@ export function Header() {
 
 				{/* Mobilni meni */}
 				{mobileMenuOpen && (
-					<div className="border-t border-stone-200 bg-white lg:hidden">
+					<div className="bg-white border-t border-stone-200 lg:hidden">
 						<nav
-							className="mx-auto max-w-7xl px-6 py-5"
+							className="px-6 py-5 mx-auto max-w-7xl"
 							aria-label="Mobilna navigacija"
 						>
 							<div className="flex flex-col gap-1">
 								{navigation.map((item) => (
-									<a
+									<Link
 										key={item.href}
 										href={item.href}
 										onClick={() => setMobileMenuOpen(false)}
-										className="
-                      rounded-md px-3 py-3
-                      text-base font-medium text-stone-700
-                      hover:bg-institute-50
-                      hover:text-institute-800
-                    "
+										className="px-3 py-3 text-base font-medium rounded-md  text-stone-700 hover:bg-institute-50 hover:text-institute-800"
 									>
 										{item.label}
-									</a>
+									</Link>
 								))}
 							</div>
 
-							<div className="mt-5 border-t border-stone-200 pt-5">
+							<div className="pt-5 mt-5 border-t border-stone-200">
 								<div className="flex items-center justify-between">
-									<a
+									<Link
 										href="/kontakt"
-										className="
-                      rounded-md bg-institute-800
-                      px-5 py-3
-                      text-sm font-semibold text-white
-                    "
+										className="px-5 py-3 text-sm font-semibold text-white rounded-md  bg-institute-800"
 									>
 										Pošaljite upit
-									</a>
+									</Link>
 
 									<div className="flex items-center gap-2 text-sm">
-										<a
+										<Link
 											href="/"
 											className="font-semibold text-institute-800"
 										>
 											SR
-										</a>
+										</Link>
 
 										<span className="text-stone-300">|</span>
 
-										<a
+										<Link
 											href="/en"
 											className="text-stone-600"
 										>
 											EN
-										</a>
+										</Link>
 									</div>
 								</div>
 
 								<div className="mt-5 space-y-2 text-sm text-stone-600">
-									<a
+									<Link
 										href="mailto:itnms@itnms.ac.rs"
 										className="block hover:text-institute-800"
 									>
 										itnms@itnms.ac.rs
-									</a>
+									</Link>
 
-									<a
+									<Link
 										href="tel:+381113691722"
 										className="block hover:text-institute-800"
 									>
 										+381 11 3691 722
-									</a>
+									</Link>
 								</div>
 							</div>
 						</nav>

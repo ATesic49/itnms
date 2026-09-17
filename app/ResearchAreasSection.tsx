@@ -9,6 +9,7 @@ import {
 
 import { Container } from "@/app/components/Container";
 import { Section } from "@/app/components/Section";
+import Link from "next/link";
 
 const researchAreas = [
 	{
@@ -81,7 +82,7 @@ export function ResearchAreasSection() {
 						const Icon = area.icon;
 
 						return (
-							<a
+							<Link
 								key={area.href}
 								href={area.href}
 								className="group flex min-h-62.5 flex-col rounded-xl border border-stone-200 bg-white p-7 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-institute-300 hover:shadow-md"
@@ -104,7 +105,7 @@ export function ResearchAreasSection() {
 								<span className="pt-6 mt-auto text-sm font-semibold transition text-institute-700 group-hover:text-institute-900">
 									Saznajte više →
 								</span>
-							</a>
+							</Link>
 						);
 					})}
 				</div>

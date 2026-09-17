@@ -107,6 +107,7 @@ function PartnerCard({ partner, openNewWindow }: PartnerCardProps) {
 		>
 			<div className="flex items-center justify-center w-full h-16">
 				<Image
+					sizes="(min-width: 1024px) 50vw, 100vw"
 					src={logo}
 					alt=""
 					className="object-contain max-w-full transition duration-200 opacity-75 max-h-14 grayscale group-hover:opacity-100 group-hover:grayscale-0"

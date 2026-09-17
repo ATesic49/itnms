@@ -104,6 +104,7 @@ export default function QualityAndAccreditationsPage() {
 
 						<div className="overflow-hidden border shadow-sm rounded-2xl border-stone-200 bg-stone-100">
 							<Image
+								sizes="(min-width: 1024px) 50vw, 100vw"
 								src={slika}
 								alt="Laboratorijski rad i kontrola kvaliteta u ITNMS-u"
 								className="object-cover w-full aspect-4/3"

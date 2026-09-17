@@ -165,6 +165,7 @@ function LaboratoryCard({ laboratory, imageOnLeft }: LaboratoryCardProps) {
 					}`}
 				>
 					<Image
+						sizes="(min-width: 1024px) 50vw, 100vw"
 						src={laboratory.image}
 						alt={laboratory.name}
 						className="object-cover w-full h-full min-h-90"

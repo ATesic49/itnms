@@ -93,6 +93,7 @@ export default async function AboutItnmsPage() {
 
 						<div className="overflow-hidden border shadow-sm rounded-2xl border-stone-200 bg-stone-100">
 							<Image
+								sizes="(min-width: 1024px) 50vw, 100vw"
 								src={slika}
 								alt={content.intro.imageAlt}
 								className="object-cover w-full aspect-4/3"
