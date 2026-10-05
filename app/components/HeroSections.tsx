@@ -77,7 +77,7 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 								label={isEnglish ? "Years of experience" : "Godina iskustva"}
 							/>
 							<HeroStat
-								value="40+"
+								value="45+"
 								label={isEnglish ? "Researchers" : "Istraživača"}
 							/>
 							<HeroStat
