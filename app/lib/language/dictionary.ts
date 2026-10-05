@@ -1321,10 +1321,10 @@ export const dictionary = {
 							"Institut dobija naziv Institut za tehnologiju nuklearnih mineralnih sirovina i usmerava rad na tehnološka ispitivanja i istraživanje mineralnih sirovina.",
 					},
 					{
-						year: "1958.",
+						year: "1956.",
 						title: "Poseta Nilsa Bora ITNMS-u",
 						description:
-							"Jedan od najznačajnijih fizičara 20. veka, nobelovac Nils Bor (Niels Bohr), posetio je Institut 1958. godine. Njegova poseta predstavlja značajan događaj u ranoj istoriji ITNMS-a i svedoči o međunarodnom naučnom značaju Instituta već u prvim godinama njegovog razvoja.",
+							"Jedan od najznačajnijih fizičara 20. veka, nobelovac Nils Bor (Niels Bohr), posetio je Institut 1956. godine. Njegova poseta predstavlja značajan događaj u ranoj istoriji ITNMS-a i svedoči o međunarodnom naučnom značaju Instituta već u prvim godinama njegovog razvoja.",
 					},
 					{
 						year: "1966.",
@@ -3043,10 +3043,10 @@ export const dictionary = {
 							"The institution was named the Institute for Technology of Nuclear Mineral Raw Materials and focused its work on technological testing and research of mineral raw materials.",
 					},
 					{
-						year: "1958",
+						year: "1956",
 						title: "Niels Bohr visits ITNMS",
 						description:
-							"Nobel laureate Niels Bohr, one of the most prominent physicists of the 20th century, visited the Institute in 1958. His visit was an important event in the early history of ITNMS and reflects the Institute's international scientific significance during the early years of its development.",
+							"Nobel laureate Niels Bohr, one of the most prominent physicists of the 20th century, visited the Institute in 1956. His visit was an important event in the early history of ITNMS and reflects the Institute's international scientific significance during the early years of its development.",
 					},
 					{
 						year: "1966",
