@@ -109,7 +109,7 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 						<div className="absolute w-32 h-32 rounded-full -left-6 -top-6 bg-mineral-100 blur-3xl" />
 						<div className="absolute w-40 h-40 rounded-full -bottom-10 -right-8 bg-institute-100 blur-3xl" />
 
-						<div className="relative overflow-hidden border shadow-lg mb-36 rounded-2xl border-stone-200 bg-stone-100 aspect-[4/3]">
+						<div className="relative overflow-hidden border shadow-lg mb-36 rounded-2xl border-stone-200 bg-stone-100 aspect-4/3">
 							<Image
 								src={hero2}
 								alt={

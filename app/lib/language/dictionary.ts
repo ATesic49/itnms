@@ -235,7 +235,7 @@ export const dictionary = {
 			},
 
 			intro: [
-				"Centralna laboratorija za hemijska ispitivanja predstavlja spoj stručnih analitičkih usluga i savremenih naučnoistraživačkih aktivnosti u oblasti hemije, materijala i zaštite životne sredine. Tim Laboratorije čini pet istraživača u naučnim zvanjima i dva stručna tehničara, koji svojim znanjem i iskustvom doprinose povezivanju fundamentalnih i primenjenih istraživanja.",
+				"Centralna laboratorija za hemijska ispitivanja predstavlja spoj stručnih analitičkih usluga i savremenih naučnoistraživačkih aktivnosti u oblasti hemije, materijala i zaštite životne sredine. Tim Laboratorije čini šest istraživača u naučnim zvanjima i dva stručna tehničara, koji svojim znanjem i iskustvom doprinose povezivanju fundamentalnih i primenjenih istraživanja.",
 
 				"Značajan segment rada Laboratorije obuhvata pružanje uslužnih hemijskih analiza i ispitivanja uzoraka iz oblasti mineralnih sirovina. Primenom različitih analitičkih metoda vrši se određivanje hemijskog sastava, kao i ispitivanje karakteristika različitih materijala. Dobijeni rezultati pružaju pouzdanu osnovu za karakterizaciju mineralnih sirovina i materijala, kontrolu njihovog kvaliteta, procenu mogućnosti dalje prerade i primene, kao i za potrebe različitih istraživačkih i industrijskih aktivnosti.",
 
@@ -1950,7 +1950,7 @@ export const dictionary = {
 			},
 
 			intro: [
-				"The Central Laboratory for Chemical Testing combines professional analytical services with modern scientific research in the fields of chemistry, materials and environmental protection. The Laboratory team consists of five researchers holding scientific titles and two technical specialists, whose knowledge and experience contribute to connecting fundamental and applied research.",
+				"The Central Laboratory for Chemical Testing combines professional analytical services with modern scientific research in the fields of chemistry, materials and environmental protection. The Laboratory team consists of six researchers holding scientific titles and two technical specialists, whose knowledge and experience contribute to connecting fundamental and applied research.",
 
 				"A significant part of the Laboratory's work involves providing chemical analysis services and testing samples related to mineral raw materials. Various analytical methods are used to determine chemical composition and examine the characteristics of different materials. The results provide a reliable basis for the characterization of mineral raw materials and materials, quality control, assessment of their potential for further processing and application, as well as for various research and industrial activities.",
 
