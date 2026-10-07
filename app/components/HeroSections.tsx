@@ -87,6 +87,7 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 										? "Scientific publications"
 										: "Broj naučnih publikacija"
 								}
+								link="https://enauka.gov.rs/cris/ou/ou00306/publications.html"
 							/>
 							<HeroStat
 								value="800+"
@@ -142,12 +143,23 @@ export function HeroSection({ lang = "sr" }: HeroSectionProps) {
 type HeroStatProps = {
 	value: string;
 	label: string;
+	link?: string;
 };
 
-function HeroStat({ value, label }: HeroStatProps) {
+function HeroStat({ value, label, link }: HeroStatProps) {
 	return (
 		<div>
-			<dt className="text-sm leading-5 text-institute-400">{label}</dt>
+			{link ? (
+				<Link
+					href={link}
+					className="text-sm leading-5 text-institute-400 hover:text-institute-600 hover:underline"
+				>
+					{label}
+				</Link>
+			) : (
+				<dt className="text-sm leading-5 text-institute-400">{label}</dt>
+			)}
+
 			<dd className="mt-1 text-2xl font-semibold text-mineral-800">{value}</dd>
 		</div>
 	);
