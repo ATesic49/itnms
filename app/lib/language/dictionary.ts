@@ -2,6 +2,13 @@ export type Language = "sr" | "en";
 
 export const dictionary = {
 	sr: {
+		directors: {
+			eyebrow: "Rukovodstvo kroz istoriju",
+			title: "Dosadašnji direktori Instituta",
+			description:
+				"Pregled direktora koji su tokom istorije rukovodili Institutom i doprinosili njegovom razvoju.",
+			period: "Period",
+		},
 		contactPage: {
 			pageHeader: {
 				title: "Kontakt",
@@ -1719,6 +1726,13 @@ export const dictionary = {
 	},
 
 	en: {
+		directors: {
+			eyebrow: "Leadership through history",
+			title: "Former Directors of the Institute",
+			description:
+				"An overview of the directors who have led the Institute throughout its history and contributed to its development.",
+			period: "Term",
+		},
 		contactPage: {
 			pageHeader: {
 				title: "Contact",

@@ -5,7 +5,15 @@ import Link from "next/link";
 import instituteToday from "@/public/imgs/IMG_0132.jpg";
 import fountain from "@/public/imgs/IMG_0127.jpg";
 import archiveImage from "@/public/imgs/IMG_0089.jpg";
-
+import direktor1 from "@/public/imgs/direktor1.jpg";
+import direktor2 from "@/public/imgs/direktor2.jpg";
+import direktor3 from "@/public/imgs/direktor3.jpg";
+import direktor4 from "@/public/imgs/direktor4.jpg";
+import direktor5 from "@/public/imgs/direktor5.jpg";
+import direktor6 from "@/public/imgs/direktor6.jpg";
+import direktor7 from "@/public/imgs/direktor7.jpg";
+import direktor8 from "@/public/imgs/direktor8.jpg";
+import direktor9 from "@/public/imgs/direktor9.jpg";
 import accreditation1 from "@/public/imgs/akreditacija_2016_1.jpg";
 import accreditation2 from "@/public/imgs/akreditacija_2016_2.jpg";
 import accreditation3 from "@/public/imgs/akreditacija_2016_3.jpg";
@@ -31,7 +39,53 @@ export default async function HistoryPage() {
 	const dict = await getDictionary(lang);
 
 	const content = dict.history;
-
+	const directors = [
+		{
+			name: "Slobodan Nakićenović",
+			period: "",
+			image: direktor1,
+		},
+		{
+			name: "Batrić Jovanović",
+			period: "",
+			image: direktor2,
+		},
+		{
+			name: "Miladin Radulović - Krcun ",
+			period: "1961. – 1966.",
+			image: direktor3,
+		},
+		{
+			name: "Bela Bunji",
+			period: "1966. - 1970.",
+			image: direktor4,
+		},
+		{
+			name: "Veljko Brajović",
+			period: "1970. – 1974.",
+			image: direktor5,
+		},
+		{
+			name: "Milutin Anđelković",
+			period: "1974. – 1976.",
+			image: direktor6,
+		},
+		{
+			name: "Radoslav Vasiljević",
+			period: "1976. - 1984. i 1988. - 1990.",
+			image: direktor7,
+		},
+		{
+			name: "Rade Ćosović",
+			period: "1984. - 1988.",
+			image: direktor8,
+		},
+		{
+			name: "Siniša Milošević",
+			period: "1991. – 2008.",
+			image: direktor9,
+		},
+	];
 	const timeline: TimelineItem[] = content.timeline.items.map(
 		(item, index) => ({
 			...item,
@@ -266,7 +320,67 @@ export default async function HistoryPage() {
 					</div>
 				</Container>
 			</Section>
+			{/* Galerija */}
+			{/* Dosadašnji direktori */}
+			<Section background="stone">
+				<Container>
+					<div className="max-w-3xl">
+						<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
+							{dict.directors.eyebrow}
+						</p>
 
+						<h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
+							{dict.directors.title}
+						</h2>
+
+						<p className="mt-4 text-base leading-7 text-stone-600">
+							{dict.directors.description}
+						</p>
+					</div>
+
+					<div className="grid gap-6 mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+						{directors.map((director, i) => (
+							<article
+								key={`${director.name}-${director.period}-${i}`}
+								className="overflow-hidden transition bg-white border shadow-sm group rounded-2xl border-stone-200 hover:-translate-y-1 hover:shadow-md"
+							>
+								<div className="relative overflow-hidden bg-stone-100 aspect-4/5">
+									<Image
+										src={director.image}
+										alt={director.name}
+										fill
+										sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+										className="object-cover object-top transition duration-500 group-hover:scale-[1.03]"
+									/>
+
+									<div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none bg-linear-to-t from-black/35 to-transparent" />
+								</div>
+
+								<div className="p-5">
+									<h3 className="text-lg font-semibold tracking-tight text-stone-900">
+										{director.name}
+									</h3>
+
+									<div className="flex items-center gap-2 mt-2">
+										<span className="text-xs font-semibold uppercase tracking-[0.14em] text-stone-400">
+											{dict.directors.period}
+										</span>
+
+										<span
+											className="w-1 h-1 rounded-full bg-stone-300"
+											aria-hidden="true"
+										/>
+
+										<span className="text-sm font-medium text-institute-700">
+											{director.period}
+										</span>
+									</div>
+								</div>
+							</article>
+						))}
+					</div>
+				</Container>
+			</Section>
 			{/* Galerija */}
 			<Section background="institute">
 				<Container>
