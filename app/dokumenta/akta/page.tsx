@@ -30,40 +30,74 @@ type InstituteAct = {
 
 const acts: InstituteAct[] = [
 	{
-		id: "statut-instituta",
-		title: "Statut Instituta",
+		id: "pravilnik-elektricni-uredjaji-eksplozivne-smese",
+		title:
+			"Pravilnik o rukovanju i održavanju električnih uređaja, instalacija i opreme predviđenih za rad na mestima ugroženim od eksplozivnih smeša",
 		description:
-			"Osnovni opšti akt kojim se uređuju organizacija, delatnost, upravljanje i druga pitanja od značaja za rad Instituta.",
-		documentNumber: "Broj: 000/2026",
-		adoptionDate: "15. januar 2026.",
-		year: 2026,
+			"Pravilnik kojim se uređuju uslovi za izvođenje, nabavku, montažu, pregled, ispitivanje, održavanje i popravku električnih instalacija i uređaja u prostorima ugroženim eksplozivnim smešama.",
+		adoptionDate: "12. decembar 2024.",
+		year: 2024,
 		status: "Važeći",
-		fileUrl: "/documents/akta/statut-instituta.pdf",
+		fileUrl:
+			"/documents/akta/pravilnik-elektricni-uredjaji-eksplozivne-smese.pdf",
 		fileType: "PDF",
-		fileSize: "2,1 MB",
+		fileSize: "0,9 MB",
 	},
+
 	{
-		id: "osnivacki-akt",
-		title: "Osnivački akt Instituta",
+		id: "pravilnik-sticanje-zvanja-istrazivaca",
+		title: "Pravilnik o sprovođenju postupka za sticanje zvanja istraživača",
 		description:
-			"Dokument kojim se uređuju osnivanje, pravni položaj, delatnost i osnovna prava i obaveze Instituta.",
-		adoptionDate: "10. mart 2022.",
-		year: 2022,
+			"Pravilnik kojim se bliže uređuje sprovođenje postupka za sticanje istraživačkih i naučnih zvanja, kao i uslovi i postupak za sticanje stručnih zvanja istraživača u Institutu.",
+		adoptionDate: "24. septembar 2024.",
+		year: 2024,
 		status: "Važeći",
-		fileUrl: "/documents/akta/osnivacki-akt.pdf",
+		fileUrl: "/documents/akta/pravilnik-sticanje-zvanja-istrazivaca.pdf",
 		fileType: "PDF",
-		fileSize: "1,4 MB",
+		fileSize: "3,5 MB",
 	},
+
 	{
-		id: "stari-statut",
-		title: "Prethodna verzija Statuta Instituta",
-		description: "Arhivirana verzija Statuta koja više nije na snazi.",
-		adoptionDate: "20. jun 2018.",
-		year: 2018,
-		status: "Van snage",
-		fileUrl: "/documents/akta/statut-2018.pdf",
+		id: "pravilnik-organizacija-sistematizacija",
+		title:
+			"Pravilnik o organizaciji i sistematizaciji poslova u Institutu za tehnologiju nuklearnih i drugih mineralnih sirovina",
+		description:
+			"Pravilnik kojim se uređuju organizacioni delovi Instituta, nazivi i opisi poslova, potrebna stručna sprema, posebni uslovi za rad i broj izvršilaca.",
+		adoptionDate: "oktobar 2024.",
+		year: 2024,
+		status: "Važeći",
+		fileUrl:
+			"/documents/akta/pravilnik-organizacija-i-sistematizacija-poslova.pdf",
 		fileType: "PDF",
-		fileSize: "1,8 MB",
+		fileSize: "6,1 MB",
+	},
+
+	{
+		id: "statut-instituta-2021",
+		title:
+			"Statut Instituta za tehnologiju nuklearnih i drugih mineralnih sirovina",
+		description:
+			"Osnovni opšti akt kojim se uređuju oblik organizovanja, delatnost, naziv i sedište, unutrašnja organizacija, organi Instituta i druga pitanja od značaja za njegovo poslovanje i rad.",
+		adoptionDate: "2. decembar 2021.",
+		year: 2021,
+		status: "Važeći",
+		fileUrl: "/documents/akta/statut-instituta-2021.pdf",
+		fileType: "PDF",
+		fileSize: "0,5 MB",
+	},
+
+	{
+		id: "pravilnik-javne-nabavke-2021",
+		title:
+			"Pravilnik o bližem uređenju planiranja i sprovođenja postupka javnih nabavki i nabavki na koje se Zakon ne primenjuje, kao i nabavki društvenih i posebnih usluga",
+		description:
+			"Pravilnik kojim se uređuju planiranje nabavki, sprovođenje postupaka javnih nabavki, nabavki na koje se Zakon ne primenjuje, praćenje izvršenja ugovora i odgovornosti u vezi sa poslovima nabavki.",
+		adoptionDate: "decembar 2021.",
+		year: 2021,
+		status: "Važeći",
+		fileUrl: "/documents/akta/pravilnik-javne-nabavke-2021.pdf",
+		fileType: "PDF",
+		fileSize: "0,9 MB",
 	},
 ];
 

@@ -2,6 +2,57 @@ export type Language = "sr" | "en";
 
 export const dictionary = {
 	sr: {
+		industrialProjects: {
+			pageHeader: {
+				title: "Industrijski projekti",
+				description:
+					"Pregled projekata, tehničkih kontrola, elaborata i studija realizovanih za potrebe privrede i drugih partnera.",
+				breadcrumbProjects: "Projekti",
+				breadcrumbCurrent: "Industrijski projekti",
+			},
+
+			intro: {
+				eyebrow: "Saradnja sa privredom",
+				title: "Industrijski i stručni projekti",
+				description:
+					"ITNMS realizuje projekte, tehničke kontrole, elaborate i studije za potrebe domaćih i međunarodnih kompanija i institucija.",
+			},
+
+			filters: {
+				title: "Pretraga i filteri",
+				searchPlaceholder: "Pretražite naziv projekta ili investitora",
+				searchLabel: "Pretražite industrijske projekte",
+				allCategories: "Sve kategorije",
+				allYears: "Sve godine",
+				categoryLabel: "Kategorija projekta",
+				yearLabel: "Godina projekta",
+				clear: "Poništi",
+			},
+
+			categories: {
+				miningProject: "Rudarski projekti",
+				technicalControl: "Tehničke kontrole",
+				elaborate: "Elaborati",
+				study: "Studije",
+			},
+
+			results: {
+				showing: "Prikazano",
+				of: "od",
+				projects: "projekata",
+			},
+
+			card: {
+				investor: "Investitor / naručilac",
+				period: "Period",
+			},
+
+			empty: {
+				title: "Nema pronađenih projekata",
+				description: "Promenite pojam pretrage ili izaberite druge filtere.",
+				clear: "Poništi sve filtere",
+			},
+		},
 		directors: {
 			eyebrow: "Rukovodstvo kroz istoriju",
 			title: "Dosadašnji direktori Instituta",
@@ -1726,6 +1777,58 @@ export const dictionary = {
 	},
 
 	en: {
+		industrialProjects: {
+			pageHeader: {
+				title: "Industrial Projects",
+				description:
+					"An overview of projects, technical reviews, reports and studies carried out for industry and other partners.",
+				breadcrumbProjects: "Projects",
+				breadcrumbCurrent: "Industrial Projects",
+			},
+
+			intro: {
+				eyebrow: "Industry cooperation",
+				title: "Industrial and Professional Projects",
+				description:
+					"ITNMS carries out projects, technical reviews, reports and studies for domestic and international companies and institutions.",
+			},
+
+			filters: {
+				title: "Search and filters",
+				searchPlaceholder: "Search by project title or client",
+				searchLabel: "Search industrial projects",
+				allCategories: "All categories",
+				allYears: "All years",
+				categoryLabel: "Project category",
+				yearLabel: "Project year",
+				clear: "Clear",
+			},
+
+			categories: {
+				miningProject: "Mining Projects",
+				technicalControl: "Technical Reviews",
+				elaborate: "Technical Reports",
+				study: "Studies",
+			},
+
+			results: {
+				showing: "Showing",
+				of: "of",
+				projects: "projects",
+			},
+
+			card: {
+				investor: "Client",
+				period: "Period",
+			},
+
+			empty: {
+				title: "No projects found",
+				description:
+					"Try changing your search term or selecting different filters.",
+				clear: "Clear all filters",
+			},
+		},
 		directors: {
 			eyebrow: "Leadership through history",
 			title: "Former Directors of the Institute",
