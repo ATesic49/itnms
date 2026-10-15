@@ -19,23 +19,23 @@ export default async function Page() {
 
 	const team = [
 		{
-			name: "Dr Aleksandra Daković",
+			name: "Aleksandra Daković",
 			title: content.team.titles.scientificAdviser,
 		},
 		{
-			name: "Dr Marija Marković",
+			name: "Marija Marković",
 			title: content.team.titles.researchAssociate,
 		},
 		{
-			name: "Dr Milica Ožegović",
+			name: "Milica Ožegović",
 			title: content.team.titles.researchAssistant,
 		},
 		{
-			name: "Dr Milena Obradović",
+			name: "Milena Obradović",
 			title: content.team.titles.researchAssociate,
 		},
 		{
-			name: "Dr Mirko Grubišić",
+			name: "Mirko Grubišić",
 			title: content.team.titles.researchAssociate,
 		},
 	];
@@ -152,7 +152,7 @@ export default async function Page() {
 					</div> */}
 					<ContentSection title={content.team.title}>
 						<div className="grid gap-3 sm:grid-cols-2">
-							{team.map((member) => {
+							{team.map((member, i) => {
 								const profilePath = `/istrazivaci/${createEmployeeSlug(
 									member.name,
 								)}`;
@@ -161,7 +161,7 @@ export default async function Page() {
 
 								return (
 									<Link
-										key={member.name}
+										key={i}
 										href={href}
 										className="flex items-center justify-between px-4 py-4 transition bg-white border group rounded-xl border-stone-200 hover:border-institute-300 hover:bg-institute-50"
 									>
@@ -171,7 +171,7 @@ export default async function Page() {
 											</div>
 
 											<span className="flex flex-col justify-center text-sm font-medium text-stone-800">
-												<span>{member.name}</span>
+												<span>Dr {member.name}</span>
 												<span className="text-xs font-normal capitalize text-institute-700">
 													{member.title}
 												</span>

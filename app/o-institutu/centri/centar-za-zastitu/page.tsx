@@ -6,6 +6,7 @@ import {
 	Leaf,
 	Recycle,
 	ShieldCheck,
+	Users,
 } from "lucide-react";
 
 import Link from "next/link";
@@ -17,11 +18,18 @@ import { Section } from "@/app/components/Section";
 import { getLanguage } from "@/app/lib/language/getLanguage";
 import { getDictionary } from "@/app/lib/language/dictionary";
 import { routeTranslations } from "@/app/lib/language/routes";
+import EmployeeList from "../EmployeeList";
 
 export default async function EnvironmentalProtectionCenterPage() {
 	const lang = await getLanguage();
 	const dict = await getDictionary(lang);
-
+	const members = [
+		{ ime: "Zorica Lopičić" },
+		{ ime: "Tatjtana Šoštarić" },
+		{ ime: "Jelena Milojković" },
+		{ ime: " Vladimir Adamović" },
+		{ ime: " Anja Antanasijević" },
+	];
 	const content = dict.environmentalProtectionCentre;
 
 	const localizeHref = (href: string) => {
@@ -196,6 +204,29 @@ export default async function EnvironmentalProtectionCenterPage() {
 										/>
 									))}
 								</div>
+							</section>
+							<section className="pt-10 mt-12 border-t border-stone-200">
+								<div className="flex items-center gap-4">
+									<div className="flex items-center justify-center h-11 w-11 rounded-xl bg-institute-50 text-institute-800">
+										<Users className="w-5 h-5" />
+									</div>
+
+									<div>
+										<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">
+											{dict.metallurgicalTechnologiesCentre.team.eyebrow}
+										</p>
+
+										<h2 className="mt-1 text-3xl font-semibold tracking-tight text-stone-900">
+											{dict.metallurgicalTechnologiesCentre.team.title}
+										</h2>
+									</div>
+								</div>
+
+								<EmployeeList
+									lang={lang}
+									zaposleni={members}
+									title=""
+								/>
 							</section>
 						</main>
 

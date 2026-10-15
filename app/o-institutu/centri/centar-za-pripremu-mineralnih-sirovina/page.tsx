@@ -19,6 +19,8 @@ import { getDictionary } from "@/app/lib/language/dictionary";
 import { routeTranslations } from "@/app/lib/language/routes";
 
 const members = [
+	"Sonja Milićević",
+
 	"Dragan Radulović",
 	"Vladimir Jovanović",
 	"Dejan Todorović",

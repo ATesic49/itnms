@@ -16,11 +16,25 @@ import { Section } from "@/app/components/Section";
 import { getLanguage } from "@/app/lib/language/getLanguage";
 import { getDictionary } from "@/app/lib/language/dictionary";
 import { routeTranslations } from "@/app/lib/language/routes";
+import EmployeeList from "../EmployeeList";
 
 export default async function InorganicTechnologiesCenterPage() {
 	const lang = await getLanguage();
 	const dict = await getDictionary(lang);
-
+	const members = [
+		{
+			ime: "Srdjan Matijašević",
+		},
+		{
+			ime: "Jelena Nikolić",
+		},
+		{
+			ime: "Veljko Savić",
+		},
+		{
+			ime: "Vladimir Topalović",
+		},
+	];
 	const content = dict.inorganicTechnologiesCentre;
 
 	const localizeHref = (href: string) => {
@@ -144,6 +158,11 @@ export default async function InorganicTechnologiesCenterPage() {
 										))}
 									</div>
 								</div>
+								<EmployeeList
+									title={dict.metallurgicalTechnologiesCentre.team.title}
+									lang={lang}
+									zaposleni={members}
+								></EmployeeList>
 							</ContentSection>
 						</main>
 

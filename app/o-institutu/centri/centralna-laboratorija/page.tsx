@@ -9,7 +9,7 @@ import {
 	ShieldCheck,
 	Sparkles,
 } from "lucide-react";
-
+import Link from "next/link";
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
@@ -77,6 +77,12 @@ import mikroskopija_9919 from "@/public/imgs/IMG_9919.jpg";
 import mikroskopija_9920 from "@/public/imgs/IMG_9920.jpg";
 import mikroskopija_9921 from "@/public/imgs/IMG_9921.jpg";
 import mikroskopija_9922 from "@/public/imgs/IMG_9922.jpg";
+import ChemicalLaboratory from "./laboratories/ChemicalLaboratory";
+import PhysicalChemicalLaboratory from "./laboratories/PhysicalChemicalLaboratory";
+import MineralogicalLaboratory from "./laboratories/MineralogicalLaboratory";
+import EnvironmentalLaboratory from "./laboratories/EnvironmentalLaboratory";
+import PMSLaboratory from "./laboratories/PMSLaboratory";
+import ElectronMicroscopyLaboratory from "./laboratories/ElectronMicroscopyLaboratory";
 
 const chemicalImages = [hemijska_001, hemijska_002, hemijska_003];
 
@@ -134,7 +140,7 @@ export default async function CentralnaLaboratorijaPage() {
 				<Container>
 					<div className="max-w-6xl mx-auto">
 						<section className="flex flex-col max-w-4xl gap-5">
-							{content.intro.map((paragraph) => (
+							{content.intro2.map((paragraph) => (
 								<p
 									key={paragraph}
 									className="leading-8 text-stone-700 md:text-lg"
@@ -146,80 +152,32 @@ export default async function CentralnaLaboratorijaPage() {
 
 						<OrganizationDiagram content={content.organization} />
 
-						<div className="mt-20 space-y-24">
-							<LabSection
-								number="01"
-								icon={Beaker}
-								title={content.labs.chemical.title}
-								description={content.labs.chemical.description}
-								images={chemicalImages}
-								labLabel={content.labLabel}
-								noPhotosLabel={content.noPhotos}
-								openImageLabel={content.openImage}
-								photoAltLabel={content.photoAlt}
+						{/* <div className="mt-20 space-y-24">
+							<ChemicalLaboratory
+								dict={dict}
+								lang={lang}
 							/>
-
-							<LabSection
-								number="02"
-								icon={FlaskConical}
-								title={content.labs.physicochemical.title}
-								subtitle={content.labs.physicochemical.subtitle}
-								description={content.labs.physicochemical.description}
-								images={materialDevelopmentImages}
-								labLabel={content.labLabel}
-								noPhotosLabel={content.noPhotos}
-								openImageLabel={content.openImage}
-								photoAltLabel={content.photoAlt}
+							<PhysicalChemicalLaboratory
+								dict={dict}
+								lang={lang}
 							/>
-
-							<LabSection
-								number="03"
-								icon={Mountain}
-								title={content.labs.mineralogical.title}
-								subtitle={content.labs.mineralogical.subtitle}
-								description={content.labs.mineralogical.description}
-								images={mineralImages}
-								labLabel={content.labLabel}
-								noPhotosLabel={content.noPhotos}
-								openImageLabel={content.openImage}
-								photoAltLabel={content.photoAlt}
+							<MineralogicalLaboratory
+								dict={dict}
+								lang={lang}
 							/>
-
-							<LabSection
-								number="04"
-								icon={ShieldCheck}
-								title={content.labs.environmental.title}
-								description={content.labs.environmental.description}
-								images={environmentImages}
-								labLabel={content.labLabel}
-								noPhotosLabel={content.noPhotos}
-								openImageLabel={content.openImage}
-								photoAltLabel={content.photoAlt}
+							<EnvironmentalLaboratory
+								dict={dict}
+								lang={lang}
 							/>
-
-							<LabSection
-								number="05"
-								icon={Atom}
-								title={content.labs.pms.title}
-								description={content.labs.pms.description}
-								labLabel={content.labLabel}
-								noPhotosLabel={content.noPhotos}
-								openImageLabel={content.openImage}
-								photoAltLabel={content.photoAlt}
+							<PMSLaboratory
+								dict={dict}
+								lang={lang}
 							/>
-
-							<LabSection
-								number="06"
-								icon={Microscope}
-								title={content.labs.microscopy.title}
-								description={content.labs.microscopy.description}
-								images={microscopyImages}
-								labLabel={content.labLabel}
-								noPhotosLabel={content.noPhotos}
-								openImageLabel={content.openImage}
-								photoAltLabel={content.photoAlt}
+							<ElectronMicroscopyLaboratory
+								dict={dict}
+								lang={lang}
 							/>
-						</div>
+						</div> */}
 					</div>
 				</Container>
 			</Section>
@@ -248,37 +206,47 @@ type OrganizationDiagramProps = {
 function OrganizationDiagram({ content }: OrganizationDiagramProps) {
 	const labs = [
 		{
-			label: content.laboratoryLabel,
-			title: content.labs.physicochemical,
+			label: "Laboratorija za",
+			title: "Fizičko-hemijska ispitivanja",
 			icon: FlaskConical,
+			href: "/o-institutu/centri/centralna-laboratorija/fizicko-hemijska-ispitivanja",
 		},
 		{
-			label: content.laboratoryLabel,
-			title: content.labs.chemical,
+			label: "Laboratorija za",
+			title: "Hemijska ispitivanja",
 			icon: Beaker,
+			href: "/o-institutu/centri/centralna-laboratorija/hemijska-ispitivanja",
+			image: hemijska_001,
 		},
 		{
-			label: content.laboratoryLabel,
-			title: content.labs.mineralogical,
+			label: "Laboratorija za",
+			title: "Mineraloška ispitivanja",
 			icon: Mountain,
+			href: "/o-institutu/centri/centralna-laboratorija/mineraloska-ispitivanja",
+			image: hemijska_002,
 		},
 		{
-			label: content.laboratoryLabel,
-			title: content.labs.environmental,
+			label: "Laboratorija za",
+			title: "Zaštitu životne sredine",
 			icon: ShieldCheck,
+			href: "/o-institutu/centri/centralna-laboratorija/zastita-zivotne-sredine",
+			image: hemijska_003,
 		},
 		{
-			label: content.laboratoryLabel,
-			title: content.labs.mineralPreparation,
+			label: "Laboratorija za",
+			title: "Pripremu mineralnih sirovina",
 			icon: Atom,
+			href: "/o-institutu/centri/centralna-laboratorija/pms",
+			image: hemijska_002,
 		},
 		{
-			label: content.laboratoryLabel,
-			title: content.labs.microscopy,
+			label: "Laboratorija za",
+			title: "Elektronsku mikroskopiju",
 			icon: Microscope,
+			href: "/o-institutu/centri/centralna-laboratorija/elektronska-mikroskopija",
+			image: hemijska_001,
 		},
 	];
-
 	return (
 		<section className="p-6 mt-16 border rounded-3xl border-stone-200 bg-stone-50 md:p-10">
 			<div className="text-center">
@@ -318,9 +286,10 @@ function OrganizationDiagram({ content }: OrganizationDiagramProps) {
 					const Icon = lab.icon;
 
 					return (
-						<div
+						<Link
 							key={lab.title}
-							className="relative"
+							href={lab.href}
+							className="relative block group"
 						>
 							<div className="hidden w-px mx-auto h-7 bg-stone-300 md:block" />
 
@@ -337,7 +306,7 @@ function OrganizationDiagram({ content }: OrganizationDiagramProps) {
 									{lab.title}
 								</h3>
 							</div>
-						</div>
+						</Link>
 					);
 				})}
 			</div>
@@ -349,7 +318,8 @@ type LabSectionProps = {
 	number: string;
 	title: string;
 	subtitle?: string;
-	description: string;
+	description?: string;
+	descriptionn?: readonly string[];
 
 	icon: React.ComponentType<{
 		className?: string;
@@ -368,6 +338,7 @@ function LabSection({
 	title,
 	subtitle,
 	description,
+	descriptionn,
 	icon: Icon,
 	images = [],
 	labLabel,
@@ -398,10 +369,20 @@ function LabSection({
 							{subtitle}
 						</p>
 					)}
-
-					<p className="max-w-3xl mt-5 text-sm leading-7 text-stone-600">
-						{description}
-					</p>
+					{description && (
+						<p className="max-w-3xl mt-5 text-sm leading-7 text-stone-600">
+							{description}
+						</p>
+					)}
+					{descriptionn &&
+						descriptionn.map((description, i) => (
+							<p
+								key={i}
+								className="max-w-3xl mt-5 text-sm leading-7 text-stone-600"
+							>
+								{description}
+							</p>
+						))}
 				</div>
 			</div>
 

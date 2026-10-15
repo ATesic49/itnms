@@ -243,6 +243,9 @@ export const dictionary = {
 
 				"Kroz multidisciplinaran pristup i povezivanje analitičke hemije, nauke o materijalima i zaštite životne sredine, Laboratorija doprinosi valorizaciji otpada, efikasnijem korišćenju resursa i razvoju održivih rešenja zasnovanih na principima cirkularne ekonomije.",
 			],
+			intro2: [
+				"Centralna laboratorija ITNMS-a pruža pouzdana hemijska ispitivanja i stručnu podršku u oblasti mineralnih sirovina, materijala i zaštite životne sredine. Savremena oprema i iskusan tim omogućavaju precizne analize i kvalitetne rezultate za potrebe istraživanja i industrije.",
+			],
 
 			organization: {
 				eyebrow: "Organizaciona struktura",
@@ -1957,6 +1960,9 @@ export const dictionary = {
 				"Scientific research is particularly focused on the valorization of waste biomass and the development of sustainable materials and technologies. Research includes the direct utilization, chemical modification or cross-linking of biomass with mineral raw materials, as well as its transformation into carbon-rich products using thermochemical conversion methods such as hydrothermal carbonization and pyrolysis. Particular attention is devoted to the development and characterization of materials obtained from waste biomass with potential applications in environmental protection and energy. The Laboratory's research activities also include the assessment of environmental and health risks associated with the presence of potentially toxic elements and other pollutants in the environment.",
 
 				"Through a multidisciplinary approach combining analytical chemistry, materials science and environmental protection, the Laboratory contributes to waste valorization, more efficient resource use and the development of sustainable solutions based on circular economy principles.",
+			],
+			intro2: [
+				"The ITNMS Central Laboratory provides reliable chemical testing and expert support in the fields of mineral resources, materials, and environmental protection. Modern equipment and an experienced team enable precise analyses and high-quality results for both research and industrial applications.",
 			],
 
 			organization: {
