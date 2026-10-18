@@ -1,9 +1,10 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
-const adminEmails = [process.env.ADMIN_EMAIL].filter((email): email is string =>
-	Boolean(email),
-);
+const adminEmails =
+	process.env.ADMIN_EMAILS?.split(",")
+		.map((email) => email.trim().toLowerCase())
+		.filter(Boolean) ?? [];
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
 	providers: [Google],
@@ -14,15 +15,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
 	callbacks: {
 		async signIn({ user }) {
-			const email = user.email?.trim().toLocaleLowerCase();
+			const email = user.email?.trim().toLowerCase();
 
 			if (!email) {
 				return false;
 			}
 
-			return adminEmails.some(
-				(adminEmail) => adminEmail.trim().toLocaleLowerCase() === email,
-			);
+			return adminEmails.includes(email);
 		},
 	},
 });
