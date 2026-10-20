@@ -34,6 +34,9 @@ export default async function InorganicTechnologiesCenterPage() {
 		{
 			ime: "Vladimir Topalović",
 		},
+		{
+			ime: "Marija Đošić",
+		},
 	];
 	const content = dict.inorganicTechnologiesCentre;
 

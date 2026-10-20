@@ -57,6 +57,11 @@ export default async function ScientificCouncilMembersPage() {
 			scientificTitle: content.scientificTitles.scientificAdviser,
 		},
 		{
+			fullName: "Aleksandra Daković",
+			profileUrl: localizeHref("/istrazivaci/aleksandra-dakovic"),
+			scientificTitle: content.scientificTitles.scientificAdviser,
+		},
+		{
 			fullName: "Srđan Matijašević",
 			profileUrl: localizeHref("/istrazivaci/srdjan-matijasevic"),
 			scientificTitle: content.scientificTitles.scientificAdviser,

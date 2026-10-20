@@ -14,6 +14,8 @@ import direktor6 from "@/public/imgs/direktor6.jpg";
 import direktor7 from "@/public/imgs/direktor7.jpg";
 import direktor8 from "@/public/imgs/direktor8.jpg";
 import direktor9 from "@/public/imgs/direktor9.jpg";
+import direktor11 from "@/public/imgs/direktor10.png";
+import direktor10 from "@/public/imgs/direktor11.jpg";
 import accreditation1 from "@/public/imgs/akreditacija_2016_1.jpg";
 import accreditation2 from "@/public/imgs/akreditacija_2016_2.jpg";
 import accreditation3 from "@/public/imgs/akreditacija_2016_3.jpg";
@@ -84,6 +86,16 @@ export default async function HistoryPage() {
 			name: "Siniša Milošević",
 			period: "1991. – 2008.",
 			image: direktor9,
+		},
+		{
+			name: "Zvonko Gulišija",
+			period: "2008. - 2017.",
+			image: direktor10,
+		},
+		{
+			name: "Miroslav Sokić",
+			period: "2017. - 2026.",
+			image: direktor11,
 		},
 	];
 	const timeline: TimelineItem[] = content.timeline.items.map(
