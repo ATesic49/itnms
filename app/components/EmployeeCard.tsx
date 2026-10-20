@@ -1,7 +1,9 @@
 import { ExternalLink, Mail, GraduationCap, Microscope } from "lucide-react";
 import { Employee } from "../types/employee";
-import Image from "next/image";
-
+import Image, { StaticImageData } from "next/image";
+import orcid from "@/public/imgs/orcid.svg";
+import enauka from "@/public/imgs/enauka.jpg";
+import scopus from "@/public/imgs/scopus.png";
 type EmployeeCardProps = {
 	image: string;
 	fullName: string;
@@ -105,6 +107,7 @@ export function EmployeeCard({
 								<ProfileLink
 									href={orcidLink}
 									label="ORCID"
+									image={orcid}
 								/>
 							)}
 
@@ -112,11 +115,13 @@ export function EmployeeCard({
 								<ProfileLink
 									href={enaukaLink}
 									label="eNauka"
+									image={enauka}
 								/>
 							)}
 
 							{skopusLink && (
 								<ProfileLink
+									image={scopus}
 									href={skopusLink}
 									label="Scopus"
 								/>
@@ -132,9 +137,10 @@ export function EmployeeCard({
 type ProfileLinkProps = {
 	href: string;
 	label: string;
+	image: StaticImageData;
 };
 
-function ProfileLink({ href, label }: ProfileLinkProps) {
+function ProfileLink({ href, label, image }: ProfileLinkProps) {
 	return (
 		<Link
 			href={href}

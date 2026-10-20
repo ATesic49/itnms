@@ -6,10 +6,12 @@ import {
 	Microscope,
 } from "lucide-react";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
+import orcid from "@/public/imgs/orcid.svg";
+import enauka from "@/public/imgs/enauka1.png";
+import scopus from "@/public/imgs/scopus1.png";
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
@@ -177,18 +179,21 @@ export default async function EmployeeProfilePage({
 									<ProfileLink
 										href={employee.orcidLink}
 										label="ORCID"
+										image={orcid}
 									/>
 								)}
 
 								{employee.enaukaLink && (
 									<ProfileLink
 										href={employee.enaukaLink}
+										image={enauka}
 										label="eNauka"
 									/>
 								)}
 
 								{employee.skopusLink && (
 									<ProfileLink
+										image={scopus}
 										href={employee.skopusLink}
 										label="Scopus"
 									/>
@@ -352,18 +357,23 @@ function ProfileSection({ icon: Icon, title, children }: ProfileSectionProps) {
 
 type ProfileLinkProps = {
 	href: string;
+	image: StaticImageData;
 	label: string;
 };
 
-function ProfileLink({ href, label }: ProfileLinkProps) {
+function ProfileLink({ href, label, image }: ProfileLinkProps) {
 	return (
 		<a
 			href={href}
 			target="_blank"
 			rel="noreferrer"
-			className="inline-flex items-center gap-2 rounded-md border border-stone-300 bg-white px-4 py-2.5 text-sm font-semibold text-stone-700 transition hover:border-institute-300 hover:bg-institute-50 hover:text-institute-800"
+			className="inline-flex items-center gap-2 px-4 text-sm font-semibold transition bg-white border rounded-md border-stone-300 text-stone-700 hover:border-institute-300 hover:bg-institute-50 hover:text-institute-800"
 		>
-			{label}
+			<Image
+				className="w-12 "
+				src={image}
+				alt={label}
+			></Image>
 
 			<ExternalLink
 				className="w-4 h-4"
