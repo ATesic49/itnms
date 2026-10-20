@@ -162,7 +162,7 @@ export default function IndustrialProjectsPageContent({
 				]}
 			/>
 
-			<Section>
+			<Section background="transparent">
 				<Container>
 					<div className="max-w-3xl">
 						<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">

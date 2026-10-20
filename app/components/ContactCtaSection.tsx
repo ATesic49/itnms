@@ -3,6 +3,7 @@ import { ArrowRight, Mail, Phone } from "lucide-react";
 import { Container } from "@/app/components/Container";
 import { Section } from "./Section";
 import Link from "next/link";
+import { transcode } from "buffer";
 
 type ContactCtaSectionProps = {
 	content: {
@@ -22,9 +23,12 @@ export function ContactCtaSection({ content, lang }: ContactCtaSectionProps) {
 	const contactHref = lang === "en" ? "/en/contact" : "/kontakt";
 
 	return (
-		<Section className="bg-white">
+		<Section
+			background={"transparent"}
+			className="bg-transparent"
+		>
 			<Container className="py-16 md:py-20">
-				<div className="px-6 py-10 overflow-hidden border shadow-sm rounded-2xl border-institute-900 text-institute-800 md:px-10 md:py-12 lg:px-14">
+				<div className="px-6 py-10 overflow-hidden bg-white border shadow-sm rounded-2xl border-institute-900 text-institute-800 md:px-10 md:py-12 lg:px-14">
 					<div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-center">
 						<div>
 							<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-600">

@@ -3,12 +3,13 @@ import type { Metadata } from "next";
 import { Source_Serif_4, Source_Sans_3 } from "next/font/google";
 
 import "./globals.css";
-
+import bg from "@/public/imgs/fascikla.png";
 import Nav from "./components/Nav";
 import Footer1 from "./components/Footer1";
 
 import { getDictionary } from "./lib/language/dictionary";
 import { getLanguage } from "./lib/language/getLanguage";
+import Image from "next/image";
 
 const naslov = Source_Serif_4({
 	variable: "--font-naslov",
@@ -50,7 +51,11 @@ export default async function RootLayout({
 					lang={lang}
 					content={dict.nav}
 				/>
-
+				<Image
+					src={bg}
+					alt=""
+					className="fixed w-full opacity-50 -z-10 oboji"
+				></Image>
 				{children}
 
 				<Footer1

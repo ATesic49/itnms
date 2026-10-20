@@ -94,7 +94,7 @@ export default async function EmployeeProfilePage({
 				]}
 			/>
 
-			<Section>
+			<Section background="transparent">
 				<Container>
 					<div className="grid gap-10 lg:grid-cols-[300px_1fr] lg:gap-16">
 						<aside>

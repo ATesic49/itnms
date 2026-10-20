@@ -1,13 +1,14 @@
 type SectionProps = {
 	children: React.ReactNode;
 	className?: string;
-	background?: "white" | "stone" | "institute";
+	background?: "white" | "stone" | "institute" | "transparent";
 };
 
 const backgroundClasses = {
 	white: "bg-white",
 	stone: "bg-stone-50",
 	institute: "bg-institute-50",
+	transparent: "bg-transparent",
 };
 
 export function Section({
@@ -18,6 +19,7 @@ export function Section({
 	return (
 		<section
 			className={`
+				
         py-16 md:py-20 lg:py-24
         ${backgroundClasses[background]}
         ${className}

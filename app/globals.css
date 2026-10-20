@@ -102,3 +102,7 @@ body {
 		transparent 100%
 	);
 }
+.oboji {
+	filter: brightness(0) saturate(100%) invert(24%) sepia(47%) saturate(4371%)
+		hue-rotate(188deg) brightness(94%) contrast(101%);
+}

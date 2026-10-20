@@ -61,7 +61,10 @@ export function PartnersSection({ content }: PartnersSectionProps) {
 	];
 
 	return (
-		<Section background="stone">
+		<Section
+			className="bg-opacity-70"
+			background="stone"
+		>
 			<Container>
 				<div className="max-w-3xl mx-auto text-center">
 					<p className="text-sm font-semibold uppercase tracking-[0.18em] text-mineral-700">

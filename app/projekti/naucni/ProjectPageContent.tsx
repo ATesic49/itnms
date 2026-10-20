@@ -190,7 +190,7 @@ export default function ScientificProjectsPage({
 				]}
 			/>
 
-			<Section>
+			<Section background="transparent">
 				<Container>
 					<div className="p-5 border rounded-2xl border-stone-200 bg-stone-50 md:p-6">
 						<div className="flex items-center gap-2 text-sm font-semibold text-stone-800">
