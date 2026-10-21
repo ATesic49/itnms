@@ -12,7 +12,6 @@ import {
 import { Container } from "@/app/components/Container";
 import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
-
 const documentCategories = [
 	{
 		title: "Akta",
@@ -21,7 +20,6 @@ const documentCategories = [
 		href: "/dokumenta/akta",
 		icon: Gavel,
 	},
-
 	{
 		title: "Izveštaji",
 		description:
