@@ -3,6 +3,7 @@ import "server-only";
 import Papa from "papaparse";
 
 import { researchPositions, type Employee } from "@/app/types/employee";
+import { Language } from "../language/dictionary";
 
 export type EmployeeLanguage = "sr" | "en";
 
@@ -155,4 +156,30 @@ export async function getEmployees(
 				lang === "en" ? "en" : "sr",
 			),
 		);
+}
+function normalizePersonName(value: string): string {
+	return value
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "")
+		.replace(/đ/gi, "dj")
+		.toLowerCase()
+		.replace(/[‐-‒–—]/g, "-")
+		.replace(/\s+/g, " ")
+		.trim();
+}
+export async function getEmployeeByName(
+	fullName: string,
+	lang: Language,
+): Promise<Employee | null> {
+	const employees = await getEmployees(lang);
+
+	const normalizedName = normalizePersonName(fullName);
+
+	return (
+		employees.find((employee) => {
+			const employeeFullName = `${employee.firstName} ${employee.lastName}`;
+
+			return normalizePersonName(employeeFullName) === normalizedName;
+		}) ?? null
+	);
 }

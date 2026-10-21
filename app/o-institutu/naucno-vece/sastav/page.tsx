@@ -5,8 +5,10 @@ import { PageHeader } from "@/app/components/PageHeder";
 import { Section } from "@/app/components/Section";
 
 import { getLanguage } from "@/app/lib/language/getLanguage";
-import { getDictionary } from "@/app/lib/language/dictionary";
+import { getDictionary, Language } from "@/app/lib/language/dictionary";
 import { routeTranslations } from "@/app/lib/language/routes";
+import { getEmployeeByName } from "@/app/lib/google-sheets/employees";
+import { language } from "googleapis/build/src/apis/language";
 
 type CouncilMember = {
 	fullName: string;
@@ -170,6 +172,7 @@ export default async function ScientificCouncilMembersPage() {
 								<CouncilMemberRow
 									key={member.profileUrl ?? member.fullName}
 									member={member}
+									lang={lang}
 									openProfileLabel={content.openProfile}
 									notAvailableLabel={content.notAvailable}
 								/>
@@ -242,20 +245,26 @@ type CouncilMemberRowProps = {
 	member: CouncilMember;
 	openProfileLabel: string;
 	notAvailableLabel: string;
+	lang: Language;
 };
 
-function CouncilMemberRow({
+async function CouncilMemberRow({
 	member,
 	openProfileLabel,
 	notAvailableLabel,
+	lang,
 }: CouncilMemberRowProps) {
+	const emp = await getEmployeeByName(member.fullName, lang);
+
 	return (
 		<div className="grid gap-3 px-6 py-5 md:grid-cols-[1fr_280px_160px] md:items-center">
 			<div>
 				<p className="font-semibold text-stone-900">{member.fullName}</p>
 			</div>
 
-			<p className="text-sm text-stone-600">{member.scientificTitle ?? "—"}</p>
+			<p className="text-sm text-stone-600">
+				{emp?.naucnoZvanje ?? member.scientificTitle}
+			</p>
 
 			<div>
 				{member.profileUrl ? (

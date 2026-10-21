@@ -85,6 +85,12 @@ export async function getIndustrialProjects(
 			parsed.errors,
 		);
 	}
+	const categoryOrder: Record<IndustrialProjectCategory, number> = {
+		"mining-project": 1,
+		"technical-control": 2,
+		elaborate: 3,
+		study: 4,
+	};
 
 	return parsed.data
 		.flatMap((row): IndustrialProject[] => {
@@ -129,5 +135,14 @@ export async function getIndustrialProjects(
 				},
 			];
 		})
-		.sort((a, b) => (b.sortYear ?? 0) - (a.sortYear ?? 0));
+		.sort((a, b) => {
+			const categoryDifference =
+				categoryOrder[a.category] - categoryOrder[b.category];
+
+			if (categoryDifference !== 0) {
+				return categoryDifference;
+			}
+
+			return (b.sortYear ?? 0) - (a.sortYear ?? 0);
+		});
 }
